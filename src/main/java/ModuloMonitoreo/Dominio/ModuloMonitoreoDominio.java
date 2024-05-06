@@ -1,5 +1,7 @@
 package ModuloMonitoreo.Dominio;
 
-public interface ModuloMonitoreoDominio {
+public class ModuloMonitoreoDominio {
+
+
 
 }
