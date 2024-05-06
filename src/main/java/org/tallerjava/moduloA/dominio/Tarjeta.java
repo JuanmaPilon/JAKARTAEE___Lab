@@ -2,7 +2,7 @@ package org.tallerjava.moduloA.dominio;
 
 import java.sql.Date;
 
-class Tarjeta {
+public class Tarjeta {
     private int nro;
     private String nombre;
     private Date fechaVto;
