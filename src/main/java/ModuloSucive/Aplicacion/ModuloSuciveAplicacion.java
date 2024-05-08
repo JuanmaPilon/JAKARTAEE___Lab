@@ -2,9 +2,8 @@ package ModuloSucive.Aplicacion;
 
 import java.util.Date;
 import java.util.Set;
-import ModuloSucive.Dominio.Pagos;
+import ModuloSucive.Dominio.*;
 
-import org.tallerjava.moduloA.dominio.*;//*******************
 
 public interface ModuloSuciveAplicacion {
 	void notificarPago(Matricula matricula, double importe);
