@@ -2,9 +2,7 @@ package ModuloGestionClientes.Aplicacion;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
-import ModuloGestionClientes.Dominio.Usuario;
-import ModuloGestionClientes.Dominio.UsrExtranjero;
-import ModuloGestionClientes.Dominio.UsrNacional;
+import ModuloGestionClientes.Dominio.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +19,25 @@ public class GestionClientesServiceImpl implements GestionClientesService {
     }
 
     // Método para crear un usuario extranjero
+    @Override
     public Usuario crearUsuarioExtranjero(String ci, String nombre, String email) {
         return new UsrExtranjero(ci, nombre, email);
     }
 
     // Método para crear un usuario nacional
+    @Override
     public Usuario crearUsuarioNacional(String ci, String nombre, String email) {
         return new UsrNacional(ci, nombre, email);
     }
-
+    @Override
     public void cargarSaldo(ClienteTelepeaje cliente, Double importe) {
         //conveniendo que tengamos cargarSAldo
-        cliente.cargarSaldo(importe);
+        //   cliente.cargarSaldo(importe);
     }
-
+    @Override
     public void cargarSaldo(ClienteSucive cliente, Double importe) {
         //conveniendo que tengamos cargarSAldo
-        cliente.cargarSaldo(importe);
+        // cliente.cargarSaldo(importe);
     }
 
 }

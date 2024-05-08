@@ -26,10 +26,15 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
         //proximamente solo en cines
         return List.of();
     }
+    @Override
+    public List<Pagos> consultaDePagos(ClienteTelepeaje cliente){
+        //hay que obtener los pagos de un cliente, como ?
+        return List.of();
+    }
 
     @Override
-    public List<Pagos> consultaDePagos(Usuario cliente, Vehiculo vehiculo) {
-        //proximamente solo en cines
+    public List<Pagos> consultaDePagos(ClienteTelepeaje cliente, Vehiculo vehiculo) {
+        //hay que obtener los pagos del cliente igual que en la anterior, pero luego hay que filtrar para obtener solo los que correspondan a un vehiculo concreto
         return List.of();
     }
 

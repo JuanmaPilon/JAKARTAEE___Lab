@@ -1,7 +1,7 @@
 package org.tallerjava.moduloA.dominio.repo;
 
 import org.junit.jupiter.api.Test;
-// import ModuloMonitoreo.Dominio.*;
+
 import ModuloMonitoreo.Aplicacion.*;
 import static org.junit.jupiter.api.Assertions.*;
 
