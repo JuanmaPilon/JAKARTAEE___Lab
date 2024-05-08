@@ -1,11 +1,12 @@
 package ModuloComunicacion.Aplicacion;
 
-public interface ModuloComunicacionAplicacion {
+import ModuloComunicacion.Dominio.*;
 
-    //public void notificarSaldoInsuficiente(Cliente);
-    //public void notificarTarjetaBloqueada(Cliente);
-    //public void notificarInformacion(texto);
-    //public Cliente altaCliente(Cliente);
-    //obtenerNotiPorCliente(Cliente):set(Notificaciones);
+public interface ModuloComunicacionAplicacion {
+    public void notificarSaldoInsuficiente(ClienteTelepeaje cliente);
+    public void notificarTarjetaBloqueada(ClienteTelepeaje cliente);
+    public void notificarInformacion(String texto);
+    public ClienteTelepeaje altaCliente(ClienteTelepeaje cliente);
+    // obtenerNotiPorCliente(ClienteTelepeaje cliente):set(Notificaciones);
 
 }
