@@ -29,4 +29,15 @@ public class GestionClientesServiceImpl implements GestionClientesService {
     public Usuario crearUsuarioNacional(String ci, String nombre, String email) {
         return new UsrNacional(ci, nombre, email);
     }
+
+    public void cargarSaldo(ClienteTelepeaje cliente, Double importe) {
+        //conveniendo que tengamos cargarSAldo
+        cliente.cargarSaldo(importe);
+    }
+
+    public void cargarSaldo(ClienteSucive cliente, Double importe) {
+        //conveniendo que tengamos cargarSAldo
+        cliente.cargarSaldo(importe);
+    }
+
 }
