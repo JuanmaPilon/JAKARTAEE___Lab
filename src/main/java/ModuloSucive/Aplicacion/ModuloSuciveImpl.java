@@ -2,7 +2,7 @@ package ModuloSucive.Aplicacion;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import ModuloSucive.Dominio.*;
-import ModuloSucive.Dominio.Pagos;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,15 +10,16 @@ import java.util.Date;
 
 
 @ApplicationScoped
-public class ModuloSuciveImpl {
+public class ModuloSuciveImpl implements ModuloSuciveAplicacion{
 
-    public void notificarPago(String matricula, double importe) {
+    @Override
+    public void notificarPago(Matricula matricula, double importe){
         // Lógica para notificar el pago al Sistema externo de Sucive
         System.out.println("Notificando pago al Sistema externo de Sucive");
-        System.out.println("La matricula es: " + matricula);
+        System.out.println("La matricula es: " + matricula.getNroMatricula());
         System.out.println("El importe es: " + importe);
     }
-/*
+    @Override
     public Set<Pagos> consultaDePagos(Date fechaInicial, Date fechaFinal) {
         Set<Pagos> pagosEnRango = new HashSet<>();
         for (Pagos pago : listaDePagos) { // necesito la lista de pagos xd
@@ -30,14 +31,14 @@ public class ModuloSuciveImpl {
         return pagosEnRango;
     }
 
- */
-   // public Set<Pagos> consultaDePagos(String matricula) {
-   //     Set<Pagos> pagosPorMatricula = new HashSet<>();
-     //   for (Pagos pago : listaDePagos) {
-     //       if (pago.getMatricula().equals(matricula)) {
-      //          pagosPorMatricula.add(pago);
-        //    }
-       // }
-       // return pagosPorMatricula;
-   // }
+    @Override
+    public Set<Pagos> consultaDePagos(Matricula matricula) {
+        Set<Pagos> pagosPorMatricula = new HashSet<>();
+        for (Pagos pago : listaDePagos) {
+           if (pago.getMatricula().equals(matricula.getNroMatricula())) {
+                pagosPorMatricula.add(pago);
+            }
+        }
+        return pagosPorMatricula;
+    }
 }
