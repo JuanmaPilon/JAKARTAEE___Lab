@@ -9,13 +9,13 @@ public class ModuloPeajeTest {
 
     @Test
     void testEstaHabilitado_Tag() {
-        // Creamos un tag simulado
+        // Crea un tag simulado
         Tag tagAutorizado = new Tag("ID_TAG_1");
 
-        // Creamos una instancia del módulo de peaje
+        // Crea una instancia del módulo de peaje
         ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
 
-        // Probamos si el tag está habilitado
+        // Prueba si el tag está habilitado
         boolean resultado = moduloPeaje.estaHabilitado(tagAutorizado);
         System.out.println("¿El tag está habilitado? " + resultado);
         assertTrue(resultado);
@@ -23,13 +23,13 @@ public class ModuloPeajeTest {
 
     @Test
     void testEstaHabilitado_Matricula() {
-        // Creamos una matrícula simulada
+        // Crea una matrícula simulada
         Matricula matriculaAutorizada = new Matricula("123ABC");
 
-        // Creamos una instancia del módulo de peaje
+        // Crea una instancia del módulo de peaje
         ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
 
-        // Probamos si la matrícula está habilitada
+        // Prueba si la matrícula está habilitada
         boolean resultado = moduloPeaje.estaHabilitado(matriculaAutorizada);
         System.out.println("¿La matrícula está habilitada? " + resultado);
         assertTrue(resultado);
@@ -37,16 +37,41 @@ public class ModuloPeajeTest {
 
     @Test
     void testEstaHabilitado_OtroTipo() {
-        // Creamos un identificador simulado de otro tipo
+        // Crea un identificador simulado de otro tipo
         Identificador otroIdentificador = () -> "";
 
-        // Creamos una instancia del módulo de peaje
+        // Crea una instancia del módulo de peaje
         ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
 
-        // Probamos si el identificador de otro tipo no está habilitado
+        // Prueba si el identificador de otro tipo no está habilitado
         boolean resultado = moduloPeaje.estaHabilitado(otroIdentificador);
         System.out.println("¿El identificador de otro tipo está habilitado? " + resultado);
         assertFalse(resultado);
     }
+
+    @Test
+    void testActualizarTarifaComun() {
+        // Crea una instancia del módulo de peaje
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
+
+
+        double nuevoImporte = 15.0;
+
+        // Actualiza la tarifa común
+        moduloPeaje.actualizarTarifaComun(nuevoImporte);
+
+        // Obtiene el importe actualizado de la tarifa común
+        double importeActualizado = moduloPeaje.getTarifaComun().obtenerMonto();
+
+        // Verificacion
+        assertEquals(nuevoImporte, importeActualizado, "La tarifa común no se actualizó correctamente");
+
+        if (nuevoImporte == importeActualizado) {
+            System.out.println("El test  pasó correctamente.");
+        } else {
+            System.out.println("El test falló.");
+        }
+    }
+
 }
 

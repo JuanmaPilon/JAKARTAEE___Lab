@@ -18,7 +18,7 @@ public class ModuloSuciveImpl {
         System.out.println("La matricula es: " + matricula);
         System.out.println("El importe es: " + importe);
     }
-
+/*
     public Set<Pagos> consultaDePagos(Date fechaInicial, Date fechaFinal) {
         Set<Pagos> pagosEnRango = new HashSet<>();
         for (Pagos pago : listaDePagos) { // necesito la lista de pagos xd
@@ -29,4 +29,6 @@ public class ModuloSuciveImpl {
         }
         return pagosEnRango;
     }
+
+ */
 }
