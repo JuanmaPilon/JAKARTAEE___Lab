@@ -40,4 +40,16 @@ public class GestionClientesServiceImpl implements GestionClientesService {
         // cliente.cargarSaldo(importe);
     }
 
+    @Override
+        public void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
+
+            //cliente.vincularVehiculo(vehiculo);
+        }
+
+    @Override
+    public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
+
+        //cliente.vincularVehiculo(vehiculo);
+    }
+
 }
