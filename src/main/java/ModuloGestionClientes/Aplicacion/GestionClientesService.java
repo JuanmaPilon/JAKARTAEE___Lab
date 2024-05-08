@@ -10,4 +10,6 @@ public interface GestionClientesService {
     Usuario crearUsuarioNacional(String ci, String nombre, String email);
     void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo);
     void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
+    void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo);
+    void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
 }

@@ -52,4 +52,13 @@ public class GestionClientesServiceImpl implements GestionClientesService {
         //cliente.vincularVehiculo(vehiculo);
     }
 
+    @Override
+    public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
+           // cliente.desvincularVehiculo(vehiculo);
+        }
+
+    @Override
+    public void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
+        // cliente.desvincularVehiculo(vehiculo);
+    }
 }
