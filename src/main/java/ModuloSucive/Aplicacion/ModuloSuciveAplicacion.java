@@ -9,5 +9,5 @@ import org.tallerjava.moduloA.dominio.*;//*******************
 public interface ModuloSuciveAplicacion {
 	void notificarPago(Matricula matricula, double importe);
 	Set<Pagos> consultaDePagos(Date fechaInicial, Date fecha);
-    //public Pagos consultaDePagos(Ma tricula matricula);
+	Set<Pagos> consultaDePagos(Matricula matricula);
 }

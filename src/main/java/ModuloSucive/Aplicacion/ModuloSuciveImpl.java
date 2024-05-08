@@ -29,4 +29,14 @@ public class ModuloSuciveImpl {
         }
         return pagosEnRango;
     }
+
+    public Set<Pagos> consultaDePagos(String matricula) {
+        Set<Pagos> pagosPorMatricula = new HashSet<>();
+        for (Pagos pago : listaDePagos) {
+            if (pago.getMatricula().equals(matricula)) {
+                pagosPorMatricula.add(pago);
+            }
+        }
+        return pagosPorMatricula;
+    }
 }
