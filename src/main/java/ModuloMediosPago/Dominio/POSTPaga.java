@@ -6,6 +6,9 @@ public class POSTPaga extends Cuenta {
 	
 	private Tarjeta tarjeta;
 
+    public POSTPaga(int nroCuenta, Date fechaApertura) {
+        super(nroCuenta, fechaApertura);
+    }
     public POSTPaga(int nroCuenta, Date fechaApertura, Tarjeta tarjeta) {
         super(nroCuenta, fechaApertura);
         this.tarjeta = tarjeta;
