@@ -5,9 +5,8 @@ import java.util.List;
 
 public class ModuloPeajeImpl {
 
-    private List<Tag> tagsAutorizados;
-    private List<String> matriculasAutorizadas;
     private Comun tarifaComun;
+    private Preferencial tarifaPreferencial;
 
     public boolean estaHabilitado(Identificador identificador) {
         return identificador instanceof Tag || identificador instanceof Matricula;
@@ -18,6 +17,9 @@ public class ModuloPeajeImpl {
         // Inicializa la tarifa común con un monto predeterminado
         double montoPredeterminado = 10.0;
         this.tarifaComun = new Comun(montoPredeterminado);
+        // Inicializa la tarifa Preferencial con un monto predeterminado
+        double montoPredeterminadoPreferencial = 5.0;
+        this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
     }
 
     public void actualizarTarifaComun(double importe) {
@@ -30,4 +32,19 @@ public class ModuloPeajeImpl {
     public Comun getTarifaComun() {
         return tarifaComun;
     }
+
+    public void actualizarTarifaPreferencial(double importe) {
+        // Obtiene la tarifa preferencial actual
+        double importeActual = this.tarifaPreferencial.obtenerMontoPreferencial();
+
+        // Actualiza el importe de la tarifa preferencial con el importe proporcionado
+        this.tarifaPreferencial.setMonto(importe);
+
+        //Validación o procesamiento futuro
+    }
+
+    public Preferencial getTarifaPreferencial() {
+        return tarifaPreferencial;
+    }
+
 }

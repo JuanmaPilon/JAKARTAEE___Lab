@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Date;
 
-
+/*
 @ApplicationScoped
 public class ModuloSuciveImpl implements ModuloSuciveAplicacion{
 
@@ -19,6 +19,7 @@ public class ModuloSuciveImpl implements ModuloSuciveAplicacion{
         System.out.println("La matricula es: " + matricula.getNroMatricula());
         System.out.println("El importe es: " + importe);
     }
+
     @Override
     public Set<Pagos> consultaDePagos(Date fechaInicial, Date fechaFinal) {
         Set<Pagos> pagosEnRango = new HashSet<>();
@@ -41,4 +42,7 @@ public class ModuloSuciveImpl implements ModuloSuciveAplicacion{
         }
         return pagosPorMatricula;
     }
+
 }
+*/
+

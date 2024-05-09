@@ -67,11 +67,35 @@ public class ModuloPeajeTest {
         assertEquals(nuevoImporte, importeActualizado, "La tarifa común no se actualizó correctamente");
 
         if (nuevoImporte == importeActualizado) {
-            System.out.println("El test  pasó correctamente.");
+            System.out.println("El test  de la tarifa comun pasó correctamente.");
         } else {
-            System.out.println("El test falló.");
+            System.out.println("El test de la tarifa comun falló.");
         }
     }
 
+
+    @Test
+    void testActualizarTarifaPreferencial() {
+        // Crea una instancia del módulo de peaje
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
+
+
+        double nuevoImporte = 10.0;
+
+        // Actualiza la tarifa Preferencial
+        moduloPeaje.actualizarTarifaPreferencial(nuevoImporte);
+
+        // Obtiene el importe actualizado de la tarifa Preferencial
+        double importeActualizado = moduloPeaje.getTarifaPreferencial().obtenerMontoPreferencial();
+
+        // Verificacion
+        assertEquals(nuevoImporte, importeActualizado, "La tarifa Preferencial no se actualizó correctamente");
+
+        if (nuevoImporte == importeActualizado) {
+            System.out.println("El test  de la tarifa Preferencial pasó correctamente.");
+        } else {
+            System.out.println("El test de la tarifa Preferencial falló.");
+        }
+    }
 }
 
