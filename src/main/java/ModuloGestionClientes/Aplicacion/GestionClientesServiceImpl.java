@@ -1,27 +1,43 @@
 package ModuloGestionClientes.Aplicacion;
 
+import ModuloGestionClientes.Dominio.Repo.RepoClientes;
+import ModuloMediosPago.Dominio.UsrExtranjero;
 import jakarta.enterprise.context.ApplicationScoped;
+import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 
 import ModuloGestionClientes.Dominio.*;
+import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+// uso la inyeccion para inyectar el repoClientes,cualquier otra manera de usarlo ta mal
 @ApplicationScoped
 public class GestionClientesServiceImpl implements GestionClientesService {
-    private List<Usuario> usuarios = new ArrayList<>();
+
+    @Inject
+    private RepoClientes repoClientes;
+
+    private List<Usuario> usuario = new ArrayList<>();
 
     @Override
     public void altaClienteTeleapeje(Usuario usuario) {
-        usuarios.add(usuario);
-        // Lógica para el alta del cliente Teleapje
-        System.out.println("Alta cliente para Teleapje realizado para usuario: " + usuario.getCi());
+        // como el profe dijo para verificar si ya existe y demas
+        ClienteTelepeaje clienteExistente = repoClientes.buscarClientePorCI(usuario.getCi());
+        if (clienteExistente == null) {
+            ClienteTelepeaje nuevoCliente = new ClienteTelepeaje(usuario.getNom(), usuario.getCi());
+            repoClientes.agregarClienteTelepeaje(nuevoCliente);
+            System.out.println("Alta Cliente Telepeaje para el usuario: " + usuario.getCi());
+        } else {
+            System.out.println("El usuario ya ta registrado como cliente de Telepeaje.");
+        }
     }
 
     // Método para crear un usuario extranjero
     @Override
     public Usuario crearUsuarioExtranjero(String ci, String nombre, String email) {
-        return new UsrExtranjero(ci, nombre, email);
+        return new UsrNacional(ci, nombre, email);
     }
 
     // Método para crear un usuario nacional

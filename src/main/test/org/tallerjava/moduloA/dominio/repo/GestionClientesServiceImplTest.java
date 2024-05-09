@@ -4,7 +4,7 @@ import ModuloGestionClientes.Aplicacion.GestionClientesService;
 import ModuloGestionClientes.Aplicacion.GestionClientesServiceImpl;
 import org.junit.jupiter.api.Test;
 import ModuloGestionClientes.Dominio.Usuario;
-import ModuloGestionClientes.Dominio.UsrExtranjero;
+import ModuloGestionClientes.Dominio.UsrRepo;
 import ModuloGestionClientes.Dominio.UsrNacional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +16,7 @@ public class GestionClientesServiceImplTest {
         GestionClientesService gestionClientesService = new GestionClientesServiceImpl();
         Usuario usuario = gestionClientesService.crearUsuarioExtranjero("123456", "Juan", "juan@example.com");
         System.out.println("Usuario creado: " + usuario.getCi() + ", " + usuario.getNombreUsuario() + ", " + usuario.getEmail());
-        assertTrue(usuario instanceof UsrExtranjero, "El usuario no es una instancia de UsrExtranjero");
+        assertTrue(usuario instanceof UsrRepo, "El usuario no es una instancia de UsrExtranjero");
         assertEquals("123456", usuario.getCi(), "El CI no coincide");
         assertEquals("Juan", usuario.getNombreUsuario(), "El nombre no coincide");
         assertEquals("juan@example.com", usuario.getEmail(), "El email no coincide");

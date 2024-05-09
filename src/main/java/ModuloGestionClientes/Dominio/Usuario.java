@@ -1,9 +1,17 @@
 package ModuloGestionClientes.Dominio;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
 public class Usuario {
     private String ci;
     private String nom;
     private String email;
+
+
 
     public Usuario() {}
 

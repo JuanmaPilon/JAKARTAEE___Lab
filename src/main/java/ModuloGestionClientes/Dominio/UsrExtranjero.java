@@ -1,12 +1,4 @@
 package ModuloGestionClientes.Dominio;
 
-public class UsrExtranjero extends Usuario {
-
-    public UsrExtranjero() {
-        super();
-    }
-
-    public UsrExtranjero(String ci, String nombreUsuario, String email) {
-        super(ci, nombreUsuario, email);
-    }
+public class UsrExtranjero extends org.tallerjava.moduloA.dominio.Usuario {
 }
