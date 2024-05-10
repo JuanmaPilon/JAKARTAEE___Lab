@@ -1,5 +1,12 @@
 package ModuloGestionClientes.Dominio;
 
-public class Vehiculo {
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+
+public class Vehiculo {
+ private Matricula matricula;
+ private Tag tag;
 }

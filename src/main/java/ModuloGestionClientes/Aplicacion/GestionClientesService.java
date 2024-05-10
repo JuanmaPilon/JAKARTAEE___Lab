@@ -12,4 +12,5 @@ public interface GestionClientesService {
     void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
     void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo);
     void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
+
 }

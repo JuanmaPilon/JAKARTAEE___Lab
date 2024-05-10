@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 // uso la inyeccion para inyectar el repoClientes,cualquier otra manera de usarlo ta mal
@@ -76,5 +77,20 @@ public class GestionClientesServiceImpl implements GestionClientesService {
     @Override
     public void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
         // cliente.desvincularVehiculo(vehiculo);
+    }
+
+    @Inject
+    private RepoClientes repoClientes; // Repositorio de clientes
+
+    @Override
+    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
+        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
+        if (clienteEnRepo != null) {
+
+            return clienteEnRepo.getVehiculos();
+        } else {
+            // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
+            return new HashSet<>();
+        }
     }
 }
