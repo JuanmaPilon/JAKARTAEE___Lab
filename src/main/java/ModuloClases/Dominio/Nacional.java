@@ -1,8 +1,4 @@
-package ModuloPeaje.Dominio;
-
-import ModuloClases.Dominio.Matricula;
-import ModuloClases.Dominio.Tag;
-import ModuloClases.Dominio.Vehiculo;
+package ModuloClases.Dominio;
 
 public class Nacional extends Vehiculo {
 	

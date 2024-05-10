@@ -1,6 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
-import org.modulo.dominio.Usuario;
+import ModuloClases.Dominio.Usuario;
 
 public class UsrExtranjero extends Usuario {
 }

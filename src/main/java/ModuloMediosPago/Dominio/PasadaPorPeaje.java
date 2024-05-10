@@ -1,6 +1,6 @@
 package ModuloMediosPago.Dominio;
 
-import org.modulo.dominio.DataTipoCobro;
+import ModuloClases.Dominio.DataTipoCobro;
 
 import java.util.Date;
 

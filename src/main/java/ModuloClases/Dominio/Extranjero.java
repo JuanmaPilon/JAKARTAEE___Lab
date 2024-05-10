@@ -1,7 +1,4 @@
-package ModuloPeaje.Dominio;
-
-import ModuloClases.Dominio.Tag;
-import ModuloClases.Dominio.Vehiculo;
+package ModuloClases.Dominio;
 
 public class Extranjero extends Vehiculo {
 	

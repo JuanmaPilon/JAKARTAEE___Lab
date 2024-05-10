@@ -1,6 +1,6 @@
 package ModuloSucive.Dominio;
 
-import org.modulo.dominio.Cuenta;
+import ModuloClases.Dominio.Cuenta;
 
 import java.util.Date;
 
