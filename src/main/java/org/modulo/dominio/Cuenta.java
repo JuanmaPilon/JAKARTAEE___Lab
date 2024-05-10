@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio;
+package org.modulo.dominio;
 
 import java.util.Date;
 import lombok.Data;
@@ -9,6 +9,8 @@ import lombok.Data;
 public class Cuenta {
     private int nroCuenta;
     private Date fechaApertura;
+
+    public Cuenta() {} // tuve que agregar el constructor por parametros para que la clase PREPaga y POSTPaga no me tiren error con Lombok
 
     public Cuenta(int nroCuenta, Date fechaApertura) {
         this.nroCuenta = nroCuenta;

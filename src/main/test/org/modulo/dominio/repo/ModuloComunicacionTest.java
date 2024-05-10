@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio.repo;
+package org.modulo.dominio.repo;
 
 import ModuloComunicacion.Aplicacion.*;
 import ModuloComunicacion.Dominio.*;

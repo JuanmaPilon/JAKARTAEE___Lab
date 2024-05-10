@@ -1,10 +1,10 @@
-package org.tallerjava.moduloA.dominio;
+package org.modulo.dominio;
 
 public class Usuario {
     private String ci;
     private String nom;
     private String email;
-    private org.tallerjava.moduloA.dominio.ClienteTelepeaje clienteTelepeaje;
+    private ClienteTelepeaje clienteTelepeaje;
     
     public Usuario() {
     	
@@ -40,11 +40,11 @@ public class Usuario {
         this.email = email;
     }
     
-    public org.tallerjava.moduloA.dominio.ClienteTelepeaje getClienteTelepeaje() {
+    public ClienteTelepeaje getClienteTelepeaje() {
         return clienteTelepeaje;
     }
 
-    public void setClienteTelepeaje(org.tallerjava.moduloA.dominio.ClienteTelepeaje clienteTelepeaje) {
+    public void setClienteTelepeaje(ClienteTelepeaje clienteTelepeaje) {
         this.clienteTelepeaje = clienteTelepeaje;
     }
 }

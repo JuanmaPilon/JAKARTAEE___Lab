@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio;
+package org.modulo.dominio;
 
 import java.util.Date;
 
@@ -6,9 +6,9 @@ public class PasadaPorPeaje {
 	
     private Date fecha;
     private double costo;
-    private org.tallerjava.moduloA.dominio.DataTipoCobro tipoCobro;
+    private DataTipoCobro tipoCobro;
 
-    public PasadaPorPeaje(Date fecha, double costo, org.tallerjava.moduloA.dominio.DataTipoCobro tipoCobro) {
+    public PasadaPorPeaje(Date fecha, double costo, DataTipoCobro tipoCobro) {
         this.fecha = fecha;
         this.costo = costo;
         this.tipoCobro = tipoCobro;
@@ -30,11 +30,11 @@ public class PasadaPorPeaje {
         this.costo = costo;
     }
 
-    public org.tallerjava.moduloA.dominio.DataTipoCobro getTipoCobro() {
+    public DataTipoCobro getTipoCobro() {
         return tipoCobro;
     }
 
-    public void setTipoCobro(org.tallerjava.moduloA.dominio.DataTipoCobro tipoCobro) {
+    public void setTipoCobro(DataTipoCobro tipoCobro) {
         this.tipoCobro = tipoCobro;
     }
 

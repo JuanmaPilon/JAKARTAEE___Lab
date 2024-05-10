@@ -1,6 +1,6 @@
-package org.tallerjava.moduloA.dominio;
+package org.modulo.dominio;
 
-public class UsrExtranjero extends org.tallerjava.moduloA.dominio.Usuario {
+public class UsrExtranjero extends Usuario {
 
     public UsrExtranjero() {
         super(); 

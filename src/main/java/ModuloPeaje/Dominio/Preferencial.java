@@ -1,7 +1,5 @@
 package ModuloPeaje.Dominio;
 
-import org.tallerjava.moduloA.dominio.Tarifa;
-
 public class Preferencial extends ModuloPeaje.Dominio.Tarifa {
 	
 	public Preferencial(){

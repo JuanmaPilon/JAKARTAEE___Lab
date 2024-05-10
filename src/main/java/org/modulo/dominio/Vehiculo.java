@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio;
+package org.modulo.dominio;
 import ModuloPeaje.Dominio.*;
 
 public class Vehiculo {

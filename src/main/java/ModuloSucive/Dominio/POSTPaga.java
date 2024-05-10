@@ -1,7 +1,7 @@
 package ModuloSucive.Dominio;
 
-import org.tallerjava.moduloA.dominio.Cuenta;
-import org.tallerjava.moduloA.dominio.Tarjeta;
+import org.modulo.dominio.Cuenta;
+import org.modulo.dominio.Tarjeta;
 
 import java.util.Date;
 

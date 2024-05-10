@@ -1,8 +1,10 @@
 package ModuloSucive.Dominio;
 
+import org.modulo.dominio.Cuenta;
+
 import java.util.Date;
 
-public class PREPaga extends org.tallerjava.moduloA.dominio.Cuenta {
+public class PREPaga extends Cuenta {
 	
 	private double saldo;
 

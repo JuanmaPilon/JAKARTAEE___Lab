@@ -1,7 +1,4 @@
-package ModuloPeaje.Dominio;
-
-import org.modulo.dominio.Tag;
-import org.modulo.dominio.Vehiculo;
+package org.modulo.dominio;
 
 public class Extranjero extends Vehiculo {
 	

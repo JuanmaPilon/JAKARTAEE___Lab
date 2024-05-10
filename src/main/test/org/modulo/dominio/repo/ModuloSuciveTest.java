@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio.repo;
+package org.modulo.dominio.repo;
 
 import ModuloSucive.Aplicacion.*;
 import ModuloSucive.Dominio.*;

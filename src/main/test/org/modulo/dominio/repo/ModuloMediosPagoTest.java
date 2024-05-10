@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio.repo;
+package org.modulo.dominio.repo;
 import org.junit.jupiter.api.Test;
 import ModuloMediosPago.Aplicacion.*;
 import ModuloMediosPago.Dominio.*;

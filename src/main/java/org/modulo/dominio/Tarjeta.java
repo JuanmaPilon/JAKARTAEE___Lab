@@ -1,4 +1,4 @@
-package org.tallerjava.moduloA.dominio;
+package org.modulo.dominio;
 
 import java.sql.Date;
 

@@ -1,4 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
-public class UsrExtranjero extends org.tallerjava.moduloA.dominio.Usuario {
+import org.modulo.dominio.Usuario;
+
+public class UsrExtranjero extends Usuario {
 }
