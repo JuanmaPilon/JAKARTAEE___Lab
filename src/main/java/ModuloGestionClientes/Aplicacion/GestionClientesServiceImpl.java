@@ -78,10 +78,7 @@ public class GestionClientesServiceImpl implements GestionClientesService {
     public void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
         // cliente.desvincularVehiculo(vehiculo);
     }
-
-    @Inject
-    private RepoClientes repoClientes; // Repositorio de clientes
-
+    
     @Override
     public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
         Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());

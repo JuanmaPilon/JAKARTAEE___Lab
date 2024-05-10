@@ -6,7 +6,7 @@ public interface ModuloComunicacionAplicacion {
     public void notificarSaldoInsuficiente(ClienteTelepeaje cliente);
     public void notificarTarjetaBloqueada(ClienteTelepeaje cliente);
     public void notificarInformacion(String texto);
-    public ClienteTelepeaje altaCliente(ClienteTelepeaje cliente);
-    // obtenerNotiPorCliente(ClienteTelepeaje cliente):set(Notificaciones);
+    public void altaCliente(ClienteTelepeaje cliente, String email);// hago que tambien reciba email para asi poder notificarlo en este modulo
+    //obtenerNotiPorCliente(ClienteTelepeaje cliente):set(Notificaciones);
 
 }

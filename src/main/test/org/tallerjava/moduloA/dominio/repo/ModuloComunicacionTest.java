@@ -5,28 +5,27 @@ import ModuloComunicacion.Dominio.*;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ModuloComunicacionTest {
     @Test
+    public void testAltaCliente(){
+        ModuloComunicacionAplicacion modulo = new ModuloComunicacionImpl();
+        ClienteTelepeaje cliente = new ClienteTelepeaje("pepe","231234551");
+        modulo.altaCliente(cliente,"pepito@asd.com");
+    }
+
+    @Test
     public void testNotificarSaldoInsuficiente() {
         ModuloComunicacionAplicacion modulo = new ModuloComunicacionImpl();
-        ClienteTelepeaje cliente = new ClienteTelepeaje();
-        Date fechaVto = new Date();
-        PREPaga cuenta = new PREPaga(123123,fechaVto,555);
-        cliente.setCuentaPREPaga(cuenta);
+        ClienteTelepeaje cliente = new ClienteTelepeaje("pepe","231234551");
         modulo.notificarSaldoInsuficiente(cliente);
     }
 
     @Test
     public void testNotificarTarjetaBloqueada() {
         ModuloComunicacionAplicacion modulo = new ModuloComunicacionImpl();
-        ClienteTelepeaje cliente = new ClienteTelepeaje();
-        Date fechaVto = new Date();
-        POSTPaga cuenta = new POSTPaga(125125,fechaVto);
-        cliente.setCuentaPOSTPaga(cuenta);
+        ClienteTelepeaje cliente = new ClienteTelepeaje("pepe","231234551");
         modulo.notificarTarjetaBloqueada(cliente);
     }
 
@@ -35,13 +34,6 @@ public class ModuloComunicacionTest {
         ModuloComunicacionImpl moduloComunicacion = new ModuloComunicacionImpl();
         String texto = "Información importante";
         moduloComunicacion.notificarInformacion(texto);
-    }
-
-    @Test
-    public void testAltaCliente(){
-        ModuloComunicacionAplicacion modulo = new ModuloComunicacionImpl();
-        ClienteTelepeaje cliente = new ClienteTelepeaje();
-        modulo.altaCliente(cliente);
     }
 
 
