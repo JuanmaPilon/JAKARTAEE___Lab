@@ -35,11 +35,9 @@ public class ModuloComunicacion implements ModuloIComunicacion {
     }
 
     @Override
-    public void notificarInformacion(String texto) {
-        System.out.println("Notificando... ");
-        for (ClienteTelepeaje cliente : repoComunicacion.obtenerTodosLosClientes()) {//recorro mi lsita de clientes
-        cliente.agregarNotificacion("NOTIFICACION: " + texto);  //le agrego la notificacion a cada uno
-        }
+    public void notificarInformacion(ClienteTelepeaje cliente, String texto) {
+        System.out.println("Notificando al cliente : NOTIFICACION: " + texto);
+        repoComunicacion.buscarCliente(cliente.getCi()).agregarNotificacion("NOTIFICACION: " + texto);  //le agrego la notificacion al cliente
     }
 
     @Override
