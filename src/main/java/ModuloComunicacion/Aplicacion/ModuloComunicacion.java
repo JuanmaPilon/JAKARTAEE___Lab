@@ -44,9 +44,7 @@ public class ModuloComunicacion implements ModuloIComunicacion {
 
     @Override
     public List<String> obtenerNotiPorCliente(ClienteTelepeaje cliente) {
-         /* devuelvo todas las notificaciones de el cliente que se recibe, tendria que buscar el cliente en la
-        lista del clientes del repo y obtener las notificaciones de ahi para que este mas correcto */
-        return cliente.getNotificaciones();
+        return repoComunicacion.buscarCliente(cliente.getCi()).getNotificaciones();
     }
 
 }

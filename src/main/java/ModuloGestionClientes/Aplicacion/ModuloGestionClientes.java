@@ -77,15 +77,15 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         // cliente.desvincularVehiculo(vehiculo);
     }
     
-    @Override
-    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
-        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
-        if (clienteEnRepo != null) {
-
-            return clienteEnRepo.getVehiculos();
-        } else {
-           // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
-            return new HashSet<>();
-        }
-    }
+//    @Override
+//    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
+//        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
+//        if (clienteEnRepo != null) {
+//
+//            return clienteEnRepo.getVehiculos();
+//        } else {
+//           // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
+//            return new HashSet<>();
+//        }
+//    }
 }

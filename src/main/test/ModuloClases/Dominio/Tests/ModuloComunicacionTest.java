@@ -46,6 +46,8 @@ public class ModuloComunicacionTest {
         cliente.agregarNotificacion("Notificación 2");
         cliente.agregarNotificacion("Notificación 3");
 
+        moduloComunicacion.altaCliente(cliente);
+        //el cliente tiene que estar dado de alta para que obtener noti por cliente pueda obtener las notificaciones del cliente, sino explota
         List<String> notificaciones = moduloComunicacion.obtenerNotiPorCliente(cliente);
 
         // Verificar que las notificaciones obtenidas sean las esperadas
@@ -54,8 +56,6 @@ public class ModuloComunicacionTest {
         assertTrue(notificaciones.contains("Notificación 2"));
         assertTrue(notificaciones.contains("Notificación 3"));
 
-        //no se si este test este completo, tiene cosas raras
-        //tendria que solucionarse obtenerNotiPorCliente antes
     }
 
 }
