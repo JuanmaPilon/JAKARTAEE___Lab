@@ -1,9 +1,11 @@
 package ModuloComunicacion.Aplicacion;
 import ModuloComunicacion.Dominio.*;
-import ModuloComunicacion.Dominio.Repo.RepoComunicacion;
+import ModuloComunicacion.Dominio.Repo.*;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
+import java.util.List;
 
 @ApplicationScoped
 public class ModuloComunicacion implements ModuloIComunicacion {
@@ -11,29 +13,40 @@ public class ModuloComunicacion implements ModuloIComunicacion {
     @Inject
     private RepoComunicacion repoComunicacion;
 
+    public ModuloComunicacion() {
+        this.repoComunicacion = new RepoComunicacionImpl();
+    }
+    @Override
+    public void altaCliente(ClienteTelepeaje cliente) {
+        System.out.println("Registrando nuevo cliente: " + cliente.getNombre());
+        repoComunicacion.altaDatosCliente(cliente);//guardo el cliente en mi lista de clientes
+    }
+
     @Override
     public void notificarSaldoInsuficiente(ClienteTelepeaje cliente) {
-        String email = repoComunicacion.buscarMailCliente(cliente.getCi());
-        System.out.println("Notificando saldo insuficiente al cliente atravez de email:" + email);
+        System.out.println("Notificando saldo insuficiente al cliente atravez de email: " + cliente.getEmail());//le aviso
+        cliente.agregarNotificacion("NOTIFICACION: saldo insuficiente.");//guardo la notificacion
     }
 
     @Override
     public void notificarTarjetaBloqueada(ClienteTelepeaje cliente) {
-        String email = repoComunicacion.buscarMailCliente(cliente.getCi());
-        System.out.println("Notificando tarjeta bloqueada al cliente atravez de email: " + email);
+        System.out.println("Notificando tarjeta bloqueada al cliente atravez de email: " + cliente.getEmail());
+        cliente.agregarNotificacion("NOTIFICACION: tarjeta bloqueada.");
     }
 
     @Override
     public void notificarInformacion(String texto) {
-        //tengo que avisarle a todos los clientes, ver como
-        System.out.println("Notificando información: " + texto);
+        System.out.println("Notificando... ");
+        for (ClienteTelepeaje cliente : repoComunicacion.obtenerTodosLosClientes()) {//recorro mi lsita de clientes
+        cliente.agregarNotificacion("NOTIFICACION: " + texto);  //le agrego la notificacion a cada uno
+        }
     }
 
     @Override
-    public void altaCliente(ClienteTelepeaje cliente, String email) {
-        System.out.println("Registrando nuevo cliente: " + cliente.getNombre());
-        repoComunicacion.altaDatosCliente(cliente,email);
+    public List<String> obtenerNotiPorCliente(ClienteTelepeaje cliente) {
+         /* devuelvo todas las notificaciones de el cliente que se recibe, tendria que buscar el cliente en la
+        lista del clientes del repo y obtener las notificaciones de ahi para que este mas correcto */
+        return cliente.getNotificaciones();
     }
 
-    //falta oper que devuelve todas las notificaciones de un cliente
 }

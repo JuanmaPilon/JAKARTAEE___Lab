@@ -10,7 +10,7 @@ public class UsrExtranjero extends Usuario {
     //tengo que armar esta tambien, cuando pueda sigo
 
     public UsrExtranjero(String ci, String nombreUsuario, String email) {
-        super(ci, nombreUsuario, email); 
+        super(ci, nombreUsuario, email);
     }
     
 }

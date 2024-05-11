@@ -84,7 +84,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
             return clienteEnRepo.getVehiculos();
         } else {
-            // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
+           // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
             return new HashSet<>();
         }
     }

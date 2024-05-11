@@ -13,7 +13,7 @@ public class UsrNacional extends Usuario {
     public UsrNacional() {};
 
     public UsrNaciona(Long ci) {
-       // this.ci = ci; // no me lo toma ni con public ni con protected, capaz es algo de lombok
+        this.ci = ci; // no me lo toma ni con public ni con protected, capaz es algo de lombok
     }
 
     }
