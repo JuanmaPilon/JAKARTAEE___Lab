@@ -38,7 +38,7 @@ public class ModuloComunicacionTest {
         String texto = "pago 50 pesos";
         ClienteTelepeaje cliente = new ClienteTelepeaje("juan","246262365","juan@asd.com");
         moduloComunicacion.altaCliente(cliente);//el cliente tiene que estar dado de alta en el modulo
-        moduloComunicacion.notificarInformacion(cliente, texto);
+        moduloComunicacion.notificarInformacion(cliente.getCi(), texto);
     }
     @Test
     public void testObtenerNotificacionesPorCliente() {

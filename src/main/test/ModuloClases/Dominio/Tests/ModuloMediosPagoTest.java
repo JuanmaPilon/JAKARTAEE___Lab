@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class ModuloMediosPagoTest {
     @Test
-    public void testAltaClienteAsociaTarjeta() {
+    public void testAltaCliente() {
         ModuloMediosPagoImpl modulo = new ModuloMediosPagoImpl();
         ClienteTelepeaje cliente = new ClienteTelepeaje();
         Date fechaApertura = new Date();

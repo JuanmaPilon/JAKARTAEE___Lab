@@ -19,7 +19,7 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
         this.repoMediosPago = new RepoMediosPagoImpl();
         this.moduloComunicacion = new ModuloComunicacion();
     }
-    
+
     @Override
     public void altaCliente(ClienteTelepeaje cliente, Tarjeta tarjeta) {
         cliente.getCuentaPOSTPaga().setTarjeta(tarjeta); //le asocio la tarjeta a la cuenta postpaga del cliente
