@@ -88,4 +88,19 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 //            return new HashSet<>();
 //        }
 //    }
+      @Override
+      public Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
+        //return cliente.obtenerCuentasPorTag(tag);
+          return null;
+      }
+
+    @Override
+    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
+        // Implementación de realizarPrePago
+    }
+
+    @Override
+    public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
+        // Implementación de realizarPostPago
+    }
 }
