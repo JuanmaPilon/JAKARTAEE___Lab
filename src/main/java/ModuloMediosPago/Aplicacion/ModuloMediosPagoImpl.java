@@ -18,7 +18,7 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
     private RepoMediosPago repoMediosPago;
     @Inject
     private ModuloComunicacion moduloComunicacion;
-    
+
     @Inject
     public ModuloMediosPagoImpl (ModuloComunicacion moduloComunicacion){
         this.repoMediosPago = new RepoMediosPagoImpl();

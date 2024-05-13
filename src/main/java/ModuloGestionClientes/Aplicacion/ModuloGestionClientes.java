@@ -100,14 +100,12 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             System.out.println("Cliente no encontrado en el repositorio.");
         }
     }
-<<<<<<< HEAD
+
 
     public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
         // pa que no tire error mientras
     }
 
-=======
-    
 //    @Override
 //    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
 //        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
@@ -134,5 +132,5 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
         // Implementación de realizarPostPago
     }
->>>>>>> 9ea158db9d2155852455766b9d3991fe44ae8d53
+
 }
