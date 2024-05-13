@@ -1,14 +1,18 @@
 package ModuloMonitoreo.Aplicacion;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
+import jakarta.inject.Inject;
+import jakarta.enterprise.event.Observes;
 
 @ApplicationScoped
 public class ModuloMonitoreo implements ModuloIMonitoreo {
-
+    
+    // Método anotado con @Observes para escuchar el evento de pasaje de vehículo enviado desde el módulo de Peaje
     @Override
-    public void notificarPasajeVehiculo() {
-        System.out.println("Evento: pasaje de vehículo");
+    public void notificarPasajeVehiculo(@Observes String mensaje) {
+        // Manejar el evento de pasaje de vehículo recibido desde el módulo de Peaje
+        System.out.println("Evento de pasaje de vehículo recibido desde el módulo de Peaje: " + mensaje);
     }
-
     @Override
     public void notificarCobroSucive() {
         System.out.println("Evento: cobro con Sucive");

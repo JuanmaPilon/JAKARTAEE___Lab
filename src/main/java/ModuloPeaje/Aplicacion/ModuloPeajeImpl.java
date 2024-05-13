@@ -1,12 +1,24 @@
 package ModuloPeaje.Aplicacion;
 import ModuloPeaje.Dominio.*;
-
+import jakarta.enterprise.event.Event;
+import jakarta.inject.Inject;
+import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
 import java.util.List;
 
 public class ModuloPeajeImpl {
+    @Inject
+    private Event<String> eventoPasajeVehiculo; // Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
 
     private Comun tarifaComun;
     private Preferencial tarifaPreferencial;
+
+    // Método para notificar el pasaje de vehículo al módulo de Monitoreo
+    public void manejarNotificarPasajeVehiculo() {
+        // Lógica para determinar el pasaje de vehículo
+        // Una vez que se detecta el pasaje, se envía un evento para notificar al módulo de Monitoreo
+        String mensaje = "Pasaje de vehículo detectado";
+        eventoPasajeVehiculo.fire(mensaje);
+    }
 
     public boolean estaHabilitado(Identificador identificador) {
         return identificador instanceof Tag || identificador instanceof Matricula;
