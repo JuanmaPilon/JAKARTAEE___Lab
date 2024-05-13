@@ -6,7 +6,7 @@ import jakarta.enterprise.event.Observes;
 
 @ApplicationScoped
 public class ModuloMonitoreo implements ModuloIMonitoreo {
-    
+
     // Método anotado con @Observes para escuchar el evento de pasaje de vehículo enviado desde el módulo de Peaje
     @Override
     public void notificarPasajeVehiculo(@Observes String mensaje) {
@@ -19,8 +19,9 @@ public class ModuloMonitoreo implements ModuloIMonitoreo {
     }
 
     @Override
-    public void notificarCobroTarjeta() {
-        System.out.println("Evento: cobro con tarjeta");
+    public void notificarCobroTarjeta(@Observes String evento) {
+        // Manejar el evento de pago recibido desde el módulo de MediosPago
+        System.out.println("Evento de pago recibido: " + evento);
     }
 
     @Override

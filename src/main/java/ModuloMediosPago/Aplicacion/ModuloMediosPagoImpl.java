@@ -4,12 +4,16 @@ import ModuloMediosPago.Dominio.*;
 import ModuloMediosPago.Dominio.Repo.RepoMediosPago;
 import ModuloMediosPago.Dominio.Repo.RepoMediosPagoImpl;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
+import ModuloComunicacion.Aplicacion.ModuloComunicacion;
 import jakarta.inject.Inject;
 
 import java.util.*;
 
 @ApplicationScoped
 public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
+    @Inject
+    private Event<String> eventoPago;
     @Inject
     private RepoMediosPago repoMediosPago;
     @Inject
@@ -32,6 +36,7 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
         ClienteTelepeaje clienteModulo = repoMediosPago.buscarCliente(cliente.getCi()); // busco el cliente que esta ingresado en el repo mediante el que se me provee
         String texto = "Nuevo pago por el importe de :" + importe + " Matricula: "+ vehiculo.getMatricula().getNroMatricula() +" Tarjeta: "+ tarjeta.getNombre(); //creo la notificacion
         moduloComunicacion.notificarInformacion(cliente.getCi(),texto);// le derivo la tarea de la notificacion al modulo correspondiente (ver como hacer con eventos)
+        eventoPago.fire(texto); // Notifica al modulo de monitoreo
     }
 
     @Override
