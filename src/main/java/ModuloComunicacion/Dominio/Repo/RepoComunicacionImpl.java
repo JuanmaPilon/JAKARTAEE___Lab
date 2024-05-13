@@ -14,7 +14,8 @@ public class RepoComunicacionImpl implements RepoComunicacion {
 
     @Override
     public void altaDatosCliente(ModuloComunicacion.Dominio.ClienteTelepeaje cliente){
-        clientesMap.put(cliente.getCi(), cliente);
+        String ci = cliente.getCi();
+        clientesMap.put(ci, cliente);
     }
     @Override
     public ClienteTelepeaje buscarCliente(String ci) {

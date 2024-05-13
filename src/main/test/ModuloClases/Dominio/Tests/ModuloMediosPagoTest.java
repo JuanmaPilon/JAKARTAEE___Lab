@@ -3,9 +3,15 @@ package ModuloClases.Dominio.Tests;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import ModuloMediosPago.Aplicacion.*;
-import ModuloMediosPago.Dominio.*;
-//import ModuloComunicacion.Aplicacion.*;
-//import ModuloComunicacion.Dominio.*;
+import ModuloMediosPago.Dominio.ClienteTelepeaje;
+import ModuloMediosPago.Dominio.Nacional;
+import ModuloMediosPago.Dominio.Matricula;
+import ModuloMediosPago.Dominio.Tag;
+import ModuloMediosPago.Dominio.Tarjeta;
+import ModuloMediosPago.Dominio.Pagos;
+import ModuloMediosPago.Dominio.POSTPaga;
+
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Date;
@@ -14,12 +20,12 @@ import java.util.List;
 
 public class ModuloMediosPagoTest {
     @Inject
-   // private ModuloComunicacion moduloComunicacion;
+    private ModuloComunicacion.Aplicacion.ModuloComunicacion moduloComunicacion;
     private ModuloMediosPagoImpl modulo;
 
     public ModuloMediosPagoTest() {
-        //this.moduloComunicacion = new ModuloComunicacion();
-        this.modulo = new ModuloMediosPagoImpl();
+        this.moduloComunicacion = new ModuloComunicacion.Aplicacion.ModuloComunicacion();
+        this.modulo = new ModuloMediosPagoImpl(moduloComunicacion);
     }
 
     @Test
@@ -37,20 +43,31 @@ public class ModuloMediosPagoTest {
     public void testNotificarPago() {
 
         ModuloMediosPago.Dominio.ClienteTelepeaje cliente = new ModuloMediosPago.Dominio.ClienteTelepeaje();
+        cliente.setEmail("peper@gmail.com");
+        cliente.setNombre("peper");
+        cliente.setCi("234246526");
 
         Nacional vehiculo = new Nacional(new Matricula("ABC123"), new Tag("TAG123"));
         double importe = 50.0;
         Date fechaVto = new Date();
-        ModuloMediosPago.Dominio.Tarjeta tarjeta = new ModuloMediosPago.Dominio.Tarjeta(987654321, "Santander",fechaVto);
 
-//        ModuloComunicacion.Dominio.ClienteTelepeaje cliente2 = new ModuloComunicacion.Dominio.ClienteTelepeaje();
-//
-//        cliente2.setEmail(cliente.getEmail());
-//        cliente2.setNombre(cliente.getNombre());
-//        cliente2.setCi(cliente.getCi());
-//        moduloComunicacion.altaCliente(cliente2);
-//        // ejecuto notificarPago
-//        modulo.notificarPago(cliente, vehiculo, importe, tarjeta);
+        Date fechaApertura = new Date();
+        ModuloMediosPago.Dominio.POSTPaga cuentaPOSTPaga = new ModuloMediosPago.Dominio.POSTPaga(123,fechaApertura);
+        cliente.setCuentaPOSTPaga(cuentaPOSTPaga);
+        ModuloMediosPago.Dominio.Tarjeta tarjeta = new ModuloMediosPago.Dominio.Tarjeta(123456789,"BBVA", fechaApertura);
+
+        modulo.altaCliente(cliente,tarjeta);
+
+
+        ModuloComunicacion.Dominio.ClienteTelepeaje cliente2 = new ModuloComunicacion.Dominio.ClienteTelepeaje();
+
+        cliente2.setEmail("peper@gmail.com");
+        cliente2.setNombre("peper");
+        cliente2.setCi("234246526");
+        moduloComunicacion.altaCliente(cliente2);
+
+       // ejecuto notificarPago
+        modulo.notificarPago(cliente, vehiculo, importe, tarjeta);
 
     }
     @Test

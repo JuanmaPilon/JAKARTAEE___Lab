@@ -28,6 +28,7 @@ public class ClienteTelepeaje {
     private List<String> notificaciones;
 
     public ClienteTelepeaje() {
+        this.notificaciones = new ArrayList<>();
     }
     public ClienteTelepeaje(String nombre, String ci,String email) {
         this.nombre = nombre;

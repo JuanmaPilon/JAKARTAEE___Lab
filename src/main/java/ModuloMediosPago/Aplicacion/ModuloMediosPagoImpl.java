@@ -19,11 +19,10 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
     @Inject
     private ModuloComunicacion moduloComunicacion;
 
-    public ModuloMediosPagoImpl (){
+    public ModuloMediosPagoImpl (ModuloComunicacion moduloComunicacion){
         this.repoMediosPago = new RepoMediosPagoImpl();
-        this.moduloComunicacion = new ModuloComunicacion();
+        this.moduloComunicacion = moduloComunicacion;
     }
-
     @Override
     public void altaCliente(ClienteTelepeaje cliente, Tarjeta tarjeta) {
         cliente.getCuentaPOSTPaga().setTarjeta(tarjeta); //le asocio la tarjeta a la cuenta postpaga del cliente
@@ -35,7 +34,7 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
         sino tambien en el repo del modulo de comunicacion */
         ClienteTelepeaje clienteModulo = repoMediosPago.buscarCliente(cliente.getCi()); // busco el cliente que esta ingresado en el repo mediante el que se me provee
         String texto = "Nuevo pago por el importe de :" + importe + " Matricula: "+ vehiculo.getMatricula().getNroMatricula() +" Tarjeta: "+ tarjeta.getNombre(); //creo la notificacion
-        moduloComunicacion.notificarInformacion(cliente.getCi(),texto);// le derivo la tarea de la notificacion al modulo correspondiente (ver como hacer con eventos)
+        moduloComunicacion.notificarInformacion(clienteModulo.getCi(),texto);// le derivo la tarea de la notificacion al modulo correspondiente (ver como hacer con eventos)
         eventoPago.fire(texto); // Notifica al modulo de monitoreo
     }
 
