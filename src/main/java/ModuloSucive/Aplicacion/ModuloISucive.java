@@ -1,12 +1,13 @@
 package ModuloSucive.Aplicacion;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import ModuloSucive.Dominio.*;
 
 
 public interface ModuloISucive {
 	void notificarPago(Matricula matricula, double importe);
-	Set<Pagos> consultaDePagos(Date fechaInicial, Date fecha);
-	Set<Pagos> consultaDePagos(Matricula matricula);
+	public List<Pagos> consultaDePagos(Date fechaInicial, Date fechaFinal);
+	public List<Pagos> consultaDePagos(Matricula matricula);
 }
