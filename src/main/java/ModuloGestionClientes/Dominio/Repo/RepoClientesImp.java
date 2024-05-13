@@ -23,7 +23,7 @@ public class RepoClientesImp implements RepoClientes {
 
     @Override
     public void agregarClienteTelepeaje(ClienteTelepeaje cliente) {
-        clientesTelepeajeMap.put(cliente.getCi(), cliente);
+        clientesTelepeajeMap.put(String.valueOf(cliente.getCi()), cliente);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class RepoClientesImp implements RepoClientes {
 
     @Override
     public void actualizarCliente(ClienteTelepeaje cliente) {
-        clientesTelepeajeMap.put(cliente.getCi(), cliente);
+        clientesTelepeajeMap.put(String.valueOf(cliente.getCi()), cliente);
     }
 
     @Override

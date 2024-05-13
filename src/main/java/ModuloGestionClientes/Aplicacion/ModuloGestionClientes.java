@@ -22,16 +22,22 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void altaClienteTeleapeje(Usuario usuario) {
-        // como el profe dijo para verificar si ya existe y demas
+        // Verificar si el cliente ya existe
         ClienteTelepeaje clienteExistente = repoClientes.buscarClientePorCI(usuario.getCi());
         if (clienteExistente == null) {
-            ClienteTelepeaje nuevoCliente = new ClienteTelepeaje(usuario.getNom(), usuario.getCi());
+            // Crear una nueva lista de vehículos para el cliente (puedes inicializarla vacía si no tienes vehículos para agregar aquí)
+            List<Vehiculo> vehiculosCliente = new ArrayList<>();
+            // Crear una nueva instancia de ClienteTelepeaje con todos los parámetros requeridos
+            ClienteTelepeaje nuevoCliente = new ClienteTelepeaje(usuario.getNom(), usuario.getCi(), usuario.getEmail(), vehiculosCliente);
+            // Agregar el nuevo cliente al repositorio
             repoClientes.agregarClienteTelepeaje(nuevoCliente);
             System.out.println("Alta Cliente Telepeaje para el usuario: " + usuario.getCi());
         } else {
-            System.out.println("El usuario ya ta registrado como cliente de Telepeaje.");
+            // Si el cliente ya existe, mostrar un mensaje de error
+            System.out.println("El usuario ya esta registrado como cliente de Telepeaje.");
         }
     }
+
 
     // Método para crear un usuario extranjero
     @Override
@@ -44,11 +50,13 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     public Usuario crearUsuarioNacional(String ci, String nombre, String email) {
         return new UsrNacional(ci, nombre, email);
     }
+
     @Override
     public void cargarSaldo(ClienteTelepeaje cliente, Double importe) {
         //conveniendo que tengamos cargarSAldo
         //   cliente.cargarSaldo(importe);
     }
+
     @Override
     public void cargarSaldo(ClienteSucive cliente, Double importe) {
         //conveniendo que tengamos cargarSAldo
@@ -56,10 +64,9 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
     @Override
-        public void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
-
-            //cliente.vincularVehiculo(vehiculo);
-        }
+    public void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
+        cliente.agregarVehiculoVinculado(vehiculo);
+    }
 
     @Override
     public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
@@ -68,24 +75,34 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
     @Override
-    public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
-           // cliente.desvincularVehiculo(vehiculo);
-        }
-
-    @Override
     public void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
-        // cliente.desvincularVehiculo(vehiculo);
+        // Buscar el cliente en el repositorio
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+
+        // verifica si el cliente existe en el repositorio
+        if (clienteEnRepo != null) {
+            // obtiene los vehiculos vinculados al cliente
+            List<Vehiculo> vehículosVinculados = clienteEnRepo.getVehiculosCliente();
+
+            // Verificar si el vehículo está vinculado al cliente
+            if (vehículosVinculados.contains(vehiculo)) {
+                // Desvincular el vehículo del cliente
+                vehículosVinculados.remove(vehiculo);
+
+                // actualizar
+                repoClientes.actualizarCliente(clienteEnRepo);
+
+                System.out.println("El vechiculo ha sido desvinculado del cliente exitosamente.");
+            } else {
+                System.out.println("El vehiculo no ta vinculado al cliente.");
+            }
+        } else {
+            System.out.println("Cliente no encontrado en el repositorio.");
+        }
     }
-    
-//    @Override
-//    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
-//        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
-//        if (clienteEnRepo != null) {
-//
-//            return clienteEnRepo.getVehiculos();
-//        } else {
-//           // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
-//            return new HashSet<>();
-//        }
-//    }
+
+    public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
+        // pa que no tire error mientras
+    }
+
 }
