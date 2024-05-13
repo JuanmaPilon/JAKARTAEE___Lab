@@ -100,9 +100,39 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             System.out.println("Cliente no encontrado en el repositorio.");
         }
     }
+<<<<<<< HEAD
 
     public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
         // pa que no tire error mientras
     }
 
+=======
+    
+//    @Override
+//    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
+//        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
+//        if (clienteEnRepo != null) {
+//
+//            return clienteEnRepo.getVehiculos();
+//        } else {
+//           // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
+//            return new HashSet<>();
+//        }
+//    }
+      @Override
+      public Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
+        //return cliente.obtenerCuentasPorTag(tag);
+          return null;
+      }
+
+    @Override
+    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
+        // Implementación de realizarPrePago
+    }
+
+    @Override
+    public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
+        // Implementación de realizarPostPago
+    }
+>>>>>>> 9ea158db9d2155852455766b9d3991fe44ae8d53
 }

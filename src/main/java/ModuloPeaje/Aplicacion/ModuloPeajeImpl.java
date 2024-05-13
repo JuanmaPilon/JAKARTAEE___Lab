@@ -1,10 +1,12 @@
 package ModuloPeaje.Aplicacion;
 import ModuloPeaje.Dominio.*;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
 import java.util.List;
 
+@ApplicationScoped
 public class ModuloPeajeImpl {
     @Inject
     private Event<String> eventoPasajeVehiculo; // Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
