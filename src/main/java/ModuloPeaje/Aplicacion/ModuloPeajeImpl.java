@@ -3,16 +3,33 @@ import ModuloPeaje.Dominio.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
-import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
-import java.util.List;
+import lombok.Getter;
+import ModuloPeaje.Dominio.Repo.RepoPeaje;
+
 
 @ApplicationScoped
 public class ModuloPeajeImpl {
     @Inject
     private Event<String> eventoPasajeVehiculo; // Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
 
-    private Comun tarifaComun;
+
+    @Getter
     private Preferencial tarifaPreferencial;
+
+    @Getter
+    private Comun tarifaComun;
+
+    @Inject
+    private RepoPeaje repo;
+
+    public ModuloPeajeImpl(RepoPeaje repo) {
+        this.repo = repo;
+        double montoPredeterminado = 10.0;
+        this.tarifaComun = new Comun(montoPredeterminado);
+        double montoPredeterminadoPreferencial = 5.0;
+        this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
+    }
+
 
     // Método para notificar el pasaje de vehículo al módulo de Monitoreo
     public void manejarNotificarPasajeVehiculo() {
@@ -28,37 +45,29 @@ public class ModuloPeajeImpl {
 
 
     public ModuloPeajeImpl() {
+
         // Inicializa la tarifa común con un monto predeterminado
-        double montoPredeterminado = 10.0;
-        this.tarifaComun = new Comun(montoPredeterminado);
+        //double montoPredeterminado = 10.0;
+       //this.tarifaComun = new Comun(montoPredeterminado);
         // Inicializa la tarifa Preferencial con un monto predeterminado
-        double montoPredeterminadoPreferencial = 5.0;
-        this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
+        //double montoPredeterminadoPreferencial = 5.0;
+        //this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
     }
 
     public void actualizarTarifaComun(double importe) {
-        // Obtiene el importe actual de la tarifa común
-        double importeActual = this.tarifaComun.obtenerMonto();
-        // Actualiza el importe de la tarifa común con el importe proporcionado
         this.tarifaComun.setMonto(importe);
         //Validación o procesamiento futuro
     }
-    public Comun getTarifaComun() {
-        return tarifaComun;
-    }
+
 
     public void actualizarTarifaPreferencial(double importe) {
         // Obtiene la tarifa preferencial actual
-        double importeActual = this.tarifaPreferencial.obtenerMontoPreferencial();
+         importe = repo.obtenerTarifaPreferencial();
 
         // Actualiza el importe de la tarifa preferencial con el importe proporcionado
         this.tarifaPreferencial.setMonto(importe);
 
         //Validación o procesamiento futuro
-    }
-
-    public Preferencial getTarifaPreferencial() {
-        return tarifaPreferencial;
     }
 
 }

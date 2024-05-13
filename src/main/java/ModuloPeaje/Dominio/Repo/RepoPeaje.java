@@ -1,8 +1,6 @@
 package ModuloPeaje.Dominio.Repo;
 
-import java.util.Collection;
 import ModuloPeaje.Dominio.*;
-import java.util.Collection;
 
 public interface RepoPeaje {
 
@@ -11,7 +9,7 @@ public interface RepoPeaje {
 
     Vehiculo BuscarMatricula(String matricula);
 
-    Preferencial obtenerTarifaPreferencial();
+    double obtenerTarifaPreferencial();
 
-    Comun obtenerTarifaComun();
+    double obtenerTarifaComun();
 }
