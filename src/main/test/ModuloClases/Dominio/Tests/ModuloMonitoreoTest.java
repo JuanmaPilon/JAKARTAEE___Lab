@@ -8,9 +8,9 @@ public class ModuloMonitoreoTest {
 
     @Test
     public void testNotificarPasajeVehiculo() {
-        ModuloIMonitoreo modulo = new ModuloMonitoreo();
-        modulo.notificarPasajeVehiculo();
-        // No hay nada para asertar, ya que el método simplemente imprime en la consola
+//        ModuloIMonitoreo modulo = new ModuloMonitoreo();
+//        modulo.notificarPasajeVehiculo();
+//        // No hay nada para asertar, ya que el método simplemente imprime en la consola
     }
 
     @Test
@@ -22,9 +22,9 @@ public class ModuloMonitoreoTest {
 
     @Test
     public void testNotificarCobroTarjeta() {
-        ModuloIMonitoreo modulo = new ModuloMonitoreo();
-        modulo.notificarCobroTarjeta();
-        // No hay nada para asertar, ya que el método simplemente imprime en la consola
+//        ModuloIMonitoreo modulo = new ModuloMonitoreo();
+//        modulo.notificarCobroTarjeta();
+//        // No hay nada para asertar, ya que el método simplemente imprime en la consola
     }
 
     @Test

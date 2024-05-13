@@ -28,6 +28,7 @@ public class ClienteTelepeaje {
     private List<Pagos> pagosCliente;
 
     public ClienteTelepeaje() {
+        this.pagosCliente = new ArrayList<>();
     }
     public ClienteTelepeaje(String nombre, String ci,String email) {
         this.nombre = nombre;
