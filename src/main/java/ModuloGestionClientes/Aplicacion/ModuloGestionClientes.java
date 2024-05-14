@@ -65,13 +65,26 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
-        cliente.agregarVehiculoVinculado(vehiculo);
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            clienteEnRepo.agregarVehiculoACliente(vehiculo);
+            repoClientes.actualizarCliente(clienteEnRepo);
+            System.out.println("El veheiculo ha sido vinculado al cliente exitosamente.");
+        } else {
+            System.out.println("Cliente no encontrado en el repo.");
+        }
     }
 
     @Override
     public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
-
-        //cliente.vincularVehiculo(vehiculo);
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            clienteEnRepo.agregarVehiculoACliente(vehiculo);
+            repoClientes.actualizarCliente(clienteEnRepo);
+            System.out.println("El veheiculo ha sido vinculado al cliente exitosamente.");
+        } else {
+            System.out.println("Cliente no encontrado en el repo.");
+        }
     }
 
     @Override
@@ -101,36 +114,40 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         }
     }
 
-
+    @Override
     public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
-        // pa que no tire error mientras
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucivePorCI(cliente.getCi());
+
+        if (clienteEnRepo != null) {
+            List<Vehiculo> vehiculosVinculados = clienteEnRepo.getVehiculosCliente();
+
+            if (vehiculosVinculados.contains(vehiculo)) {
+                vehiculosVinculados.remove(vehiculo);
+                repoClientes.actualizarCliente(clienteEnRepo);
+                System.out.println("El vechiculo ha sido desvinculado del cliente exitosamente.");
+            } else {
+                System.out.println("El vechiculo no está vinculado al cliente.");
+            }
+        } else {
+            System.out.println("Cliente no encontrado en el repositorio.");
+        }
     }
+}
 
 //    @Override
-//    public Set<Vehiculo> mostraVehículosVinculados(Cliente cliente) {
-//        Cliente clienteEnRepo = repoClientes.buscarClientePorId(cliente.getId());
-//        if (clienteEnRepo != null) {
-//
-//            return clienteEnRepo.getVehiculos();
-//        } else {
-//           // Si el cliente no se encuentra en el repositorio, devolver un conjunto vacío
-//            return new HashSet<>();
-//        }
+//      public Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
+//        //return cliente.obtenerCuentasPorTag(tag);
+//          return null;
+//      }
+
+//    @Override
+//    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
+//        // Implementación de realizarPrePago
 //    }
-      @Override
-      public Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
-        //return cliente.obtenerCuentasPorTag(tag);
-          return null;
-      }
 
-    @Override
-    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
-        // Implementación de realizarPrePago
-    }
+//    @Override
+//    public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
+//        // Implementación de realizarPostPago
+//    }
 
-    @Override
-    public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
-        // Implementación de realizarPostPago
-    }
 
-}

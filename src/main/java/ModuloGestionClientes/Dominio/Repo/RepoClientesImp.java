@@ -1,29 +1,24 @@
 package ModuloGestionClientes.Dominio.Repo;
 
 import ModuloGestionClientes.Dominio.ClienteTelepeaje;
-import jakarta.inject.Inject;
-import ModuloGestionClientes.Dominio.Repo.RepoClientes;
+import ModuloGestionClientes.Dominio.ClienteSucive;
+import ModuloGestionClientes.Dominio.Vehiculo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-
-
-
 public class RepoClientesImp implements RepoClientes {
-
-    // Usaremos un mapa para simular el repositorio de clientes en memoria
     private Map<String, ClienteTelepeaje> clientesTelepeajeMap;
+    private Map<String, ClienteSucive> clientesSuciveMap;
 
     public RepoClientesImp() {
         clientesTelepeajeMap = new HashMap<>();
+        clientesSuciveMap = new HashMap<>();
     }
 
     @Override
     public void agregarClienteTelepeaje(ClienteTelepeaje cliente) {
-        clientesTelepeajeMap.put(String.valueOf(cliente.getCi()), cliente);
+        clientesTelepeajeMap.put(cliente.getCi(), cliente);
     }
 
     @Override
@@ -33,12 +28,33 @@ public class RepoClientesImp implements RepoClientes {
 
     @Override
     public void actualizarCliente(ClienteTelepeaje cliente) {
-        clientesTelepeajeMap.put(String.valueOf(cliente.getCi()), cliente);
+        clientesTelepeajeMap.put(cliente.getCi(), cliente);
     }
 
     @Override
     public void eliminarClientePorCI(String ci) {
         clientesTelepeajeMap.remove(ci);
     }
+
+    @Override
+    public void agregarClienteSucive(ClienteSucive cliente) {
+        clientesSuciveMap.put(cliente.getCi(), cliente);
+    }
+
+    @Override
+    public ClienteSucive buscarClienteSucivePorCI(String ci) {
+        return clientesSuciveMap.get(ci);
+    }
+
+    @Override
+    public void actualizarCliente(ClienteSucive cliente) {
+        clientesSuciveMap.put(cliente.getCi(), cliente);
+    }
+
+    @Override
+    public void eliminarClienteSucivePorCI(String ci) {
+        clientesSuciveMap.remove(ci);
+    }
+
 
 }

@@ -5,34 +5,27 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+// mismo que las otras clases, tambien hay que quitar las otras viejas desactualizadas de cada modulo y solo ponerlos aca
+
 @Data
 public class ClienteSucive {
-
     private String nombre;
-    public String ci;
-    private List<Vehiculo> vehiculosVinculados;
+    // no me lo agarra usr nacional si es private, lo cambio a public, pero no se si estara bien
+    private String ci;
+    private List<Vehiculo> vehiculosCliente;
 
     public ClienteSucive() {
-        this.vehiculosVinculados = new ArrayList<>();
+        this.vehiculosCliente = new ArrayList<>();
     }
 
-    public ClienteSucive(String nombre, String ci) {
+    public ClienteSucive(String nombre, String ci, List<Vehiculo> vehiculosCliente) {
         this.nombre = nombre;
         this.ci = ci;
-        this.vehiculosVinculados = new ArrayList<>();
+        this.vehiculosCliente = vehiculosCliente;
     }
 
-
-    public void agregarVehiculoVinculado(Vehiculo vehiculo) {
-        this.vehiculosVinculados.add(vehiculo);
-    }
-
-    public void eliminarVehiculoVinculado(Vehiculo vehiculo) {
-        this.vehiculosVinculados.remove(vehiculo);
-    }
-
-    public List<Vehiculo> getVehiculosVinculados() {
-        return this.vehiculosVinculados;
+    public void agregarVehiculoACliente(Vehiculo vehiculo) {
+        this.vehiculosCliente.add(vehiculo);
     }
 
 }

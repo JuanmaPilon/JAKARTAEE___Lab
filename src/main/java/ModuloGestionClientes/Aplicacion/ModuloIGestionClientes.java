@@ -12,8 +12,8 @@ public interface ModuloIGestionClientes {
     void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
     void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo);
     void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
-    Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag);
-    void realizarPrePago(ClienteTelepeaje cliente, double importe);
-    void realizarPostPago(ClienteTelepeaje cliente, double importe);
+   // Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag);
+   // void realizarPrePago(ClienteTelepeaje cliente, double importe);
+   // void realizarPostPago(ClienteTelepeaje cliente, double importe);
 
 }

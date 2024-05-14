@@ -25,6 +25,10 @@ public class ClienteTelepeaje {
         this.email = email;
         this.vehiculosCliente = vehiculosCliente;
     }
+
+    public void agregarVehiculoACliente(Vehiculo vehiculo) {
+        this.vehiculosCliente.add(vehiculo);
+    }
 }
 
 

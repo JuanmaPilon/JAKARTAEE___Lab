@@ -7,4 +7,9 @@ public interface RepoClientes {
     ClienteTelepeaje buscarClientePorCI(String ci);
     void actualizarCliente(ClienteTelepeaje cliente);
     void eliminarClientePorCI(String ci);
+    void agregarClienteSucive(ClienteSucive cliente);
+    ClienteSucive buscarClienteSucivePorCI(String ci);
+    void actualizarCliente(ClienteSucive cliente);
+    void eliminarClienteSucivePorCI(String ci);
+
 }
