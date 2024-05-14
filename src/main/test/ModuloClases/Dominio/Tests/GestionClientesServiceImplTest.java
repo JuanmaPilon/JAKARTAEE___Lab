@@ -16,14 +16,18 @@ public class GestionClientesServiceImplTest {
         this.gestionClientesService = new ModuloGestionClientes();
     }
 
-
-
+    @Test
+    void testAltaClienteSucive() {
+        Usuario usuario = new Usuario("12345678", "Juan", "juan@example.com");
+        gestionClientesService.altaClienteSucksive(usuario);
+    }
 
     @Test
     void testAltaClienteTeleapeje() {
         Usuario usuario = new Usuario("12345678", "Juan", "juan@example.com");
         gestionClientesService.altaClienteTeleapeje(usuario);
     }
+
     @Test
     void testCargarSaldoTelepeaje() {
         Usuario usuario = new Usuario("34563456", "Pepe", "pepe@example.com");
@@ -34,10 +38,15 @@ public class GestionClientesServiceImplTest {
         clienteTelepeaje.setEmail(usuario.getEmail());
         gestionClientesService.cargarSaldo(clienteTelepeaje,55.0);
     }
+
     @Test
     void testCargarSaldoSucive() {
-        //Usuario usuario = new Usuario("3456345634", "Roberto", "roberto@example.com");
-
+        Usuario usuario = new Usuario("3456345634", "Roberto", "roberto@example.com");
+        gestionClientesService.altaClienteSucksive(usuario);
+        ClienteSucive clienteSucive = new ClienteSucive();
+        clienteSucive.setCi(usuario.getCi());
+        clienteSucive.setNombre(usuario.getNombreUsuario());
+        gestionClientesService.cargarSaldo(clienteSucive,55.0);
     }
-    // Aquí podrías agregar más pruebas según la funcionalidad que desees verificar
+    
 }
