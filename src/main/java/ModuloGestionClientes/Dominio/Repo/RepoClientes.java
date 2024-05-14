@@ -12,4 +12,5 @@ public interface RepoClientes {
     void eliminarClienteSucivePorCI(String ci);
     void agregarClienteSukcsive(ClienteSucive cliente);
     ClienteSucive buscarClienteSucPorCI(String ci);
+
 }

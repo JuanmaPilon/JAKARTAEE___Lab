@@ -65,6 +65,5 @@ public class RepoClientesImp implements RepoClientes {
     public void eliminarClienteSucivePorCI(String ci) {
         clientesSuciveMap.remove(ci);
     }
-
-
+    
 }

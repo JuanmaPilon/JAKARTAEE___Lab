@@ -211,6 +211,28 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             System.out.println("No hay cuenta POSTPaga asignada.");
         }
     }
+
+    @Override
+    public Double consultarSaldo(ClienteSucive cliente) {
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            return clienteEnRepo.consultarSaldo();
+        } else {
+            System.out.println("Cliente no encontrado en el repo.");
+            return null;
+        }
+    }
+
+    @Override
+    public Double consultarSaldo(ClienteTelepeaje cliente) {
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            return clienteEnRepo.consultarSaldo();
+        } else {
+            System.out.println("Cliente no encontrado en el repo.");
+            return null;
+        }
+    }
 }
 
 

@@ -15,4 +15,6 @@ public interface ModuloIGestionClientes {
     void realizarPrePago(ClienteTelepeaje cliente, double importe);
     void realizarPostPago(ClienteTelepeaje cliente, double importe);
     void altaClienteSucksive(Usuario usuario);
+    Double consultarSaldo(ClienteSucive cliente);
+    Double consultarSaldo(ClienteTelepeaje cliente);
 }

@@ -50,6 +50,9 @@ public class ClienteTelepeaje {
         this.saldo += importe;
     }
 
+    public Double consultarSaldo() {
+        return this.saldo;
+    }
 
 }
 

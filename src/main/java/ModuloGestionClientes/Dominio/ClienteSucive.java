@@ -35,4 +35,8 @@ public class ClienteSucive {
         this.saldo += importe;
     }
 
+    public Double consultarSaldo() {
+        return this.saldo;
+    }
+
 }
