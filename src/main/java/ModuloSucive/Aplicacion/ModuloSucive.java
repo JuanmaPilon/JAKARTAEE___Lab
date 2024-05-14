@@ -1,8 +1,8 @@
 package ModuloSucive.Aplicacion;
 
 
-
 import ModuloSucive.Dominio.*;
+import ModuloSucive.Dominio.Repo.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -12,7 +12,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class ModuloSucive implements ModuloISucive {
+    @Inject
+    private RepoModuloSucive repoModuloSucive;
 
+    public ModuloSucive() {
+        this.repoModuloSucive = new RepoModuloSuciveImpl();
+    }
 
     @Override
     public void notificarPago(Matricula matricula, double importe){
@@ -24,22 +29,22 @@ public class ModuloSucive implements ModuloISucive {
 
     @Override
     public List<Pagos> consultaDePagos(Date fechaInicial, Date fechaFinal) {
-         List<Pagos> consultaDePagos = new ArrayList<>();
-        return consultaDePagos;
-        //yo (carlangas) lo hago
+        List<Pagos> pagosEntreFechas = new ArrayList<>();//creo la nueva lista
+        for (Matricula matricula : repoModuloSucive.obtenerMatriculas()) { //recorro lista de Matriculas (son todos los vehiculos nacionales)
+            for (Pagos pago : matricula.getPagos()) {  //recorro pagos de cada cliente
+                if(pago.getFecha().after(fechaInicial) && pago.getFecha().before(fechaFinal)) { //me aseguro que el pago corresponda a las fechas
+                    pagosEntreFechas.add(pago);  //lo agrego a la nueva lista
+                }
+            }
+        }
+        pagosEntreFechas.sort((pago1, pago2) -> pago1.getFecha().compareTo(pago2.getFecha())); // supuestamente ordena la lista de pagos por fechas
+        return pagosEntreFechas; //retorno los pagos
     }
 
     @Override
     public List<Pagos> consultaDePagos(Matricula matricula) {
-        //yo (carlangas) lo hago
-        //obtengo listaDePagos del repo
-        List<Pagos> pagosPorMatricula = new ArrayList<>();
-//        for (Pagos pago : listaDePagos) {
-//           if (pago.getMatricula().equals(matricula.getNroMatricula())) {
-//                pagosPorMatricula.add(pago);
-//            }
-//        }
-        return pagosPorMatricula;
+        //obtengo listaDePagos del repo y la retorno
+        return matricula.getPagos();
     }
 
 }

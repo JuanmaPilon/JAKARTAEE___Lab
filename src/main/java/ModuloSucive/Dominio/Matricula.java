@@ -1,25 +1,37 @@
 package ModuloSucive.Dominio;
 
+
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Matricula {
 	
-	String nroMatricula;
-	
+	@Setter
+    @Getter
+    String nroMatricula;
+
+	private List<Pagos> pagosMatricula;
+
 	public Matricula() {
-		
+		this.pagosMatricula = new ArrayList<>();
 	}
 	
 	public Matricula(String nroMatricula) {
 		this.nroMatricula = nroMatricula;
+		this.pagosMatricula = new ArrayList<>();
 	}
 
-	public String getNroMatricula() {
-		return nroMatricula;
+	public void agregarPago(Pagos pago) {
+		this.pagosMatricula.add(pago); // nuevo pago realizado por el cliente
 	}
 
-	public void setNroMatricula(String nroMatricula) {
-		this.nroMatricula = nroMatricula;
+	public List<Pagos> getPagos() {
+		return pagosMatricula; // todos los pagos del cliente
 	}
-	
-	
+
 
 }
