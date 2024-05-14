@@ -14,12 +14,14 @@ public class ClienteTelepeaje {
     private String email;
     private List<Vehiculo> vehiculosCliente;
     private Double saldo;
-    private List<Cuenta> cuentas;
+    private PREPaga cuentaPrepaga; // Cuenta de tipo PREPaga
+    private POSTPaga cuentaPostpaga; // Cuenta de tipo POSTPaga
 
     public ClienteTelepeaje() {
         this.vehiculosCliente = new ArrayList<>();
-        this.cuentas = new ArrayList<>();
         this.saldo = 0.0;
+        this.cuentaPrepaga = null;
+        this.cuentaPostpaga = null;
     }
 
     public ClienteTelepeaje(String nombre, String ci,String email, List<Vehiculo> vehiculosCliente) {
@@ -27,16 +29,21 @@ public class ClienteTelepeaje {
         this.ci = ci;
         this.email = email;
         this.vehiculosCliente = vehiculosCliente;
-        this.cuentas = new ArrayList<>();
         this.saldo = 0.0;
+        this.cuentaPrepaga = null;
+        this.cuentaPostpaga = null;
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
         this.vehiculosCliente.add(vehiculo);
     }
 
-    public void agregarCuenta(Cuenta cuenta) {
-        this.cuentas.add(cuenta);
+    public void asignarCuentaPrepaga(PREPaga cuenta) {
+        this.cuentaPrepaga = cuenta;
+    }
+
+    public void asignarCuentaPostpaga(POSTPaga cuenta) {
+        this.cuentaPostpaga = cuenta;
     }
 
     public void cargarSaldo(Double importe) {

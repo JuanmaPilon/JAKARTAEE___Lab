@@ -153,62 +153,51 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
        }
    }
 
-   /* TUKI ----------------------------------------------------------------------
-   @Override
-   public Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
-       Set<Cuenta> cuentasPorTag = new HashSet<>();
-       for (Vehiculo vehiculo : cliente.getVehiculosCliente()) {
-           if (vehiculo.getTag().equals(tag)) {
-               for (Cuenta cuenta : cliente.getCuentas()) {
-                   if (cuenta instanceof PREPaga) {
-                       PREPaga prePaga = (PREPaga) cuenta;
-                       System.out.println("Cuenta PREPaga con saldo: " + prePaga.getSaldo());
-                   } else if (cuenta instanceof POSTPaga) {
-                       System.out.println("Cuenta POSTPaga");
-                   }
-                   cuentasPorTag.add(cuenta);
-               }
-           }
-       }
-       return cuentasPorTag;
-   }
-
     @Override
-    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
-        for (Cuenta cuenta : cliente.getCuentas()) {
-            if (cuenta instanceof PREPaga) {
-                PREPaga cuentaPrePaga = (PREPaga) cuenta;
-                if (cuentaPrePaga.getSaldo() >= importe) {
-                    cuentaPrePaga.setSaldo(cuentaPrePaga.getSaldo() - importe);
-                    System.out.println("Pago realizado. Saldo restante: " + cuentaPrePaga.getSaldo());
-                    return;
-                } else {
-                    System.out.println("Saldo insuficiente.");
+    public Set<Object> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
+        Set<Object> cuentasPorTag = new HashSet<>();
+        for (Vehiculo vehiculo : cliente.getVehiculosCliente()) {
+            if (vehiculo.getTag().equals(tag)) {
+                if (cliente.getCuentaPrepaga() != null) {
+                    cuentasPorTag.add(cliente.getCuentaPrepaga());
+                }
+                if (cliente.getCuentaPostpaga() != null) {
+                    cuentasPorTag.add(cliente.getCuentaPostpaga());
                 }
             }
         }
-        System.out.println("No se encontró una cuenta de tipo PREPaga.");
+        return cuentasPorTag;
+    }
+
+    @Override
+    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
+        PREPaga cuenta = cliente.getCuentaPrepaga();
+        if (cuenta != null) {
+            if (cuenta.getSaldo() >= importe) {
+                cuenta.setSaldo(cuenta.getSaldo() - importe);
+                System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
+            } else {
+                System.out.println("Saldo insuficiente.");
+            }
+        } else {
+            System.out.println("No hay cuenta PREPaga asignada.");
+        }
     }
 
     @Override
     public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
-        for (Cuenta cuenta : cliente.getCuentas()) {
-            if (cuenta instanceof POSTPaga) {
-                POSTPaga cuentaPostPaga = (POSTPaga) cuenta;
-                Tarjeta tarjeta = cuentaPostPaga.getTarjeta();
-                if (tarjeta != null) {
-                    // Lógica para procesar el pago con la tarjeta
-                    System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
-                    return;
-                } else {
-                    System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
-                }
+        POSTPaga cuenta = cliente.getCuentaPostpaga();
+        if (cuenta != null) {
+            Tarjeta tarjeta = cuenta.getTarjeta();
+            if (tarjeta != null) {
+                System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+            } else {
+                System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
             }
+        } else {
+            System.out.println("No hay cuenta POSTPaga asignada.");
         }
-        System.out.println("No se encontró una cuenta de tipo POSTPaga.");
     }
-
-    */
 }
 
 //    @Override
