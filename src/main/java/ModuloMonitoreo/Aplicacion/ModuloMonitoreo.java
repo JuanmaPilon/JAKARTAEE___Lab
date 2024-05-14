@@ -11,11 +11,12 @@ public class ModuloMonitoreo implements ModuloIMonitoreo {
     @Override
     public void notificarPasajeVehiculo(@Observes String mensaje) {
         // Manejar el evento de pasaje de vehículo recibido desde el módulo de Peaje
-        System.out.println("Evento de pasaje de vehículo recibido desde el módulo de Peaje: " + mensaje);
+        System.out.println("Evento de pasaje de vehículo: " + mensaje);
     }
     @Override
-    public void notificarCobroSucive() {
-        System.out.println("Evento: cobro con Sucive");
+    public void notificarCobroSucive(@Observes String mensajeSucive) {
+
+        System.out.println("Evento: cobro con Sucive" + mensajeSucive);
     }
 
     @Override

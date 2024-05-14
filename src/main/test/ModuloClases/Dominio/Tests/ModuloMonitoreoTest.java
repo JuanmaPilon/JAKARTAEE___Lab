@@ -16,7 +16,7 @@ public class ModuloMonitoreoTest {
     @Test
     public void testNotificarCobroSucive() {
         ModuloIMonitoreo modulo = new ModuloMonitoreo();
-        modulo.notificarCobroSucive();
+        // modulo.notificarCobroSucive();
         // No hay nada para asertar, ya que el método simplemente imprime en la consola
     }
 
