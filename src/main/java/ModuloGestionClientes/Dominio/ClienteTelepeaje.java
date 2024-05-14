@@ -14,9 +14,11 @@ public class ClienteTelepeaje {
     private String email;
     private List<Vehiculo> vehiculosCliente;
     private Double saldo;
+    private List<Cuenta> cuentas;
 
     public ClienteTelepeaje() {
         this.vehiculosCliente = new ArrayList<>();
+        this.cuentas = new ArrayList<>();
         this.saldo = 0.0;
     }
 
@@ -25,11 +27,16 @@ public class ClienteTelepeaje {
         this.ci = ci;
         this.email = email;
         this.vehiculosCliente = vehiculosCliente;
+        this.cuentas = new ArrayList<>();
         this.saldo = 0.0;
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
         this.vehiculosCliente.add(vehiculo);
+    }
+
+    public void agregarCuenta(Cuenta cuenta) {
+        this.cuentas.add(cuenta);
     }
 
     public void cargarSaldo(Double importe) {

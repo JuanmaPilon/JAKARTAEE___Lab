@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 
 
 // uso la inyeccion para inyectar el repoClientes,cualquier otra manera de usarlo ta mal
@@ -151,6 +152,63 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
            System.out.println("El usuario ya esta registrado como cliente de Telepeaje.");
        }
    }
+
+   /* TUKI ----------------------------------------------------------------------
+   @Override
+   public Set<Cuenta> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
+       Set<Cuenta> cuentasPorTag = new HashSet<>();
+       for (Vehiculo vehiculo : cliente.getVehiculosCliente()) {
+           if (vehiculo.getTag().equals(tag)) {
+               for (Cuenta cuenta : cliente.getCuentas()) {
+                   if (cuenta instanceof PREPaga) {
+                       PREPaga prePaga = (PREPaga) cuenta;
+                       System.out.println("Cuenta PREPaga con saldo: " + prePaga.getSaldo());
+                   } else if (cuenta instanceof POSTPaga) {
+                       System.out.println("Cuenta POSTPaga");
+                   }
+                   cuentasPorTag.add(cuenta);
+               }
+           }
+       }
+       return cuentasPorTag;
+   }
+
+    @Override
+    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
+        for (Cuenta cuenta : cliente.getCuentas()) {
+            if (cuenta instanceof PREPaga) {
+                PREPaga cuentaPrePaga = (PREPaga) cuenta;
+                if (cuentaPrePaga.getSaldo() >= importe) {
+                    cuentaPrePaga.setSaldo(cuentaPrePaga.getSaldo() - importe);
+                    System.out.println("Pago realizado. Saldo restante: " + cuentaPrePaga.getSaldo());
+                    return;
+                } else {
+                    System.out.println("Saldo insuficiente.");
+                }
+            }
+        }
+        System.out.println("No se encontró una cuenta de tipo PREPaga.");
+    }
+
+    @Override
+    public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
+        for (Cuenta cuenta : cliente.getCuentas()) {
+            if (cuenta instanceof POSTPaga) {
+                POSTPaga cuentaPostPaga = (POSTPaga) cuenta;
+                Tarjeta tarjeta = cuentaPostPaga.getTarjeta();
+                if (tarjeta != null) {
+                    // Lógica para procesar el pago con la tarjeta
+                    System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                    return;
+                } else {
+                    System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
+                }
+            }
+        }
+        System.out.println("No se encontró una cuenta de tipo POSTPaga.");
+    }
+
+    */
 }
 
 //    @Override
