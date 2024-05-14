@@ -23,12 +23,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         this.repoClientes = new RepoClientesImp();
     }
 
-    private List<Usuario> usuario = new ArrayList<>();
-
     @Override
     public void altaClienteTeleapeje(Usuario usuario) {
         // Verificar si el cliente ya existe
-        ClienteTelepeaje clienteExistente = repoClientes.buscarClientePorCI(usuario.getCi());
+        ClienteTelepeaje clienteExistente = repoClientes.buscarClienteTelePorCI(usuario.getCi());
         if (clienteExistente == null) {
             // Crear una nueva lista de vehículos para el cliente (puedes inicializarla vacía si no tienes vehículos para agregar aquí)
             List<Vehiculo> vehiculosCliente = new ArrayList<>();
@@ -44,21 +42,9 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
 
-    // Método para crear un usuario extranjero
-    @Override
-    public Usuario crearUsuarioExtranjero(String ci, String nombre, String email) {
-        return new UsrExtranjero(ci, nombre, email);
-    }
-
-    // Método para crear un usuario nacional
-    @Override
-    public Usuario crearUsuarioNacional(String ci, String nombre, String email) {
-        return new UsrNacional(ci, nombre, email);
-    }
-
     @Override
     public void cargarSaldo(ClienteTelepeaje cliente, Double importe) {
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
         if (clienteEnRepo != null) {
             clienteEnRepo.cargarSaldo(importe);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -70,7 +56,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void cargarSaldo(ClienteSucive cliente, Double importe) {
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
         if (clienteEnRepo != null) {
             clienteEnRepo.cargarSaldo(importe);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -82,7 +68,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -94,7 +80,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -107,7 +93,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     @Override
     public void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
         // Buscar el cliente en el repositorio
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
 
         // verifica si el cliente existe en el repositorio
         if (clienteEnRepo != null) {
@@ -133,7 +119,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
-        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucivePorCI(cliente.getCi());
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
 
         if (clienteEnRepo != null) {
             List<Vehiculo> vehiculosVinculados = clienteEnRepo.getVehiculosCliente();
@@ -149,6 +135,22 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             System.out.println("Cliente no encontrado en el repositorio.");
         }
     }
+   public void altaClienteSucksive(Usuario usuario){
+       // Verificar si el cliente ya existe
+       ClienteSucive clienteExistente = repoClientes.buscarClienteSucPorCI(usuario.getCi());
+       if (clienteExistente == null) {
+           // Crear una nueva lista de vehículos para el cliente (puedes inicializarla vacía si no tienes vehículos para agregar aquí)
+           List<Vehiculo> vehiculosCliente = new ArrayList<>();
+           // Crear una nueva instancia de ClienteTelepeaje con todos los parámetros requeridos
+           ClienteTelepeaje nuevoCliente = new ClienteTelepeaje(usuario.getNom(), usuario.getCi(), usuario.getEmail(), vehiculosCliente);
+           // Agregar el nuevo cliente al repositorio
+           repoClientes.agregarClienteTelepeaje(nuevoCliente);
+           System.out.println("Alta Cliente Sucive para el usuario: " + usuario.getCi());
+       } else {
+           // Si el cliente ya existe, mostrar un mensaje de error
+           System.out.println("El usuario ya esta registrado como cliente de Telepeaje.");
+       }
+   }
 }
 
 //    @Override

@@ -16,25 +16,9 @@ public class GestionClientesServiceImplTest {
         this.gestionClientesService = new ModuloGestionClientes();
     }
 
-    @Test
-    void testCrearUsuarioExtranjero() {
-        Usuario usuario = gestionClientesService.crearUsuarioExtranjero("123456", "Juan", "juan@example.com");
-        System.out.println("Usuario creado: " + usuario.getCi() + ", " + usuario.getNombreUsuario() + ", " + usuario.getEmail());
-        assertInstanceOf(UsrExtranjero.class, usuario, "El usuario no es una instancia de UsrExtranjero");
-        assertEquals("123456", usuario.getCi(), "El CI no coincide");
-        assertEquals("Juan", usuario.getNombreUsuario(), "El nombre no coincide");
-        assertEquals("juan@example.com", usuario.getEmail(), "El email no coincide");
-    }
 
-    @Test
-    void testCrearUsuarioNacional() {
-        Usuario usuario = gestionClientesService.crearUsuarioNacional("654321", "María", "maria@example.com");
-        System.out.println("Usuario creado: " + usuario.getCi() + ", " + usuario.getNombreUsuario() + ", " + usuario.getEmail());
-        assertInstanceOf(UsrNacional.class, usuario, "El usuario no es una instancia de UsrNacional");
-        assertEquals("654321", usuario.getCi(), "El CI no coincide");
-        assertEquals("María", usuario.getNombreUsuario(), "El nombre no coincide");
-        assertEquals("maria@example.com", usuario.getEmail(), "El email no coincide");
-    }
+
+
     @Test
     void testAltaClienteTeleapeje() {
         Usuario usuario = new Usuario("12345678", "Juan", "juan@example.com");
