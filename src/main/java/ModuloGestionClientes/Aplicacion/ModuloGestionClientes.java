@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import ModuloGestionClientes.Dominio.*;
 import jakarta.inject.Inject;
 
+import jakarta.enterprise.event.Event;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,12 @@ import java.util.HashSet;
 // uso la inyeccion para inyectar el repoClientes,cualquier otra manera de usarlo ta mal
 @ApplicationScoped
 public class ModuloGestionClientes implements ModuloIGestionClientes {
+
+    @Inject
+    private Event<String> enventoPagoTarjeta;
+
+    @Inject
+    private Event<String> enventoPREPago;
 
     @Inject
     private RepoClientes repoClientes;
@@ -178,6 +185,8 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
             } else {
                 System.out.println("Saldo insuficiente.");
+                String mensajeTarjeta = "Saldo insuficiente";
+                enventoPREPago.fire(mensajeTarjeta);
             }
         } else {
             System.out.println("No hay cuenta PREPaga asignada.");
@@ -191,8 +200,12 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
                 System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
+                enventoPagoTarjeta.fire(mensajeTarjeta);
             } else {
                 System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
+                String mensajeTarjeta = "Tarjeta: Rechazada";
+                enventoPagoTarjeta.fire(mensajeTarjeta);
             }
         } else {
             System.out.println("No hay cuenta POSTPaga asignada.");
