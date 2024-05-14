@@ -26,12 +26,12 @@ public class ModuloMonitoreo implements ModuloIMonitoreo {
     }
 
     @Override
-    public void notificarCobroTarjetaRechazado() {
-        System.out.println("Evento: rechazo de cobro por tarjeta");
+    public void notificarCobroTarjetaRechazado(@Observes String mensajeTarjeta) {
+        System.out.println("Evento: rechazo de cobro por tarjeta" + mensajeTarjeta);
     }
 
     @Override
-    public void notificarSaldoInsuficiente() {
-        System.out.println("Evento: rechazo de cobro por saldo insuficiente");
+    public void notificarSaldoInsuficiente(@Observes String mensajeTarjeta) {
+         System.out.println("Evento: rechazo de cobro por saldo insuficiente" + mensajeTarjeta);
     }
 }
