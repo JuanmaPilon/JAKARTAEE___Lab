@@ -42,7 +42,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     // Método para crear un usuario extranjero
     @Override
     public Usuario crearUsuarioExtranjero(String ci, String nombre, String email) {
-        return new UsrNacional(ci, nombre, email);
+        return new UsrExtranjero(ci, nombre, email);
     }
 
     // Método para crear un usuario nacional

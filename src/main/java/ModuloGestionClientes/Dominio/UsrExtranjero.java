@@ -1,6 +1,12 @@
 package ModuloGestionClientes.Dominio;
 
-import ModuloClases.Dominio.Usuario;
-
 public class UsrExtranjero extends Usuario {
+
+    public UsrExtranjero() {
+        super();
+    }
+
+    public UsrExtranjero(String ci, String nombreUsuario, String email) {
+        super(ci, nombreUsuario, email);
+    }
 }
