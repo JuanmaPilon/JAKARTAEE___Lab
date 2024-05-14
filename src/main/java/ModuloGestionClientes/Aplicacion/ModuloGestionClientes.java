@@ -1,6 +1,7 @@
 package ModuloGestionClientes.Aplicacion;
 
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
+import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import ModuloGestionClientes.Dominio.*;
@@ -17,6 +18,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Inject
     private RepoClientes repoClientes;
+
+    public ModuloGestionClientes() {
+        this.repoClientes = new RepoClientesImp();
+    }
 
     private List<Usuario> usuario = new ArrayList<>();
 
