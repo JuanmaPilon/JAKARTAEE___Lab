@@ -13,19 +13,26 @@ public class ClienteSucive {
     // no me lo agarra usr nacional si es private, lo cambio a public, pero no se si estara bien
     private String ci;
     private List<Vehiculo> vehiculosCliente;
+    private Double saldo;
 
     public ClienteSucive() {
         this.vehiculosCliente = new ArrayList<>();
+        this.saldo = 0.0;
     }
 
     public ClienteSucive(String nombre, String ci, List<Vehiculo> vehiculosCliente) {
         this.nombre = nombre;
         this.ci = ci;
         this.vehiculosCliente = vehiculosCliente;
+        this.saldo = 0.0;
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
         this.vehiculosCliente.add(vehiculo);
+    }
+
+    public void cargarSaldo(Double importe) {
+        this.saldo += importe;
     }
 
 }

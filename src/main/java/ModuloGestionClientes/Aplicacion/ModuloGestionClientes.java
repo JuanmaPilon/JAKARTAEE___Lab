@@ -53,14 +53,26 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void cargarSaldo(ClienteTelepeaje cliente, Double importe) {
-        //conveniendo que tengamos cargarSAldo
-        //   cliente.cargarSaldo(importe);
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            clienteEnRepo.cargarSaldo(importe);
+            repoClientes.actualizarCliente(clienteEnRepo);
+            System.out.println("El saldo ha sido cargado exitosamente para el cliente: " + cliente.getCi());
+        } else {
+            System.out.println("Cliente no encontrado en el repositorio.");
+        }
     }
 
     @Override
     public void cargarSaldo(ClienteSucive cliente, Double importe) {
-        //conveniendo que tengamos cargarSAldo
-        // cliente.cargarSaldo(importe);
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClientePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            clienteEnRepo.cargarSaldo(importe);
+            repoClientes.actualizarCliente(clienteEnRepo);
+            System.out.println("El saldo ha sido cargado exitosamente para el cliente: " + cliente.getCi());
+        } else {
+            System.out.println("Cliente no encontrado en el repositorio.");
+        }
     }
 
     @Override

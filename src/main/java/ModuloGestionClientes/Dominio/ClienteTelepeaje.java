@@ -1,6 +1,5 @@
 package ModuloGestionClientes.Dominio;
 
-
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -14,9 +13,11 @@ public class ClienteTelepeaje {
     private String ci;
     private String email;
     private List<Vehiculo> vehiculosCliente;
+    private Double saldo;
 
     public ClienteTelepeaje() {
         this.vehiculosCliente = new ArrayList<>();
+        this.saldo = 0.0;
     }
 
     public ClienteTelepeaje(String nombre, String ci,String email, List<Vehiculo> vehiculosCliente) {
@@ -24,11 +25,18 @@ public class ClienteTelepeaje {
         this.ci = ci;
         this.email = email;
         this.vehiculosCliente = vehiculosCliente;
+        this.saldo = 0.0;
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
         this.vehiculosCliente.add(vehiculo);
     }
+
+    public void cargarSaldo(Double importe) {
+        this.saldo += importe;
+    }
+
+
 }
 
 
