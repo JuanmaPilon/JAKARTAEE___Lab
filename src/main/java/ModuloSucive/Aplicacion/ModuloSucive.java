@@ -4,6 +4,7 @@ package ModuloSucive.Aplicacion;
 import ModuloSucive.Dominio.*;
 import ModuloSucive.Dominio.Repo.*;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import java.util.List;
 
 @ApplicationScoped
 public class ModuloSucive implements ModuloISucive {
+    @Inject
+    private Event<String> enventoPagoSucive;
+
     @Inject
     private RepoModuloSucive repoModuloSucive;
 
@@ -25,6 +29,10 @@ public class ModuloSucive implements ModuloISucive {
         System.out.println("Notificando pago al Sistema externo de Sucive");
         System.out.println("La matricula es: " + matricula.getNroMatricula());
         System.out.println("El importe es: " + importe);
+        String mensajeSucive = "Pago realizado con Sucive. " +
+                "La matricula es: " + matricula.getNroMatricula() +
+                ". El importe es: " + importe;
+        enventoPagoSucive.fire(mensajeSucive);
     }
 
     @Override

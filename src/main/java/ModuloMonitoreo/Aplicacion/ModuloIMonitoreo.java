@@ -2,7 +2,7 @@ package ModuloMonitoreo.Aplicacion;
 
 public interface ModuloIMonitoreo {
 	void notificarPasajeVehiculo(String mensaje);
-	void notificarCobroSucive();
+	void notificarCobroSucive(String mensajeSucive);
 	void notificarCobroTarjeta(String evento);
 	void notificarCobroTarjetaRechazado();
 	void notificarSaldoInsuficiente();
