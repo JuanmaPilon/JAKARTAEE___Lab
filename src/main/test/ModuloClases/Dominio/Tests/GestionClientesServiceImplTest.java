@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -97,6 +98,59 @@ public class GestionClientesServiceImplTest {
         expectedCuentas.add(cuentaPostpaga);
 
         assertEquals(expectedCuentas, cuentasPorTag, "Las cuentas obtenidas por Tag no son correctas.");
+    }
+
+    @Test
+    void testRealizarPrePago_SaldoSuficiente() {
+        // Crear un cliente de Telepeaje
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Crear una cuenta PREPaga con saldo suficiente
+        PREPaga cuentaPrepaga = new PREPaga();
+        cuentaPrepaga.setSaldo(100.0);
+        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+
+        // Importe a pagar
+        double importe = 50.0;
+
+        // Realizar el pago
+        gestionClientesService.realizarPrePago(cliente, importe);
+
+        // Verificar que el saldo se haya reducido correctamente
+        assertEquals(50.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo no se redujo correctamente.");
+    }
+
+    @Test
+    void testRealizarPrePago_SaldoInsuficiente() {
+        // Crear un cliente de Telepeaje
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Crear una cuenta PREPaga con saldo insuficiente
+        PREPaga cuentaPrepaga = new PREPaga();
+        cuentaPrepaga.setSaldo(30.0); // Saldo insuficiente para pagar
+        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+
+        // Importe a pagar
+        double importe = 50.0;
+
+        // Realizar el pago
+        gestionClientesService.realizarPrePago(cliente, importe);
+
+        // Verificar que el saldo no se haya reducido
+        assertEquals(30.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo debería permanecer igual debido a saldo insuficiente.");
+    }
+
+    @Test
+    void testRealizarPrePago_SinCuentaPrepaga() {
+        // Crear un cliente de Telepeaje sin cuenta PREPaga asignada
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Importe a pagar
+        double importe = 50.0;
+
+        // Realizar el pago
+        gestionClientesService.realizarPrePago(cliente, importe);
+
     }
     
 }
