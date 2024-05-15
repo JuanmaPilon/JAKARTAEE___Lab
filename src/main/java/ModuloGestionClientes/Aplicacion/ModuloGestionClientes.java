@@ -19,6 +19,8 @@ import java.util.HashSet;
 public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Inject
+    private ModuloIGestionClientes ModuloIGestionClientes;
+    @Inject
     private Event<String> enventoPagoTarjeta;
 
     @Inject
@@ -232,6 +234,22 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             System.out.println("Cliente no encontrado en el repo.");
             return null;
         }
+    }
+
+
+
+
+    @Override
+    public boolean verificarPrePago(int tag, double importe) {
+
+        return ModuloIGestionClientes.verificarPrePago(tag, importe);
+    }
+
+
+    @Override
+    public boolean verificarPostPago(int tag, double importe) {
+
+            return ModuloIGestionClientes.verificarPostPago(tag, importe);
     }
 }
 

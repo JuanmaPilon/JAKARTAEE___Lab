@@ -26,8 +26,8 @@ public class RepoPeajeImpl implements RepoPeaje {
     }
 
     @Override
-    public double obtenerTarifaPreferencial() {
-        return tarifaPreferencial.obtenerMonto();
+    public Preferencial obtenerTarifaPreferencial() {
+        return null;
     }
 
     @Override

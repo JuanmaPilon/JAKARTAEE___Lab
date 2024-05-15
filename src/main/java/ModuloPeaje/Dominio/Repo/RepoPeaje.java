@@ -9,7 +9,7 @@ public interface RepoPeaje {
 
     Vehiculo BuscarMatricula(String matricula);
 
-    double obtenerTarifaPreferencial();
+    Preferencial obtenerTarifaPreferencial();
 
     double obtenerTarifaComun();
 }
