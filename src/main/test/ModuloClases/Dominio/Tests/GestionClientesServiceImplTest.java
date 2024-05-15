@@ -152,5 +152,62 @@ public class GestionClientesServiceImplTest {
         gestionClientesService.realizarPrePago(cliente, importe);
 
     }
+
+    @Test
+    void testRealizarPostPago_ConTarjeta() throws ParseException {
+        // Crear un cliente de Telepeaje con cuenta POSTPaga y tarjeta asociada
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Crear fecha como cadena
+        String fechaVtoStr = "2025-12-31";
+
+        // Crear Tarjeta con la fecha como cadena
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaVto = sdf.parse(fechaVtoStr);
+        Tarjeta tarjeta = new Tarjeta(1234, "Carlos", new java.sql.Date(fechaVto.getTime()));
+        POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), tarjeta);
+        cliente.asignarCuentaPostpaga(cuentaPostpaga);
+
+        // Importe a pagar
+        double importe = 50.0;
+
+        // Realizar el pago
+        gestionClientesService.realizarPostPago(cliente, importe);
+
+        // Verificar que se haya realizado el pago correctamente
+        // Por ejemplo, podrías verificar si la tarjeta se ha cargado con el importe correcto
+    }
+
+    @Test
+    void testRealizarPostPago_SinTarjeta() {
+        // Crear un cliente de Telepeaje con cuenta POSTPaga pero sin tarjeta asociada
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Crear una cuenta POSTPaga sin tarjeta asociada
+        POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), null);
+        cliente.asignarCuentaPostpaga(cuentaPostpaga);
+
+        // Importe a pagar
+        double importe = 50.0;
+
+        // Realizar el pago
+        gestionClientesService.realizarPostPago(cliente, importe);
+
+        // Verificar que se haya indicado que no hay tarjeta asociada
+        // Aquí puedes agregar aserciones adicionales si es necesario
+    }
+
+    @Test
+    void testRealizarPostPago_SinCuentaPostpaga() {
+        // Crear un cliente de Telepeaje sin cuenta POSTPaga asignada
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Importe a pagar
+        double importe = 50.0;
+
+        // Realizar el pago
+        gestionClientesService.realizarPostPago(cliente, importe);
+
+    }
     
 }
