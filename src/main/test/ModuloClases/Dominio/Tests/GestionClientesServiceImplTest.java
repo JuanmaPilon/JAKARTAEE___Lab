@@ -3,9 +3,13 @@ package ModuloClases.Dominio.Tests;
 import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloGestionClientes.Dominio.*;
+import ModuloGestionClientes.Dominio.Repo.RepoClientes;
+import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.ByteArrayOutputStream;
@@ -173,9 +177,6 @@ public class GestionClientesServiceImplTest {
 
         // Realizar el pago
         gestionClientesService.realizarPostPago(cliente, importe);
-
-        // Verificar que se haya realizado el pago correctamente
-        // Por ejemplo, podrías verificar si la tarjeta se ha cargado con el importe correcto
     }
 
     @Test
@@ -193,8 +194,6 @@ public class GestionClientesServiceImplTest {
         // Realizar el pago
         gestionClientesService.realizarPostPago(cliente, importe);
 
-        // Verificar que se haya indicado que no hay tarjeta asociada
-        // Aquí puedes agregar aserciones adicionales si es necesario
     }
 
     @Test
@@ -207,7 +206,46 @@ public class GestionClientesServiceImplTest {
 
         // Realizar el pago
         gestionClientesService.realizarPostPago(cliente, importe);
+    }
 
+    @Test
+    void testConsultarSaldo_ClienteSucive_Encontrado() {
+        // Crear un cliente Sucive existente
+        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
+        cliente.cargarSaldo(100.0);
+
+        // Consultar saldo del cliente Sucive existente
+        gestionClientesService.consultarSaldo(cliente);
+
+    }
+
+    @Test
+    void testConsultarSaldo_ClienteTelepeaje_Encontrado() {
+        // Crear un cliente Telepeaje existente
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Pedro", "87654321", "pedro@example.com", new ArrayList<>());
+        cliente.cargarSaldo(200.0);
+
+        // Consultar saldo del cliente Telepeaje existente
+        gestionClientesService.consultarSaldo(cliente);
+
+    }
+
+    @Test
+    void testConsultarSaldo_ClienteSucive_NoEncontrado() {
+        // Crear un cliente Sucive no existente
+        ClienteSucive cliente = null;
+
+        // Consultar saldo de un cliente Sucive no existente
+        gestionClientesService.consultarSaldo(cliente);
+    }
+
+    @Test
+    void testConsultarSaldo_ClienteTelepeaje_NoEncontrado() {
+        // Crear un cliente Telepeaje no existente
+        ClienteTelepeaje cliente = null;
+
+        // Consultar saldo de un cliente Telepeaje no existente
+        gestionClientesService.consultarSaldo(cliente);
     }
     
 }
