@@ -233,7 +233,7 @@ public class GestionClientesServiceImplTest {
     @Test
     void testConsultarSaldo_ClienteSucive_NoEncontrado() {
         // Crear un cliente Sucive no existente
-        ClienteSucive cliente = null;
+        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
 
         // Consultar saldo de un cliente Sucive no existente
         gestionClientesService.consultarSaldo(cliente);
