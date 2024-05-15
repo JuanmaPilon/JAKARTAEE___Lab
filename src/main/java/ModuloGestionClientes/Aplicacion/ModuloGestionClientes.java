@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Date;
 
 
 // uso la inyeccion para inyectar el repoClientes,cualquier otra manera de usarlo ta mal
@@ -143,22 +144,23 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             System.out.println("Cliente no encontrado en el repositorio.");
         }
     }
-   public void altaClienteSucksive(Usuario usuario){
-       // Verificar si el cliente ya existe
-       ClienteSucive clienteExistente = repoClientes.buscarClienteSucPorCI(usuario.getCi());
-       if (clienteExistente == null) {
-           // Crear una nueva lista de vehículos para el cliente (puedes inicializarla vacía si no tienes vehículos para agregar aquí)
-           List<Vehiculo> vehiculosCliente = new ArrayList<>();
-           // Crear una nueva instancia de ClienteTelepeaje con todos los parámetros requeridos
-           ClienteTelepeaje nuevoCliente = new ClienteTelepeaje(usuario.getNom(), usuario.getCi(), usuario.getEmail(), vehiculosCliente);
-           // Agregar el nuevo cliente al repositorio
-           repoClientes.agregarClienteTelepeaje(nuevoCliente);
-           System.out.println("Alta Cliente Sucive para el usuario: " + usuario.getCi());
-       } else {
-           // Si el cliente ya existe, mostrar un mensaje de error
-           System.out.println("El usuario ya esta registrado como cliente de Telepeaje.");
-       }
-   }
+
+    public void altaClienteSucksive(Usuario usuario) {
+        // Verificar si el cliente ya existe
+        ClienteSucive clienteExistente = repoClientes.buscarClienteSucPorCI(usuario.getCi());
+        if (clienteExistente == null) {
+            // Crear una nueva lista de vehículos para el cliente (puedes inicializarla vacía si no tienes vehículos para agregar aquí)
+            List<Vehiculo> vehiculosCliente = new ArrayList<>();
+            // Crear una nueva instancia de ClienteTelepeaje con todos los parámetros requeridos
+            ClienteTelepeaje nuevoCliente = new ClienteTelepeaje(usuario.getNom(), usuario.getCi(), usuario.getEmail(), vehiculosCliente);
+            // Agregar el nuevo cliente al repositorio
+            repoClientes.agregarClienteTelepeaje(nuevoCliente);
+            System.out.println("Alta Cliente Sucive para el usuario: " + usuario.getCi());
+        } else {
+            // Si el cliente ya existe, mostrar un mensaje de error
+            System.out.println("El usuario ya esta registrado como cliente de Telepeaje.");
+        }
+    }
 
     @Override
     public Set<Object> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag) {
@@ -233,6 +235,56 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             return null;
         }
     }
+
+    @Override
+    public void asociarTarjeta(ClienteTelepeaje cliente, Tarjeta tarjeta) {
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            clienteEnRepo.asociarTarjeta(tarjeta);
+            repoClientes.actualizarCliente(clienteEnRepo);
+            System.out.println("La tarjeta ha sido asociada esitosamente al cliente: " + cliente.getCi());
+        } else {
+            System.out.println("Cliente no encontrado en el repo");
+        }
+    }
+
+    @Override
+    public void asociarTarjeta(ClienteSucive cliente, Tarjeta tarjeta) {
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            clienteEnRepo.asociarTarjeta(tarjeta);
+            repoClientes.actualizarCliente(clienteEnRepo);
+            System.out.println("La tarjeta ha sido asociada esitosamente al cliente: " + cliente.getCi());
+        } else {
+            System.out.println("Cliente no encontrado en el repo");
+        }
+    }
+
+    @Override
+    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin) {
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            List<PasadaPorPeaje> pasadasEnRango = clienteEnRepo.getPasadasEnRango(fechaInicio, fechaFin);
+            return new HashSet<>(pasadasEnRango);
+        } else {
+            System.out.println("Cliente no encontrado en el repo.");
+            return new HashSet<>();
+        }
+    }
+
+    @Override
+    public Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin) {
+        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            List<PasadaPorPeaje> pasadasEnRango = clienteEnRepo.getPasadasEnRango(fechaInicio, fechaFin);
+            return new HashSet<>(pasadasEnRango);
+        } else {
+            System.out.println("Cliente no encontrado en el repo");
+            return new HashSet<>();
+        }
+    }
+
 }
+
 
 

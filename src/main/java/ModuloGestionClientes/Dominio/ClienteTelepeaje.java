@@ -1,9 +1,11 @@
 package ModuloGestionClientes.Dominio;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 // cambie por data que ya incluye setters , getters, pareses y to string y otras cosas.
 
 @Data
@@ -16,12 +18,16 @@ public class ClienteTelepeaje {
     private Double saldo;
     private PREPaga cuentaPrepaga; // Cuenta de tipo PREPaga
     private POSTPaga cuentaPostpaga; // Cuenta de tipo POSTPaga
+    private Tarjeta tarjeta;
+    private List<PasadaPorPeaje> pasadaPorPeaje;
 
     public ClienteTelepeaje() {
         this.vehiculosCliente = new ArrayList<>();
         this.saldo = 0.0;
         this.cuentaPrepaga = null;
         this.cuentaPostpaga = null;
+        this.tarjeta = null;
+        this.pasadaPorPeaje = new ArrayList<>();
     }
 
     public ClienteTelepeaje(String nombre, String ci,String email, List<Vehiculo> vehiculosCliente) {
@@ -32,6 +38,8 @@ public class ClienteTelepeaje {
         this.saldo = 0.0;
         this.cuentaPrepaga = null;
         this.cuentaPostpaga = null;
+        this.tarjeta = null;
+        this.pasadaPorPeaje = new ArrayList<>();
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
@@ -54,6 +62,23 @@ public class ClienteTelepeaje {
         return this.saldo;
     }
 
+    public void asociarTarjeta(Tarjeta tarjeta) {
+        this.tarjeta = tarjeta;
+    }
+
+    public List<PasadaPorPeaje> getPasadasPorPeaje() {
+        return this.pasadaPorPeaje;
+    }
+
+    public List<PasadaPorPeaje> getPasadasEnRango(Date fechaInicio, Date fechaFin) {
+        List<PasadaPorPeaje> pasadasEnRango = new ArrayList<>();
+        for (PasadaPorPeaje pasada : this.pasadaPorPeaje) {
+            if (!pasada.getFecha().before(fechaInicio) && !pasada.getFecha().after(fechaFin)) {
+                pasadasEnRango.add(pasada);
+            }
+        }
+        return pasadasEnRango;
+    }
 }
 
 
