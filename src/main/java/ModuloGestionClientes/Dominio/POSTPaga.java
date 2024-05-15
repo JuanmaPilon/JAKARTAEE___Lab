@@ -1,6 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
-import ModuloClases.Dominio.Cuenta;
+import ModuloGestionClientes.Dominio.Cuenta;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

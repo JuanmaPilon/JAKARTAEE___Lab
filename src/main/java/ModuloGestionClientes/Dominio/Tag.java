@@ -19,7 +19,5 @@ public class Tag {
 	public void setIdUnico(String idUnico) {
 		this.idUnico = idUnico;
 	}
-	
-	
 
 }

@@ -1,13 +1,13 @@
 package ModuloGestionClientes.Dominio;
 
-import ModuloClases.Dominio.PasadaPorPeaje;
-import ModuloClases.Dominio.Tag;
+import ModuloGestionClientes.Dominio.PasadaPorPeaje;
+import ModuloGestionClientes.Dominio.Tag;
 import lombok.Data;
 import java.util.List;
 
 @Data
 public class Vehiculo {
- private ModuloClases.Dominio.Tag tag;
+ private ModuloGestionClientes.Dominio.Tag tag;
  private List<PasadaPorPeaje> pasadaPorPeajeList;
 
  // creo que el constructor vacio, porque sino cuando tag y las otras hereden los metodos, se rompe con lombok
