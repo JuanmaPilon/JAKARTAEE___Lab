@@ -9,6 +9,7 @@ import java.util.List;
 public class Vehiculo {
  private ModuloGestionClientes.Dominio.Tag tag;
  private List<PasadaPorPeaje> pasadaPorPeajeList;
+ private ClienteTelepeaje cliente;
 
  // creo que el constructor vacio, porque sino cuando tag y las otras hereden los metodos, se rompe con lombok
  public Vehiculo() {}

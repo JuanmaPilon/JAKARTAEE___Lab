@@ -1,6 +1,11 @@
 package ModuloPeaje.Dominio;
 
-public class Matricula implements Identificador {
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+public class Matricula {
 
 	String nroMatricula;
 
@@ -12,16 +17,5 @@ public class Matricula implements Identificador {
 		this.nroMatricula = nroMatricula;
 	}
 
-	public String getNroMatricula() {
-		return nroMatricula;
-	}
 
-	public void setNroMatricula(String nroMatricula) {
-		this.nroMatricula = nroMatricula;
-	}
-
-	@Override
-	public String getIdentificador() {
-		return getNroMatricula();
-	}
 }

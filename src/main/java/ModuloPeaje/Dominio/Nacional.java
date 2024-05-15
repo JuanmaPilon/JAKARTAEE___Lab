@@ -3,15 +3,19 @@ package ModuloPeaje.Dominio;
 import ModuloClases.Dominio.Matricula;
 import ModuloClases.Dominio.Tag;
 import ModuloClases.Dominio.Vehiculo;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class Nacional extends Vehiculo {
-	
+
 	private Matricula matricula;
-	
+
 	private Tag tag;
-	
+
 	public Nacional() {
-		
+
 	}
 
 	public Nacional(Matricula matricula, Tag tag) {
@@ -20,21 +24,5 @@ public class Nacional extends Vehiculo {
 		this.tag = tag;
 	}
 
-	public Matricula getMatricula() {
-		return matricula;
-	}
 
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
-	}
-
-	public Tag getTag() {
-		return tag;
-	}
-
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
-	
-    
 }

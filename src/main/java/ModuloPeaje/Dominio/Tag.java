@@ -1,6 +1,11 @@
 package ModuloPeaje.Dominio;
 
-public class Tag implements Identificador {
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+public class Tag {
 
 	String idUnico;
 
@@ -12,16 +17,5 @@ public class Tag implements Identificador {
 		this.idUnico = idUnico;
 	}
 
-	public String getIdUnico() {
-		return idUnico;
-	}
 
-	public void setIdUnico(String idUnico) {
-		this.idUnico = idUnico;
-	}
-
-	@Override
-	public String getIdentificador() {
-		return getIdUnico();
-	}
 }

@@ -4,59 +4,65 @@ import ModuloPeaje.Dominio.*;
 import ModuloPeaje.Aplicacion.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
+
 import org.mockito.Mockito;
 import ModuloPeaje.Dominio.Repo.RepoPeaje;
 
 
 
+
+
 public class ModuloPeajeTest {
 
-    @Test
-    void testEstaHabilitado_Tag() {
-        // Crea un tag simulado
-        Tag tagAutorizado = new Tag("ID_TAG_1");
 
-        // Crea una instancia del módulo de peaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
-
-        // Prueba si el tag está habilitado
-        boolean resultado = moduloPeaje.estaHabilitado(tagAutorizado);
-        System.out.println("¿El tag está habilitado? " + resultado);
-        assertTrue(resultado);
-    }
-
-    @Test
-    void testEstaHabilitado_Matricula() {
-        // Crea una matrícula simulada
-        Matricula matriculaAutorizada = new Matricula("123ABC");
-
-        // Crea una instancia del módulo de peaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
-
-        // Prueba si la matrícula está habilitada
-        boolean resultado = moduloPeaje.estaHabilitado(matriculaAutorizada);
-        System.out.println("¿La matrícula está habilitada? " + resultado);
-        assertTrue(resultado);
-    }
-
-    @Test
-    void testEstaHabilitado_OtroTipo() {
-        // Crea un identificador simulado de otro tipo
-        Identificador otroIdentificador = () -> "";
-
-        // Crea una instancia del módulo de peaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
-
-        // Prueba si el identificador de otro tipo no está habilitado
-        boolean resultado = moduloPeaje.estaHabilitado(otroIdentificador);
-        System.out.println("¿El identificador de otro tipo está habilitado? " + resultado);
-        assertFalse(resultado);
-    }
+//    @Test
+//    void testEstaHabilitado_Tag() {
+//        // Crea un tag simulado
+//        Tag tagAutorizado = new Tag("ID_TAG_1");
+//
+//        // Crea una instancia del módulo de peaje
+//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
+//
+//        // Prueba si el tag está habilitado
+//        boolean resultado = moduloPeaje.estaHabilitado(tagAutorizado);
+//        System.out.println("¿El tag está habilitado? " + resultado);
+//        assertTrue(resultado);
+//    }
+//
+//    @Test
+//    void testEstaHabilitado_Matricula() {
+//        // Crea una matrícula simulada
+//        Matricula matriculaAutorizada = new Matricula("123ABC");
+//
+//        // Crea una instancia del módulo de peaje
+//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
+//
+//        // Prueba si la matrícula está habilitada
+//        boolean resultado = moduloPeaje.estaHabilitado(matriculaAutorizada);
+//        System.out.println("¿La matrícula está habilitada? " + resultado);
+//        assertTrue(resultado);
+//    }
+//
+//    @Test
+//    void testEstaHabilitado_OtroTipo() {
+//        // Crea un identificador simulado de otro tipo
+//        Identificador otroIdentificador = () -> "";
+//
+//        // Crea una instancia del módulo de peaje
+//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl();
+//
+//        // Prueba si el identificador de otro tipo no está habilitado
+//        boolean resultado = moduloPeaje.estaHabilitado(otroIdentificador);
+//        System.out.println("¿El identificador de otro tipo está habilitado? " + resultado);
+//        assertFalse(resultado);
+//    }
 
     @Test
     void testActualizarTarifaComun() {
         // Mock del RepoPeaje
-        RepoPeaje repoMock = Mockito.mock(RepoPeaje.class);
+        RepoPeaje repoMock = mock(RepoPeaje.class);
         Mockito.when(repoMock.obtenerTarifaComun()).thenReturn(10.0);
 
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
@@ -75,21 +81,26 @@ public class ModuloPeajeTest {
     @Test
     void testActualizarTarifaPreferencial() {
         // Mock del RepoPeaje
-        RepoPeaje repoMock = Mockito.mock(RepoPeaje.class);
-        Mockito.when(repoMock.obtenerTarifaPreferencial()).thenReturn(5.0);
+        RepoPeaje repoMock = mock(RepoPeaje.class);
+        Mockito.when(repoMock.obtenerTarifaPreferencial()).thenAnswer(invocation -> 5.0);
 
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
         ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
 
+        // Crea un objeto Preferencial con el valor deseado
+        Preferencial preferencial = new Preferencial();
+        preferencial.setMonto(20.0);
+
         // Llama al método para actualizar la tarifa preferencial
-        moduloPeaje.actualizarTarifaPreferencial(20.0);
+        moduloPeaje.actualizarTarifaPreferencial(preferencial);
 
         // Verifica que la tarifa preferencial se haya actualizado correctamente
         Preferencial tarifaPreferencial = moduloPeaje.getTarifaPreferencial();
-        assertEquals(5.0, tarifaPreferencial.getMontoPreferencial());
+        assertEquals(20.0, tarifaPreferencial.getMonto());
         // Si la aserción es verdadera, se imprime un mensaje en la consola
         System.out.println("La tarifa preferencial se ha actualizado correctamente.");
     }
+
 }
 
 

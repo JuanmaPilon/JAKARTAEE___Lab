@@ -6,10 +6,9 @@ public class Preferencial extends ModuloPeaje.Dominio.Tarifa {
 
         super();
     }
-    
-    public Preferencial(double monto) {
 
-        super(monto);
+    public Preferencial(double monto) {
+        this.monto= monto;
     }
     public double obtenerMonto() {
         // Ahora puedes acceder al atributo monto de la clase Tarifa

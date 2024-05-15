@@ -1,7 +1,7 @@
 package ModuloGestionClientes.Aplicacion;
-import java.util.Date;
 import java.util.Set;
 import ModuloGestionClientes.Dominio.*;
+import java.util.Date;
 
 public interface ModuloIGestionClientes {
     void altaClienteTeleapeje(Usuario usuario);
@@ -22,4 +22,8 @@ public interface ModuloIGestionClientes {
     void asociarTarjeta(ClienteSucive clienteSucive, Tarjeta tarjeta);
     Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin);
     Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin);
+
+    public boolean verificarPrePago(int tag, double importe);
+    public boolean verificarPostPago(int tag, double importe);
+
 }

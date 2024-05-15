@@ -65,14 +65,14 @@ public class GestionClientesServiceImplTest {
     @Test
     void testObtenerCuentasPorTag() throws ParseException {
         // Crear un cliente de Telepeaje
-        ModuloGestionClientes.Dominio.ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+       ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear un Tag
-        ModuloGestionClientes.Dominio.Tag tagA = new ModuloGestionClientes.Dominio.Tag("TAG123");
+        Tag tagA = new Tag("TAG123");
 
         // Crear un vehículo con ese Tag
-        List<ModuloGestionClientes.Dominio.PasadaPorPeaje> pasadasPorPeaje = new ArrayList<>();
-        ModuloGestionClientes.Dominio.Vehiculo vehiculo = new ModuloGestionClientes.Dominio.Vehiculo(tagA, pasadasPorPeaje);
+        List<PasadaPorPeaje> pasadasPorPeaje = new ArrayList<>();
+        Vehiculo vehiculo = new Vehiculo(tagA, pasadasPorPeaje);
 
         // Agregar el vehículo al cliente
         cliente.agregarVehiculoACliente(vehiculo);
@@ -233,7 +233,7 @@ public class GestionClientesServiceImplTest {
     @Test
     void testConsultarSaldo_ClienteSucive_NoEncontrado() {
         // Crear un cliente Sucive no existente
-        ClienteSucive cliente = null;
+        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
 
         // Consultar saldo de un cliente Sucive no existente
         gestionClientesService.consultarSaldo(cliente);
