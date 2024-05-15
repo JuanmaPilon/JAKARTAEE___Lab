@@ -4,12 +4,18 @@ import ModuloPeaje.Dominio.*;
 import ModuloPeaje.Aplicacion.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
+
 import org.mockito.Mockito;
 import ModuloPeaje.Dominio.Repo.RepoPeaje;
 
 
 
+
+
 public class ModuloPeajeTest {
+
 
 //    @Test
 //    void testEstaHabilitado_Tag() {
@@ -56,7 +62,7 @@ public class ModuloPeajeTest {
     @Test
     void testActualizarTarifaComun() {
         // Mock del RepoPeaje
-        RepoPeaje repoMock = Mockito.mock(RepoPeaje.class);
+        RepoPeaje repoMock = mock(RepoPeaje.class);
         Mockito.when(repoMock.obtenerTarifaComun()).thenReturn(10.0);
 
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
@@ -72,24 +78,29 @@ public class ModuloPeajeTest {
         System.out.println("La tarifa común se ha actualizado correctamente.");
     }
 
-//    @Test
-//    void testActualizarTarifaPreferencial() {
-//        // Mock del RepoPeaje
-//        RepoPeaje repoMock = Mockito.mock(RepoPeaje.class);
-//        Mockito.when(repoMock.obtenerTarifaPreferencial()).thenReturn(5.0);
-//
-//        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-//
-//        // Llama al método para actualizar la tarifa preferencial
-//        moduloPeaje.actualizarTarifaPreferencial(20.0);
-//
-//        // Verifica que la tarifa preferencial se haya actualizado correctamente
-//        Preferencial tarifaPreferencial = moduloPeaje.getTarifaPreferencial();
-//        assertEquals(5.0, tarifaPreferencial.getMontoPreferencial());
-//        // Si la aserción es verdadera, se imprime un mensaje en la consola
-//        System.out.println("La tarifa preferencial se ha actualizado correctamente.");
-//    }
+    @Test
+    void testActualizarTarifaPreferencial() {
+        // Mock del RepoPeaje
+        RepoPeaje repoMock = mock(RepoPeaje.class);
+        Mockito.when(repoMock.obtenerTarifaPreferencial()).thenAnswer(invocation -> 5.0);
+
+        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
+
+        // Crea un objeto Preferencial con el valor deseado
+        Preferencial preferencial = new Preferencial();
+        preferencial.setMonto(20.0);
+
+        // Llama al método para actualizar la tarifa preferencial
+        moduloPeaje.actualizarTarifaPreferencial(preferencial);
+
+        // Verifica que la tarifa preferencial se haya actualizado correctamente
+        Preferencial tarifaPreferencial = moduloPeaje.getTarifaPreferencial();
+        assertEquals(20.0, tarifaPreferencial.getMonto());
+        // Si la aserción es verdadera, se imprime un mensaje en la consola
+        System.out.println("La tarifa preferencial se ha actualizado correctamente.");
+    }
+
 }
 
 

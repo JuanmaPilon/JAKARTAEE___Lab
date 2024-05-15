@@ -17,6 +17,7 @@ import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 public class ModuloPeajeImpl {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
 
+
     @Inject
     private Event<String> eventoPasajeVehiculo; // Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
 
