@@ -247,5 +247,91 @@ public class GestionClientesServiceImplTest {
         // Consultar saldo de un cliente Telepeaje no existente
         gestionClientesService.consultarSaldo(cliente);
     }
+
+    @Test
+    void testAsociarTarjeta_ClienteTelepeaje() throws ParseException {
+        // Crear un cliente de Telepeaje
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Crear fecha como cadena
+        String fechaVtoStr = "2025-12-31";
+
+        // Crear Tarjeta con la fecha como cadena
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaVto = sdf.parse(fechaVtoStr);
+        Tarjeta tarjeta = new Tarjeta(1234, "Carlos", new java.sql.Date(fechaVto.getTime()));
+
+        // Asociar la tarjeta al cliente
+        gestionClientesService.asociarTarjeta(cliente, tarjeta);
+    }
+
+    @Test
+    void testAsociarTarjeta_ClienteSucive() throws ParseException {
+        // Crear un cliente de Sucive
+        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
+
+        // Crear fecha como cadena
+        String fechaVtoStr = "2025-12-31";
+
+        // Crear Tarjeta con la fecha como cadena
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaVto = sdf.parse(fechaVtoStr);
+        Tarjeta tarjeta = new Tarjeta(1234, "Juan", new java.sql.Date(fechaVto.getTime()));
+
+        // Asociar la tarjeta al cliente
+        gestionClientesService.asociarTarjeta(cliente, tarjeta);
+    }
+
+    @Test
+    void testConsultarPasadas_ClienteTelepeaje() throws ParseException {
+        // Crear un cliente de Telepeaje
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+
+        // Crear fechas como cadenas
+        String fechaInicioStr = "2025-01-01";
+        String fechaFinStr = "2025-12-31";
+
+        // Convertir las cadenas a objetos de tipo Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaInicio = new java.sql.Date(sdf.parse(fechaInicioStr).getTime());
+        Date fechaFin = new java.sql.Date(sdf.parse(fechaFinStr).getTime());
+
+        // Consultar pasadas por peaje
+        Set<PasadaPorPeaje> pasadas = gestionClientesService.consultarPasadas(cliente, fechaInicio, fechaFin);
+    }
+
+    @Test
+    void testConsultarPasadas_ClienteSucive() throws ParseException {
+        // Crear un cliente de Sucive
+        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
+
+        // Crear fechas como cadenas
+        String fechaInicioStr = "2025-01-01";
+        String fechaFinStr = "2025-12-31";
+
+        // Convertir las cadenas a objetos de tipo Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaInicio = new java.sql.Date(sdf.parse(fechaInicioStr).getTime());
+        Date fechaFin = new java.sql.Date(sdf.parse(fechaFinStr).getTime());
+
+        // Consultar pasadas por peaje
+        Set<PasadaPorPeaje> pasadas = gestionClientesService.consultarPasadas(cliente, fechaInicio, fechaFin);
+    }
+
+    @Test
+    void testVerificarPrePago() {
+        int tag = 1234; // Tag del cliente
+        double importe = 50.0; // Importe a pagar
+
+        boolean resultado = gestionClientesService.verificarPrePago(tag, importe);
+    }
+
+    @Test
+    void testVerificarPostPago() {
+        int tag = 1234; // Tag del cliente
+        double importe = 50.0; // Importe a pagar
+
+        boolean resultado = gestionClientesService.verificarPostPago(tag, importe);
+    }
     
 }
