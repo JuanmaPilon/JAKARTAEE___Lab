@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class Tag {
 
-	String idUnico;
+	private String idUnico;
 
 	public Tag() {
 

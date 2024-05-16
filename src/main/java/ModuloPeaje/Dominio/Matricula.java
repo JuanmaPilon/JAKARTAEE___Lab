@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class Matricula {
 
-	String nroMatricula;
+	private String nroMatricula;
 
 	public Matricula() {
 
