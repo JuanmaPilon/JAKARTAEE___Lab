@@ -1,6 +1,6 @@
 package ModuloPeaje.Aplicacion;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
-import ModuloGestionClientes.Dominio.ClienteTelepeaje;
+import ModuloGestionClientes.Dominio.*;
 import ModuloPeaje.Dominio.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
@@ -39,19 +39,23 @@ public class ModuloPeajeImpl {
     @Inject
     private RepoPeaje repo;
 
+    @Inject
+    private ModuloIGestionClientes moduloIGestionClientes;
+
     public ModuloPeajeImpl(RepoPeaje repo) {
         this.repo = repo;
         double montoPredeterminado = 10.0;
         this.tarifaComun = new Comun(montoPredeterminado);
         double montoPredeterminadoPreferencial = 5.0;
         this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
+        this.moduloIGestionClientes = new ModuloGestionClientes();
     }
 
 
     public boolean estaHabilitado(int tag, String matricula) {
         log.infof("*** Verificando peaje vehiculo: tag %s, matricula: %s", tag, matricula);
         boolean habilitado = false;
-        Vehiculo vehiculo = existeVehiculo(tag, matricula);
+        ModuloPeaje.Dominio.Vehiculo vehiculo = existeVehiculo(tag, matricula);
         if (vehiculo != null) {
             if (vehiculo.nacional()) {
                 //mandarAQueueDePagos(vehiculo);
@@ -71,7 +75,7 @@ public class ModuloPeajeImpl {
 //        clienteT.setEmail("correo@ejemplo.com");
     //Tag tagObjeto = new Tag();
 
-    private boolean  procesarVehiculoExtranjero(int tag, Vehiculo vehiculo) {
+    private boolean  procesarVehiculoExtranjero(int tag, ModuloPeaje.Dominio.Vehiculo vehiculo) {
         log.infof("*** Procesando pago vehículo extranjero %s tag:", tag);
         boolean habilitado = false;
         // Todos los vehículos extranjeros son preferenciales
@@ -81,12 +85,10 @@ public class ModuloPeajeImpl {
 
         // Realizar el pre-pago
 
-        ModuloIGestionClientes moduloIGestionClientes = new ModuloGestionClientes();
-
 // Asignar vehículos si es necesario
 // Asignar saldo, cuentas prepagas o postpagas si es necesario
 
-        ClienteTelepeaje cliente = new ClienteTelepeaje();
+        ModuloGestionClientes.Dominio.ClienteTelepeaje cliente = new ModuloGestionClientes.Dominio.ClienteTelepeaje();
         cliente.setCi("0000000");
         cliente.setNombre("Extranjero");
         ModuloGestionClientes.Dominio.Vehiculo vehiculo2 = new ModuloGestionClientes.Dominio.Vehiculo();
@@ -123,8 +125,8 @@ public class ModuloPeajeImpl {
 //        //TODO esto lo vamos a hacer más adelante.
 //    }
 
-    private Vehiculo existeVehiculo(int tag, String matricula) {
-        Vehiculo vehiculo = repo.BuscarTag(tag);
+    private ModuloPeaje.Dominio.Vehiculo existeVehiculo(int tag, String matricula) {
+        ModuloPeaje.Dominio.Vehiculo vehiculo = repo.BuscarTag(tag);
 
         if (vehiculo != null) {
             log.infof("Vehiculo encontrado con tag: %s", tag);
