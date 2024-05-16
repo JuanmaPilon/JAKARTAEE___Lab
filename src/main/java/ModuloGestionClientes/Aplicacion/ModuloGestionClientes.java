@@ -31,6 +31,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     private RepoClientes repoClientes;
 
     public ModuloGestionClientes() {
+
         this.repoClientes = new RepoClientesImp();
     }
 
@@ -336,15 +337,15 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public boolean verificarPrePago(int tag, double importe) {
-
-        return ModuloIGestionClientes.verificarPrePago(tag, importe);
+        //return ModuloIGestionClientes.verificarPrePago(tag, importe);
+        return true;
     }
 
 
     @Override
     public boolean verificarPostPago(int tag, double importe) {
-
-            return ModuloIGestionClientes.verificarPostPago(tag, importe);
+        //return ModuloIGestionClientes.verificarPostPago(tag, importe);
+        return true;
     }
 }
 

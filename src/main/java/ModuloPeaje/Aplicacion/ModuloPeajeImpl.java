@@ -1,11 +1,11 @@
 package ModuloPeaje.Aplicacion;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
-import ModuloGestionClientes.Dominio.*;
-import ModuloPeaje.Dominio.*;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import lombok.Getter;
+import ModuloPeaje.Dominio.*;
 import ModuloPeaje.Dominio.Repo.RepoPeaje;
 
 //estahab
@@ -31,10 +31,10 @@ public class ModuloPeajeImpl {
     }
 
     @Getter
-    private Preferencial tarifaPreferencial;
+    private ModuloPeaje.Dominio.Preferencial tarifaPreferencial;
 
     @Getter
-    private Comun tarifaComun;
+    private ModuloPeaje.Dominio.Comun tarifaComun;
 
     @Inject
     private RepoPeaje repo;
@@ -45,9 +45,9 @@ public class ModuloPeajeImpl {
     public ModuloPeajeImpl(RepoPeaje repo) {
         this.repo = repo;
         double montoPredeterminado = 10.0;
-        this.tarifaComun = new Comun(montoPredeterminado);
+        this.tarifaComun = new ModuloPeaje.Dominio.Comun(montoPredeterminado);
         double montoPredeterminadoPreferencial = 5.0;
-        this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
+        this.tarifaPreferencial = new ModuloPeaje.Dominio.Preferencial(montoPredeterminadoPreferencial);
         this.moduloIGestionClientes = new ModuloGestionClientes();
     }
 
@@ -55,68 +55,64 @@ public class ModuloPeajeImpl {
     public boolean estaHabilitado(int tag, String matricula) {
         log.infof("*** Verificando peaje vehiculo: tag %s, matricula: %s", tag, matricula);
         boolean habilitado = false;
-        ModuloPeaje.Dominio.Vehiculo vehiculo = existeVehiculo(tag, matricula);
-        if (vehiculo != null) {
-            if (vehiculo.nacional()) {
-                //mandarAQueueDePagos(vehiculo);
-                habilitado = true;
-
-            } else {
-                habilitado = procesarVehiculoExtranjero(tag, vehiculo);
-            }
-        }
-
-        log.infof("Resultado habilitacion tag %s, matricula %s es: %b", tag, matricula, habilitado);
+//        ModuloPeaje.Dominio.Vehiculo vehiculo = existeVehiculo(tag, matricula);
+//        if (vehiculo != null) {
+//            if (vehiculo.nacional()) {
+//                //mandarAQueueDePagos(vehiculo);
+//                habilitado = true;
+//
+//            } else {
+//                habilitado = procesarVehiculoExtranjero(tag, vehiculo);
+//            }
+//        }
+//
+//        log.infof("Resultado habilitacion tag %s, matricula %s es: %b", tag, matricula, habilitado);
         return habilitado;
     }
-//    ClienteTelepeaje clienteT = new ClienteTelepeaje();
-//    clienteT.setNombre("Nombre del cliente");
-//        clienteT.setCi("123456789");
-//        clienteT.setEmail("correo@ejemplo.com");
-    //Tag tagObjeto = new Tag();
+
 
     private boolean  procesarVehiculoExtranjero(int tag, ModuloPeaje.Dominio.Vehiculo vehiculo) {
         log.infof("*** Procesando pago vehículo extranjero %s tag:", tag);
         boolean habilitado = false;
-        // Todos los vehículos extranjeros son preferenciales
-        Preferencial tarifa = repo.obtenerTarifaPreferencial();
-
-        log.infof("Tarifa obtenida %f ", tarifa.getMontoPreferencial());
-
-        // Realizar el pre-pago
-
-// Asignar vehículos si es necesario
-// Asignar saldo, cuentas prepagas o postpagas si es necesario
-
-        ModuloGestionClientes.Dominio.ClienteTelepeaje cliente = new ModuloGestionClientes.Dominio.ClienteTelepeaje();
-        cliente.setCi("0000000");
-        cliente.setNombre("Extranjero");
-        ModuloGestionClientes.Dominio.Vehiculo vehiculo2 = new ModuloGestionClientes.Dominio.Vehiculo();
-        vehiculo2.setCliente(cliente);
-        String numeroTag = Integer.toString(tag);
-        ModuloGestionClientes.Dominio.Tag tag2 = new ModuloGestionClientes.Dominio.Tag(numeroTag);
-        vehiculo2.setTag(tag2);
-
-        cliente.getVehiculosCliente().add(vehiculo2);
-        cliente.setSaldo(tarifa.getMontoPreferencial());
-        ModuloGestionClientes.Dominio.PREPaga prePaga = new ModuloGestionClientes.Dominio.PREPaga();
-        prePaga.setSaldo(tarifa.getMontoPreferencial());
-        cliente.setCuentaPrepaga(prePaga);
-        moduloIGestionClientes.realizarPrePago( cliente, tarifa.getMontoPreferencial());
-
-        // Llamar al método verificarPrePago de la instancia moduloClientes
-        habilitado = moduloIGestionClientes.verificarPrePago(tag, tarifa.getMontoPreferencial());
-
-        log.infof("Respuesta prePago: %b ", habilitado);
-        if (!habilitado) {
-            //fallo el cobro prepago, intento con la tarjeta (postPago)
-            habilitado = moduloIGestionClientes.verificarPostPago(tag, tarifa.getMontoPreferencial());
-            log.infof("Respuesta postPago: %b ",habilitado);
-            if (!habilitado) {
-                //TODO mando evento al modulo de monitoreo
-                //el auto no pasa
-            }
-        }
+//        // Todos los vehículos extranjeros son preferenciales
+//        ModuloPeaje.Dominio.Preferencial tarifa = repo.obtenerTarifaPreferencial();
+//
+//        log.infof("Tarifa obtenida %f ", tarifa.getMontoPreferencial());
+//
+//        // Realizar el pre-pago
+//
+//// Asignar vehículos si es necesario
+//// Asignar saldo, cuentas prepagas o postpagas si es necesario
+//
+//        ModuloGestionClientes.Dominio.ClienteTelepeaje cliente = new ModuloGestionClientes.Dominio.ClienteTelepeaje();
+//        cliente.setCi("0000000");
+//        cliente.setNombre("Extranjero");
+//        ModuloGestionClientes.Dominio.Vehiculo vehiculo2 = new ModuloGestionClientes.Dominio.Vehiculo();
+//        vehiculo2.setCliente(cliente);
+//        String numeroTag = Integer.toString(tag);
+//        ModuloGestionClientes.Dominio.Tag tag2 = new ModuloGestionClientes.Dominio.Tag(numeroTag);
+//        vehiculo2.setTag(tag2);
+//
+//        cliente.getVehiculosCliente().add(vehiculo2);
+//        cliente.setSaldo(tarifa.getMontoPreferencial());
+//        ModuloGestionClientes.Dominio.PREPaga prePaga = new ModuloGestionClientes.Dominio.PREPaga();
+//        prePaga.setSaldo(tarifa.getMontoPreferencial());
+//        cliente.setCuentaPrepaga(prePaga);
+//        moduloIGestionClientes.realizarPrePago( cliente, tarifa.getMontoPreferencial());
+//
+//        // Llamar al método verificarPrePago de la instancia moduloClientes
+//        habilitado = moduloIGestionClientes.verificarPrePago(tag, tarifa.getMontoPreferencial());
+//
+//        log.infof("Respuesta prePago: %b ", habilitado);
+//        if (!habilitado) {
+//            //fallo el cobro prepago, intento con la tarjeta (postPago)
+//            habilitado = moduloIGestionClientes.verificarPostPago(tag, tarifa.getMontoPreferencial());
+//            log.infof("Respuesta postPago: %b ",habilitado);
+//            if (!habilitado) {
+//                //TODO mando evento al modulo de monitoreo
+//                //el auto no pasa
+//            }
+//        }
         return habilitado;
     }
 
@@ -156,13 +152,6 @@ public class ModuloPeajeImpl {
 
 
     public ModuloPeajeImpl() {
-
-        // Inicializa la tarifa común con un monto predeterminado
-        //double montoPredeterminado = 10.0;
-       //this.tarifaComun = new Comun(montoPredeterminado);
-        // Inicializa la tarifa Preferencial con un monto predeterminado
-        //double montoPredeterminadoPreferencial = 5.0;
-        //this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
     }
 
     public void actualizarTarifaComun(double importe) {
@@ -171,7 +160,7 @@ public class ModuloPeajeImpl {
     }
 
 
-    public void actualizarTarifaPreferencial(Preferencial importe) {
+    public void actualizarTarifaPreferencial(ModuloPeaje.Dominio.Preferencial importe) {
         // Obtiene el monto de la tarifa preferencial actual
         double monto = importe.getMonto();
 
