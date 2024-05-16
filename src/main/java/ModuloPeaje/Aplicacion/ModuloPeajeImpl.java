@@ -81,21 +81,34 @@ public class ModuloPeajeImpl {
 
         // Realizar el pre-pago
 
-        ModuloIGestionClientes ModuloIGestionClientes = new ModuloGestionClientes();
+        ModuloIGestionClientes moduloIGestionClientes = new ModuloGestionClientes();
 
 // Asignar vehículos si es necesario
 // Asignar saldo, cuentas prepagas o postpagas si es necesario
 
-        //ClienteTelepeaje cliente = ModuloIGestionClientes.obtenerCuentasPorTag(cliente, tag);
-        //duloIGestionClientes.realizarPrePago( cliente, tarifa.getMontoPreferencial());
+        ClienteTelepeaje cliente = new ClienteTelepeaje();
+        cliente.setCi("0000000");
+        cliente.setNombre("Extranjero");
+        ModuloGestionClientes.Dominio.Vehiculo vehiculo2 = new ModuloGestionClientes.Dominio.Vehiculo();
+        vehiculo2.setCliente(cliente);
+        String numeroTag = Integer.toString(tag);
+        ModuloGestionClientes.Dominio.Tag tag2 = new ModuloGestionClientes.Dominio.Tag(numeroTag);
+        vehiculo2.setTag(tag2);
+
+        cliente.getVehiculosCliente().add(vehiculo2);
+        cliente.setSaldo(tarifa.getMontoPreferencial());
+        ModuloGestionClientes.Dominio.PREPaga prePaga = new ModuloGestionClientes.Dominio.PREPaga();
+        prePaga.setSaldo(tarifa.getMontoPreferencial());
+        cliente.setCuentaPrepaga(prePaga);
+        moduloIGestionClientes.realizarPrePago( cliente, tarifa.getMontoPreferencial());
 
         // Llamar al método verificarPrePago de la instancia moduloClientes
-        habilitado = ModuloIGestionClientes.verificarPrePago(tag, tarifa.getMontoPreferencial());
+        habilitado = moduloIGestionClientes.verificarPrePago(tag, tarifa.getMontoPreferencial());
 
         log.infof("Respuesta prePago: %b ", habilitado);
         if (!habilitado) {
             //fallo el cobro prepago, intento con la tarjeta (postPago)
-            habilitado = ModuloIGestionClientes.verificarPostPago(tag, tarifa.getMontoPreferencial());
+            habilitado = moduloIGestionClientes.verificarPostPago(tag, tarifa.getMontoPreferencial());
             log.infof("Respuesta postPago: %b ",habilitado);
             if (!habilitado) {
                 //TODO mando evento al modulo de monitoreo
