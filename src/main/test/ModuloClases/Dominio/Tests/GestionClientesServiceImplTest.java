@@ -242,7 +242,7 @@ public class GestionClientesServiceImplTest {
     @Test
     void testConsultarSaldo_ClienteTelepeaje_NoEncontrado() {
         // Crear un cliente Telepeaje no existente
-        ClienteTelepeaje cliente = null;
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Pedro", "87654321", "pedro@example.com", new ArrayList<>());
 
         // Consultar saldo de un cliente Telepeaje no existente
         gestionClientesService.consultarSaldo(cliente);
