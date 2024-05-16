@@ -15,16 +15,26 @@ public class RepoPeajeImpl implements RepoPeaje {
 
     @Override
     public Vehiculo BuscarTag(int tag) {
-        // Lógica para buscar un vehículo por tag
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo.getTag().equals(tag)) {
+                return vehiculo;
+            }
+        }
         return null;
     }
 
     @Override
     public Vehiculo BuscarMatricula(String matricula) {
-        // Lógica para buscar un vehículo por matrícula
-        return null;
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo instanceof Nacional) {
+                Nacional nacional = (Nacional) vehiculo;
+                if (nacional.getMatricula().getNroMatricula().equals(matricula)) {
+                    return nacional;
+                }
+            }
+        }
+        return null; // Vehículo no encontrado
     }
-
     @Override
     public Preferencial obtenerTarifaPreferencial() {
         return null;

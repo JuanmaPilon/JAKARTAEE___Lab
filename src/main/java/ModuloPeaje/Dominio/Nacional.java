@@ -1,8 +1,6 @@
 package ModuloPeaje.Dominio;
 
-import ModuloClases.Dominio.Matricula;
-import ModuloClases.Dominio.Tag;
-import ModuloClases.Dominio.Vehiculo;
+import ModuloPeaje.Dominio.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +9,6 @@ import lombok.Setter;
 public class Nacional extends Vehiculo {
 
 	private Matricula matricula;
-
 	private Tag tag;
 
 	public Nacional() {
