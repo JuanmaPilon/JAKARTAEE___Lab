@@ -1,6 +1,5 @@
 package ModuloClases.Dominio.Tests;
 
-
 import ModuloSucive.Aplicacion.ModuloSucive;
 import ModuloSucive.Dominio.Matricula;
 import ModuloSucive.Evento.PublicadorEventoSucive;

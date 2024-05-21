@@ -1,21 +1,42 @@
 package ModuloClases.Dominio.Tests;
 
 import ModuloPeaje.Dominio.*;
-import ModuloPeaje.Aplicacion.*;
+import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
+import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import ModuloPeaje.Evento.notificarPasajeVehiculo;
 import org.junit.jupiter.api.Test;
+import jakarta.inject.Inject;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import ModuloPeaje.Dominio.Repo.RepoPeaje;
 
+import ModuloPeaje.Aplicacion.ModuloPeajeAplicacion;
+import ModuloPeaje.Evento.notificarPasajeVehiculo;
+import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-
-
+import static org.mockito.Mockito.verify;
 
 public class ModuloPeajeTest {
 
+    @Mock
+    private PublicadorEventoPeaje pasajeVehiculo;
+
+    @InjectMocks
+    private ModuloPeajeImpl moduloPeaje;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
 //    @Test
 //    void testEstaHabilitado_Tag() {

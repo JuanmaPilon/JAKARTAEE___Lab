@@ -1,5 +1,6 @@
 package ModuloClases.Dominio.Tests;
 
+import ModuloPeaje.Evento.notificarPasajeVehiculo;
 import ModuloSucive.Evento.notificarPagoSucive;
 import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,15 @@ public class ModuloMonitoreoTest {
 
         // Act
         moduloMonitoreo.notificarCobroSucive(event);
+    }
 
+    @Test
+    public void testnotificarPeajeVehiculo() {
+        // Arrange
+        String mensaje = "Pasaje de vehículo detectado";
+        notificarPasajeVehiculo event = new notificarPasajeVehiculo(mensaje);
+
+        // Act
+        moduloMonitoreo.notificarPeajeVehiculo(event);
     }
 }
