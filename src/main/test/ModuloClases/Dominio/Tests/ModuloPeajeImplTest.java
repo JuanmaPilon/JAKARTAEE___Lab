@@ -1,68 +1,50 @@
 package ModuloClases.Dominio.Tests;
 
-import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
 import ModuloPeaje.Evento.notificarPasajeVehiculo;
-import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
 import jakarta.enterprise.event.Event;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 public class ModuloPeajeImplTest {
-
-    @InjectMocks
-    private ModuloPeajeImpl moduloPeaje;
 
     @Mock
     private PublicadorEventoPeaje publicadorEventoPeaje;
 
     @Mock
-    private Event<notificarPasajeVehiculo> pasajeVehiculoEvent;
+    private Event<notificarPasajeVehiculo> event;
 
-    @Mock
-    private ModuloMonitoreo moduloMonitoreo;
+    @InjectMocks
+    private ModuloPeajeImpl moduloPeaje;
 
     @BeforeEach
-    public void setUp() {
+    void setUp(){
         MockitoAnnotations.openMocks(this);
-
-        // Configurar el comportamiento del mock para el método publicarPasajeVehiculo
-        doAnswer(invocation -> {
-            String mensaje = invocation.getArgument(0);
-            pasajeVehiculoEvent.fire(new notificarPasajeVehiculo(mensaje));
-            return null;
-        }).when(publicadorEventoPeaje).publicarPasajeVehiculo(anyString());
-
-        // Configurar el comportamiento del mock para el evento pasajeVehiculoEvent.fire
-        doAnswer(invocation -> {
-            notificarPasajeVehiculo event = invocation.getArgument(0);
-            moduloMonitoreo.notificarPeajeVehiculo(event);
-            return null;
-        }).when(pasajeVehiculoEvent).fire(any(notificarPasajeVehiculo.class));
     }
 
-    @Test
-    public void testManejarNotificarPasajeVehiculo() {
-        // Arrange
-        String mensajeEsperado = "Pasaje de vehículo detectado";
+    @Captor
+    ArgumentCaptor<notificarPasajeVehiculo> captor;
 
-        // Act
+    @Test
+    public void manejarNotificarPasajeVehiculoTest() {
+        MockitoAnnotations.openMocks(this);
+        String mensajeVehiculo = "Pasaje de vehículo detectado";
+
         moduloPeaje.manejarNotificarPasajeVehiculo();
 
-        // Assert
-        ArgumentCaptor<notificarPasajeVehiculo> mensajeCaptor = ArgumentCaptor.forClass(notificarPasajeVehiculo.class);
-        verify(pasajeVehiculoEvent).fire(mensajeCaptor.capture());
-        assertEquals(mensajeEsperado, mensajeCaptor.getValue().getDescripcion());
+        verify(publicadorEventoPeaje).publicarPasajeVehiculo(mensajeVehiculo);
+        // verify(event).fire(captor.capture());
 
-        // Verify
-        verify(pasajeVehiculoEvent).fire(any(notificarPasajeVehiculo.class));
+        // notificarPasajeVehiculo evento = captor.getValue();
+        // assertEquals(mensajeVehiculo, evento.getDescripcion());
     }
 }
