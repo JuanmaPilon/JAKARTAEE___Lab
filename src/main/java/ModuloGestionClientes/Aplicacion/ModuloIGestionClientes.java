@@ -13,7 +13,7 @@ public interface ModuloIGestionClientes {
     void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo);
     void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
     Set<Object> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag);
-    boolean realizarPrePago(int tag, double importe);
+    public boolean realizarPrePago(int tag, double importe);
     boolean realizarPostPago(int tag, double importe);
     void altaClienteSucksive(Usuario usuario);
     Double consultarSaldo(ClienteSucive cliente);

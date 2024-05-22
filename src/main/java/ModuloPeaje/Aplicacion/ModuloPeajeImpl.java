@@ -54,6 +54,14 @@ public class ModuloPeajeImpl {
         this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
 
     }
+    public ModuloPeajeImpl(RepoPeaje repo2, ModuloIGestionClientes moduloIGestionClientes) {
+        this.moduloIGestionClientes =  moduloIGestionClientes;
+        this.repo = repo2;
+        double montoPredeterminado = 10.0;
+        this.tarifaComun = new Comun(montoPredeterminado);
+        double montoPredeterminadoPreferencial = 5.0;
+        this.tarifaPreferencial = new Preferencial(montoPredeterminadoPreferencial);
+    }
 
 
     public boolean estaHabilitado(int tag, String matricula) {
