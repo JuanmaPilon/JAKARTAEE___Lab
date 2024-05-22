@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GestionClientesServiceImplTest {
 
     @Inject
-    private RepoClientes repoClientes;
+    private RepoClientesImp repoClientes;
     @Inject
     private ModuloGestionClientes gestionClientesService;
 
@@ -40,7 +40,7 @@ public class GestionClientesServiceImplTest {
         // Inicializa la implementación real del repositorio
         repoClientes = new RepoClientesImp();
         // Inicializa el servicio con el repositorio
-        gestionClientesService = new ModuloGestionClientes();
+        gestionClientesService = new ModuloGestionClientes(repoClientes);
 
         // Configura los datos iniciales
         clienteTelepeaje = new ClienteTelepeaje();
@@ -141,69 +141,88 @@ public class GestionClientesServiceImplTest {
     @Test
     void testRealizarPrePago_SaldoSuficiente() {
 
-        // Crear una cuenta PREPaga con saldo suficiente
-//        PREPaga cuentaPrepaga = new PREPaga();
-//        cuentaPrepaga.setSaldo(100.0);
-//        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+        // Crear una cuenta PREPaga con saldo suficiente
+        PREPaga cuentaPrepaga = new PREPaga();
+        cuentaPrepaga.setSaldo(100.0);
+
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPrepaga(cuentaPrepaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        boolean resultado = gestionClientesService.realizarPrePago(tag, importe);
+        boolean resultado = gestionClientesService.realizarPrePago(123, 50.0);
 
         assertTrue(resultado);
         // Busca el vehículo por el tag
-        Vehiculo vehiculo = repoClientes.BuscarTag(tag);
+        vehiculo = repoClientes.BuscarTag(Integer.parseInt(tag.getIdUnico()));
 
         // Verificar que el saldo se haya reducido correctamente
-        //assertEquals(50.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo no se redujo correctamente.");
-        //assertEquals(50.0, vehiculo.getClienteTelepeaje().getCuentaPrepaga().getSaldo());
+        assertEquals(50.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo no se redujo correctamente.");
+        assertEquals(50.0, vehiculo.getClienteTelepeaje().getCuentaPrepaga().getSaldo());
         System.out.println("Test realizado. Saldo esperado: " + 50.0);
 
     }
 
     @Test
     void testRealizarPrePago_SaldoInsuficiente() {
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
         // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear una cuenta PREPaga con saldo insuficiente
         PREPaga cuentaPrepaga = new PREPaga();
-        cuentaPrepaga.setSaldo(30.0); // Saldo insuficiente para pagar
-        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+        cuentaPrepaga.setSaldo(20.0);
 
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPrepaga(cuentaPrepaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPrePago(tag, importe);
+        gestionClientesService.realizarPrePago(123, 50.0);
 
         // Verificar que el saldo no se haya reducido
-        assertEquals(30.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo debería permanecer igual debido a saldo insuficiente.");
-   }
+        assertEquals(20.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo debería permanecer igual debido a saldo insuficiente.");
+        System.out.println("Saldo insuficiente");
+        System.out.println("Su cuenta tiene: "+ cuentaPrepaga.getSaldo());
+    }
 
     @Test
     void testRealizarPrePago_SinCuentaPrepaga() {
-        // Crear un cliente de Telepeaje sin cuenta PREPaga asignada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+
+        vehiculo.setCliente(cliente);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPrePago(tag, importe);
+        gestionClientesService.realizarPrePago(123, 50.0);
 
     }
 
     @Test
     void testRealizarPostPago_ConTarjeta() throws ParseException {
-        // Crear un cliente de Telepeaje con cuenta POSTPaga y tarjeta asociada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear fecha como cadena
@@ -216,46 +235,57 @@ public class GestionClientesServiceImplTest {
         POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), tarjeta);
         cliente.asignarCuentaPostpaga(cuentaPostpaga);
 
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPostpaga(cuentaPostpaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
+
 
         // Realizar el pago
-        gestionClientesService.realizarPostPago(tag, importe);
+        gestionClientesService.realizarPostPago(123, 50.0);
+        System.out.println("Pago logrado");
     }
 
     @Test
     void testRealizarPostPago_SinTarjeta() {
-        // Crear un cliente de Telepeaje con cuenta POSTPaga pero sin tarjeta asociada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear una cuenta POSTPaga sin tarjeta asociada
         POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), null);
         cliente.asignarCuentaPostpaga(cuentaPostpaga);
 
-        // Importe a pagar
-        double importe = 50.0;
-        //tag asignado
-        int tag = 123;
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPostpaga(cuentaPostpaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPostPago(tag, importe);
+        gestionClientesService.realizarPostPago(123, 50.0);
+
 
     }
 
     @Test
     void testRealizarPostPago_SinCuentaPostpaga() {
-        // Crear un cliente de Telepeaje sin cuenta POSTPaga asignada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
-        // Importe a pagar
-        double importe = 50.0;
-        //tag asignado
-        int tag = 123;
+
+        vehiculo.setCliente(cliente);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPostPago(tag, importe);
+        gestionClientesService.realizarPostPago(123, 50.0);
     }
 
     @Test
@@ -391,7 +421,7 @@ public class GestionClientesServiceImplTest {
 
         clienteEnRepo = repoClientes.buscarClienteTelePorCI("12345678");
         assertNotNull(clienteEnRepo);
-        assertTrue(clienteEnRepo.getVehiculosCliente().contains(vehiculo), "El vehículo debería estar vinculado al cliente de Telepeaje.");
+        assertTrue(clienteEnRepo.getVehiculosCliente().contains(vehiculo), "El vehiculo debería estar vinculado al cliente de Telepeaje.");
 
         }
 }

@@ -36,6 +36,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
         this.repoClientes = new RepoClientesImp();
     }
+    public ModuloGestionClientes(RepoClientesImp repoClientesImp) {
+
+        this.repoClientes = repoClientesImp;
+    }
 
     @Override
     public void altaClienteTeleapeje(Usuario usuario) {
@@ -87,7 +91,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
-            System.out.println("El veheiculo ha sido vinculado al cliente exitosamente.");
+            System.out.println("El vehiculo ha sido vinculado al cliente exitosamente.");
         } else {
             System.out.println("Cliente no encontrado en el repo.");
         }
@@ -95,10 +99,8 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
-        log.infof("***uw" + vehiculo);
-        log.infof("***uw" + cliente);
+
         ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
-        log.infof("***uw" + clienteEnRepo);
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -189,7 +191,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public boolean realizarPrePago(int tag, double importe) {
-    Vehiculo vehiculo = repoClientes.BuscarTag(tag);
+        Vehiculo vehiculo = repoClientes.BuscarTag(tag);
         PREPaga cuenta =  vehiculo.getClienteTelepeaje().getCuentaPrepaga();
 
         if (cuenta != null) {
@@ -198,9 +200,11 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
                 return true;
             } else {
-                System.out.println("Saldo insuficiente.");
-                String mensajeTarjeta = "Saldo insuficiente";
-                pagoTarjeta.publicarPago(mensajeTarjeta);
+                if(this.pagoTarjeta != null) {
+                    System.out.println("Saldo insuficiente.");
+                    String mensajeTarjeta = "Saldo insuficiente";
+                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                }
                 return false;
             }
         } else {
@@ -216,14 +220,18 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (cuenta != null) {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
-                System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
-                String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
-                pagoTarjeta.publicarPago(mensajeTarjeta);
+                    System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                if(this.pagoTarjeta != null) {
+                    String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
+                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                }
                 return true;
             } else {
-                System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
-                String mensajeTarjeta = "Tarjeta: Rechazada";
-                pagoTarjeta.publicarPago(mensajeTarjeta);
+                    System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
+                if(this.pagoTarjeta != null) {
+                    String mensajeTarjeta = "Tarjeta: Rechazada";
+                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                }
                 return false;
             }
         } else {
