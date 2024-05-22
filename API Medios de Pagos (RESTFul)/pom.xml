@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.tallerjava</groupId>
-	<artifactId>Medios de Pago</artifactId>
+	<artifactId>Medios-de-Pago</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
