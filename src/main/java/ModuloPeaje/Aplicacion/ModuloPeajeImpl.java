@@ -19,7 +19,8 @@ import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 @ApplicationScoped
 public class ModuloPeajeImpl {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
-
+    @Inject
+    private RepoPeaje repo;
 
     @Inject
     private PublicadorEventoPeaje pasajeVehiculo;// Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
@@ -39,17 +40,14 @@ public class ModuloPeajeImpl {
     @Getter
     private ModuloPeaje.Dominio.Comun tarifaComun;
 
-    @Inject
-    private RepoPeaje repo;
 
     @Inject
     private ModuloIGestionClientes moduloIGestionClientes;
 
 
-    public ModuloPeajeImpl(RepoPeaje repo) {
+    public ModuloPeajeImpl(RepoPeaje repo2) {
         this.moduloIGestionClientes = new ModuloGestionClientes();
-
-        this.repo = repo;
+        this.repo = repo2;
         double montoPredeterminado = 10.0;
         this.tarifaComun = new Comun(montoPredeterminado);
         double montoPredeterminadoPreferencial = 5.0;
@@ -63,7 +61,7 @@ public class ModuloPeajeImpl {
         boolean habilitado = false;
 
         Vehiculo vehiculo = existeVehiculo(tag, matricula);
-        log.infof("obtengo vehiculo" + vehiculo);
+        log.infof("obtengo vehiculo " + vehiculo);
         if (vehiculo != null) {
             if (vehiculo.nacional()) {
                 //mandarAQueueDePagos(vehiculo);
@@ -88,26 +86,6 @@ public class ModuloPeajeImpl {
         if (tarifa != null) {
         log.infof("Tarifa obtenida %f ", tarifa.getMontoPreferencial());
         // Realizar el pre-pago
-
-// Asignar vehículos si es necesario
-// Asignar saldo, cuentas prepagas o postpagas si es necesario
-
-//        ModuloGestionClientes.Dominio.ClienteTelepeaje cliente = new ModuloGestionClientes.Dominio.ClienteTelepeaje();
-//        cliente.setCi("0000000");
-//        cliente.setNombre("Extranjero");
-//        ModuloGestionClientes.Dominio.Vehiculo vehiculo2 = new ModuloGestionClientes.Dominio.Vehiculo();
-//        vehiculo2.setCliente(cliente);
-//        String numeroTag = Integer.toString(tag);
-//        ModuloGestionClientes.Dominio.Tag tag2 = new ModuloGestionClientes.Dominio.Tag(numeroTag);
-//        vehiculo2.setTag(tag2);
-//
-//        cliente.getVehiculosCliente().add(vehiculo2);
-//        cliente.setSaldo(tarifa.getMontoPreferencial());
-//        ModuloGestionClientes.Dominio.PREPaga prePaga = new ModuloGestionClientes.Dominio.PREPaga();
-//        prePaga.setSaldo(tarifa.getMontoPreferencial());
-//        cliente.setCuentaPrepaga(prePaga);
-//        moduloIGestionClientes.realizarPrePago( cliente, tarifa.getMontoPreferencial());
-
         // Llamar al método verificarPrePago de la instancia moduloClientes
         habilitado = moduloIGestionClientes.realizarPrePago(tag,tarifa.getMontoPreferencial());
                 //moduloIGestionClientes.verificarPrePago(tag, tarifa.getMontoPreferencial());
@@ -138,10 +116,8 @@ public class ModuloPeajeImpl {
 //    }
 
     private Vehiculo existeVehiculo(int tag, String matricula) {
-
-        Vehiculo vehiculo = new Vehiculo();
-        vehiculo = repo.BuscarTag(tag);
-
+        log.infof("flag a");
+        Vehiculo vehiculo = repo.BuscarTag(tag);
         if (vehiculo != null) {
             log.infof("Vehiculo encontrado con tag: %s", tag);
             return vehiculo;
@@ -149,14 +125,13 @@ public class ModuloPeajeImpl {
             vehiculo = repo.BuscarMatricula(matricula);
             if (vehiculo != null) {
                 log.infof("Vehiculo encontrado con matricula: %s", tag);
+                return vehiculo;
             } else {
                 //error grave el vehiculo no esta en el sistema
                 String mensaje ="Vehiculo no encontrado: " + tag+ " " + matricula;
                 if (this.vehiculoNoEncontrado != null) {
                     vehiculoNoEncontrado.fire(mensaje); // Invoca el método solo si vehiculoNoEncontrado no es nulo
                 }
-
-                        ;
             }
         }
         return vehiculo;

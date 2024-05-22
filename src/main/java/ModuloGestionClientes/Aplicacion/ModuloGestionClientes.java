@@ -189,7 +189,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public boolean realizarPrePago(int tag, double importe) {
-    Vehiculo vehiculo = repoClientes. BuscarTag(tag);
+    Vehiculo vehiculo = repoClientes.BuscarTag(tag);
         PREPaga cuenta =  vehiculo.getClienteTelepeaje().getCuentaPrepaga();
 
         if (cuenta != null) {

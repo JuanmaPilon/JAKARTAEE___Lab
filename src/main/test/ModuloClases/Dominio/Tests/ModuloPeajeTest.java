@@ -70,17 +70,21 @@ public class ModuloPeajeTest {
     repo = new RepoPeajeImpl(new Preferencial(50.0), new Comun(30.0));
 
     Tag tag = new Tag("123");
+    Tag tagx = new Tag("456");
     Matricula matricula = new Matricula("ABC123");
     vehiculoNacional = new Nacional(matricula, tag);
-    vehiculoExtranjero = new Extranjero(tag);
-
+    vehiculoNacional.setNacionalidad(Nacionalidad.NACIONAL);
+    vehiculoExtranjero = new Extranjero(tagx);
+    vehiculoExtranjero.setNacionalidad(Nacionalidad.EXTRANJERO);
     // Utiliza el repositorio mockeado en lugar de la instancia real
+    repo.altaVehiculo(vehiculoNacional);
+    repo.altaVehiculo(vehiculoExtranjero);
+    //moduloIGestionClientes.
+//        repoMock.altaVehiculo(vehiculoNacional);
+//        verify(repoMock).altaVehiculo(vehiculoNacional);
+//        System.out.println("¿Vehículo encontrado? " + vehiculoNacional);
+//        repoMock.altaVehiculo(vehiculoExtranjero);
 
-
-        repoMock.altaVehiculo(vehiculoNacional);
-        verify(repoMock).altaVehiculo(vehiculoNacional);
-        System.out.println("¿Vehículo encontrado? " + vehiculoNacional);
-        repoMock.altaVehiculo(vehiculoExtranjero);
 }
 
     @Test
@@ -89,58 +93,30 @@ public class ModuloPeajeTest {
         MockitoAnnotations.openMocks(this);
 
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-
-        // Crea una instancia de Preferencial y asigna un valor de tarifa válido
-        Preferencial tarifaPreferencial = new Preferencial();
-        tarifaPreferencial.setMonto(100.0);
-
-        // Crea una instancia de Vehiculo y configúrala como un vehículo nacional
-        Nacional vehiculoNacional = new Nacional();
-        vehiculoNacional.setNacionalidad(Nacionalidad.NACIONAL);
-        vehiculoNacional.setTag(tag = new Tag("123"));
-        Matricula matricula = new Matricula("ABC123");
-        vehiculoNacional.setMatricula(matricula);
-
-        System.out.println("dato " + vehiculoNacional.getTag().getIdUnico());
-        System.out.println("dato " + vehiculoNacional.getNacionalidad());
-        System.out.println("dato " + vehiculoNacional.getMatricula().getNroMatricula());
-        moduloPeaje.altaVehiculo(vehiculoNacional);
-
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo);
         // Ejecuta el método a probar
-        boolean resultado = moduloPeaje.estaHabilitado(Integer.parseInt(tag.getIdUnico()), matricula.getNroMatricula());
+        boolean resultado = moduloPeaje.estaHabilitado(123,"ABC123");
 
         // Verifica que el resultado sea verdadero
         assertTrue(resultado);
-        System.out.println("resultado" + resultado);
-
+        System.out.println("resultado: " + resultado);
     }
-//@Test
-//public void testEstaHabilitadoVehiculoNacional() {
-//
-//
-//    // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-//    //ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-//    boolean resultado = .estaHabilitado(123, "ABC123");
-//
-//    assertTrue(resultado);
-//    verify(repo, times(1)).BuscarTag(123);
-//    verify(repo, never()).BuscarMatricula(anyString());
-//}
-//
-//    @Test
-//    public void testEstaHabilitadoVehiculoExtranjero() {
-//        // Mock del RepoPeaje
-//        RepoPeaje repoMock = mock(RepoPeaje.class);
-//        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-//        when(moduloIGestionClientes.realizarPrePago(123, 50.0)).thenReturn(true);
-//
-//        boolean resultado = moduloPeaje.estaHabilitado(123, "DEF456");
-//
-//        assertTrue(resultado);
-//        verify(moduloIGestionClientes, times(1)).realizarPrePago(123, 50.0);
-//    }
+
+    @Test
+    public void testEstaHabilitadoVehiculoExtranjero() {
+        // Mock del RepoPeaje
+        MockitoAnnotations.openMocks(this);
+
+        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo);
+        // Ejecuta el método a probar
+        boolean resultado = moduloPeaje.estaHabilitado(456,"");
+
+        // Verifica que el resultado sea verdadero
+        assertTrue(resultado);
+        System.out.println("resultado: " + resultado);
+    }
+
 //
 //    @Test
 //    public void testEstaHabilitadoVehiculoExtranjeroFalloPrePagoExitoPostPago() {

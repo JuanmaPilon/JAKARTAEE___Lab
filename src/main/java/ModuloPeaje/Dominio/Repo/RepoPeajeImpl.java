@@ -28,16 +28,15 @@ public class RepoPeajeImpl implements RepoPeaje {
 
     }
 
+
     @Override
     public Vehiculo BuscarTag(int tag) {
-        log.infof("***uw", tag);
+        log.infof("b  "+ tag);
         for (Vehiculo vehiculo : vehiculos) {
-            int tag2 = Integer.parseInt(vehiculo.getTag().getIdUnico());
-            if (tag2 == tag) {
+            if (Integer.parseInt(vehiculo.getTag().getIdUnico()) == tag) {
                 return vehiculo;
             }
         }
-
         return null;
     }
 
