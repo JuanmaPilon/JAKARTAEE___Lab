@@ -8,7 +8,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Medios de Pago</name>
+	<name>Medios-de-Pago</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -111,7 +111,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>06-JakartaProyectoReferencia</finalName>
+		<finalName>Medios-de-Pago</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
