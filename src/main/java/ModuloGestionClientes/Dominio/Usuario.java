@@ -1,5 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
+import ModuloMediosPago.Dominio.ClienteTelepeaje;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ public class Usuario {
     private String ci;
     private String nom;
     private String email;
+    private ClienteTelepeaje cliente;
 
 
 
@@ -44,4 +46,15 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+
+public ClienteTelepeaje getClienteTelepeaje() {
+    return cliente;
+}
+
+public void setClienteTelepeaje(ClienteTelepeaje clienteTelepeaje) {
+    this.cliente = clienteTelepeaje;
+}
+
 }

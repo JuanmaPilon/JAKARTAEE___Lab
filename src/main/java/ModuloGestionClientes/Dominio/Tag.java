@@ -1,9 +1,15 @@
 package ModuloGestionClientes.Dominio;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Tag {
 	
-	String idUnico;
-	
+	@Setter
+    @Getter
+    String idUnico;
+
+
 	public Tag() {
 		
 	}
@@ -12,12 +18,11 @@ public class Tag {
 		this.idUnico = idUnico;
 	}
 
-	public String getIdUnico() {
+	@Override
+	public String toString() {
 		return idUnico;
 	}
-
-	public void setIdUnico(String idUnico) {
-		this.idUnico = idUnico;
-	}
-
 }
+
+
+

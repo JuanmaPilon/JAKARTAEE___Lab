@@ -11,11 +11,22 @@ public class Vehiculo {
  private List<PasadaPorPeaje> pasadaPorPeajeList;
  private ClienteTelepeaje cliente;
 
+
  // creo que el constructor vacio, porque sino cuando tag y las otras hereden los metodos, se rompe con lombok
- public Vehiculo() {}
+ public Vehiculo() {
+ }
 
  public Vehiculo(Tag tag, List<PasadaPorPeaje> pasadaPorPeajeList) {
   this.tag = tag;
   this.pasadaPorPeajeList = pasadaPorPeajeList;
  }
+ public ClienteTelepeaje getClienteTelepeaje() {
+  return cliente;
+ }
+
+ public void setClienteTelepeaje(ClienteTelepeaje clienteTelepeaje) {
+  this.cliente= clienteTelepeaje;}
 }
+
+
+

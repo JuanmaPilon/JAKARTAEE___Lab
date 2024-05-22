@@ -17,5 +17,8 @@ public class Tag {
 		this.idUnico = idUnico;
 	}
 
-
+	@Override
+	public String toString() {
+		return idUnico;
+	}
 }

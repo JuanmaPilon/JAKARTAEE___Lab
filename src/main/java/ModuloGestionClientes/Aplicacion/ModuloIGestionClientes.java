@@ -13,8 +13,8 @@ public interface ModuloIGestionClientes {
     void desvincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo);
     void desvincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo);
     Set<Object> obtenerCuentasPorTag(ClienteTelepeaje cliente, Tag tag);
-    void realizarPrePago(ClienteTelepeaje cliente, double importe);
-    void realizarPostPago(ClienteTelepeaje cliente, double importe);
+    boolean realizarPrePago(int tag, double importe);
+    boolean realizarPostPago(int tag, double importe);
     void altaClienteSucksive(Usuario usuario);
     Double consultarSaldo(ClienteSucive cliente);
     Double consultarSaldo(ClienteTelepeaje cliente);
@@ -24,6 +24,5 @@ public interface ModuloIGestionClientes {
     Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin);
     Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
     Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
-    public boolean verificarPrePago(int tag, double importe);
-    public boolean verificarPostPago(int tag, double importe);
+
 }

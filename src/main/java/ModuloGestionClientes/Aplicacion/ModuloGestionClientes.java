@@ -2,12 +2,15 @@ package ModuloGestionClientes.Aplicacion;
 
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
+import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import ModuloGestionClientes.Dominio.*;
 import jakarta.inject.Inject;
 
 import jakarta.enterprise.event.Event;
+import org.jboss.logging.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +21,7 @@ import java.util.Date;
 // uso la inyeccion para inyectar el repoClientes,cualquier otra manera de usarlo ta mal
 @ApplicationScoped
 public class ModuloGestionClientes implements ModuloIGestionClientes {
-
+    private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     @Inject
     private ModuloIGestionClientes ModuloIGestionClientes;
     @Inject
@@ -81,6 +84,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     @Override
     public void vincularVehiculo(ClienteSucive cliente, Vehiculo vehiculo) {
         ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
+
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -92,7 +96,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
+        log.infof("***uw" + vehiculo);
+        log.infof("***uw" + cliente);
         ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+        log.infof("***uw" + clienteEnRepo);
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -182,38 +189,47 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
     @Override
-    public void realizarPrePago(ClienteTelepeaje cliente, double importe) {
-        PREPaga cuenta = cliente.getCuentaPrepaga();
+    public boolean realizarPrePago(int tag, double importe) {
+    Vehiculo vehiculo = repoClientes. BuscarTag(tag);
+        PREPaga cuenta =  vehiculo.getClienteTelepeaje().getCuentaPrepaga();
+
         if (cuenta != null) {
             if (cuenta.getSaldo() >= importe) {
                 cuenta.setSaldo(cuenta.getSaldo() - importe);
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
+                return true;
             } else {
                 System.out.println("Saldo insuficiente.");
                 String mensajeTarjeta = "Saldo insuficiente";
                 enventoPREPago.fire(mensajeTarjeta);
+                return false;
             }
         } else {
             System.out.println("No hay cuenta PREPaga asignada.");
+            return false;
         }
     }
 
     @Override
-    public void realizarPostPago(ClienteTelepeaje cliente, double importe) {
-        POSTPaga cuenta = cliente.getCuentaPostpaga();
+    public boolean realizarPostPago(int tag, double importe) {
+        Vehiculo vehiculo = repoClientes. BuscarTag(tag);
+        POSTPaga cuenta = vehiculo.getClienteTelepeaje().getCuentaPostpaga();
         if (cuenta != null) {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
                 System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
                 String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
                 enventoPagoTarjeta.fire(mensajeTarjeta);
+                return true;
             } else {
                 System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
                 String mensajeTarjeta = "Tarjeta: Rechazada";
                 enventoPagoTarjeta.fire(mensajeTarjeta);
+                return false;
             }
         } else {
             System.out.println("No hay cuenta POSTPaga asignada.");
+            return false;
         }
     }
 
@@ -332,21 +348,4 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         }
     }
 
-
-
-
-    @Override
-    public boolean verificarPrePago(int tag, double importe) {
-        //return ModuloIGestionClientes.verificarPrePago(tag, importe);
-        return true;
-    }
-
-
-    @Override
-    public boolean verificarPostPago(int tag, double importe) {
-        //return ModuloIGestionClientes.verificarPostPago(tag, importe);
-        return true;
-    }
 }
-
-

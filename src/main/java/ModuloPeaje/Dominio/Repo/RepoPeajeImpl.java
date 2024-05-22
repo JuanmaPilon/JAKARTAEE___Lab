@@ -1,16 +1,19 @@
 package ModuloPeaje.Dominio.Repo;
 
+import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import ModuloPeaje.Dominio.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import org.jboss.logging.Logger;
 
 
 public class RepoPeajeImpl implements RepoPeaje {
-
+    private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     private Preferencial tarifaPreferencial;
     private Comun tarifaComun;
     private List<Vehiculo> vehiculos;
+
 
     public RepoPeajeImpl(Preferencial tarifaPreferencial, Comun tarifaComun) {
         this.tarifaPreferencial = tarifaPreferencial;
@@ -20,17 +23,21 @@ public class RepoPeajeImpl implements RepoPeaje {
     }
     @Override
     public void altaVehiculo(Vehiculo vehiculo) {
+
         this.vehiculos.add(vehiculo);
+
     }
 
     @Override
     public Vehiculo BuscarTag(int tag) {
+        log.infof("***uw", tag);
         for (Vehiculo vehiculo : vehiculos) {
             int tag2 = Integer.parseInt(vehiculo.getTag().getIdUnico());
             if (tag2 == tag) {
                 return vehiculo;
             }
         }
+
         return null;
     }
 
@@ -54,4 +61,6 @@ public class RepoPeajeImpl implements RepoPeaje {
     public double obtenerTarifaComun() {
         return tarifaComun.obtenerMonto();
     }
+
+
 }

@@ -13,4 +13,6 @@ public interface RepoClientes {
     void agregarClienteSukcsive(ClienteSucive cliente);
     ClienteSucive buscarClienteSucPorCI(String ci);
 
+    void addVehiculo(Vehiculo vehiculo);
+    Vehiculo BuscarTag(int tag);
 }

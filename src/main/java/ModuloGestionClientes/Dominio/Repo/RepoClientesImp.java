@@ -4,6 +4,9 @@ import ModuloGestionClientes.Dominio.ClienteTelepeaje;
 import ModuloGestionClientes.Dominio.ClienteSucive;
 import ModuloGestionClientes.Dominio.Usuario;
 import ModuloGestionClientes.Dominio.Vehiculo;
+import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
+import org.jboss.logging.Logger;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,18 +14,23 @@ import java.util.List;
 import java.util.Map;
 
 public class RepoClientesImp implements RepoClientes {
+    private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     private Map<String, ClienteTelepeaje> clientesTelepeajeMap;
     private Map<String, ClienteSucive> clientesSuciveMap;
-
+    private List<Vehiculo> vehiculos = new ArrayList<>();
 
     public RepoClientesImp() {
+
         clientesTelepeajeMap = new HashMap<>();
         clientesSuciveMap = new HashMap<>();
+        this.vehiculos = new ArrayList<>();
+
     }
 
 
     @Override
     public void agregarClienteTelepeaje(ClienteTelepeaje cliente) {
+
         clientesTelepeajeMap.put(cliente.getCi(), cliente);
     }
 
@@ -33,6 +41,7 @@ public class RepoClientesImp implements RepoClientes {
 
     @Override
     public ClienteTelepeaje buscarClienteTelePorCI(String ci) {
+
         return clientesTelepeajeMap.get(ci);
     }
 
@@ -65,5 +74,22 @@ public class RepoClientesImp implements RepoClientes {
     public void eliminarClienteSucivePorCI(String ci) {
         clientesSuciveMap.remove(ci);
     }
-    
+
+    @Override
+    public void addVehiculo(Vehiculo vehiculo) {
+        vehiculos.add(vehiculo);
+    }
+
+    @Override
+    public Vehiculo BuscarTag(int tag) {
+        for (Vehiculo vehiculo : vehiculos) {
+            int tag2 = Integer.parseInt(vehiculo.getTag().getIdUnico());
+            if (tag2 == tag) {
+                return vehiculo;
+            }
+        }
+        return null;
+    }
+
 }
+
