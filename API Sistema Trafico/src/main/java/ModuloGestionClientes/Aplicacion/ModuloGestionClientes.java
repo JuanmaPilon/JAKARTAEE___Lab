@@ -200,9 +200,11 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
                 return true;
             } else {
-                System.out.println("Saldo insuficiente.");
-                String mensajeTarjeta = "Saldo insuficiente";
-                pagoTarjeta.publicarPago(mensajeTarjeta);
+                if(this.pagoTarjeta != null) {
+                    System.out.println("Saldo insuficiente.");
+                    String mensajeTarjeta = "Saldo insuficiente";
+                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                }
                 return false;
             }
         } else {

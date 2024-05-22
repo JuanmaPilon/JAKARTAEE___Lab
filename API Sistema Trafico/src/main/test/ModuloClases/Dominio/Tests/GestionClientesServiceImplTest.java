@@ -173,25 +173,30 @@ public class GestionClientesServiceImplTest {
 
     @Test
     void testRealizarPrePago_SaldoInsuficiente() {
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
         // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear una cuenta PREPaga con saldo insuficiente
         PREPaga cuentaPrepaga = new PREPaga();
-        cuentaPrepaga.setSaldo(30.0); // Saldo insuficiente para pagar
-        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+        cuentaPrepaga.setSaldo(20.0);
 
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPrepaga(cuentaPrepaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPrePago(tag, importe);
+        gestionClientesService.realizarPrePago(123, 50.0);
 
         // Verificar que el saldo no se haya reducido
-        assertEquals(30.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo debería permanecer igual debido a saldo insuficiente.");
-   }
+        assertEquals(20.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo debería permanecer igual debido a saldo insuficiente.");
+        System.out.println("Saldo insuficiente");
+        System.out.println("Su cuenta tiene: "+ cuentaPrepaga.getSaldo());
+    }
 
     @Test
     void testRealizarPrePago_SinCuentaPrepaga() {
