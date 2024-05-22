@@ -141,26 +141,32 @@ public class GestionClientesServiceImplTest {
     @Test
     void testRealizarPrePago_SaldoSuficiente() {
 
-        // Crear una cuenta PREPaga con saldo suficiente
-//        PREPaga cuentaPrepaga = new PREPaga();
-//        cuentaPrepaga.setSaldo(100.0);
-//        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+        // Crear una cuenta PREPaga con saldo suficiente
+        PREPaga cuentaPrepaga = new PREPaga();
+        cuentaPrepaga.setSaldo(100.0);
+
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPrepaga(cuentaPrepaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        boolean resultado = gestionClientesService.realizarPrePago(tag, importe);
+        boolean resultado = gestionClientesService.realizarPrePago(123, 50.0);
 
         assertTrue(resultado);
         // Busca el vehículo por el tag
-        Vehiculo vehiculo = repoClientes.BuscarTag(tag);
+        vehiculo = repoClientes.BuscarTag(Integer.parseInt(tag.getIdUnico()));
 
         // Verificar que el saldo se haya reducido correctamente
-        //assertEquals(50.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo no se redujo correctamente.");
-        //assertEquals(50.0, vehiculo.getClienteTelepeaje().getCuentaPrepaga().getSaldo());
+        assertEquals(50.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo no se redujo correctamente.");
+        assertEquals(50.0, vehiculo.getClienteTelepeaje().getCuentaPrepaga().getSaldo());
         System.out.println("Test realizado. Saldo esperado: " + 50.0);
 
     }

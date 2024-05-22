@@ -99,10 +99,8 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public void vincularVehiculo(ClienteTelepeaje cliente, Vehiculo vehiculo) {
-        log.infof("***uw" + vehiculo);
-        log.infof("***uw" + cliente);
+
         ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
-        log.infof("***uw" + clienteEnRepo);
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
@@ -193,7 +191,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
     @Override
     public boolean realizarPrePago(int tag, double importe) {
-    Vehiculo vehiculo = repoClientes.BuscarTag(tag);
+        Vehiculo vehiculo = repoClientes.BuscarTag(tag);
         PREPaga cuenta =  vehiculo.getClienteTelepeaje().getCuentaPrepaga();
 
         if (cuenta != null) {
