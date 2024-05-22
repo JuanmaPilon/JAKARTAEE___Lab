@@ -220,16 +220,18 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (cuenta != null) {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
-                if(this.pagoTarjeta != null) {
                     System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                if(this.pagoTarjeta != null) {
                     String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
                     pagoTarjeta.publicarPago(mensajeTarjeta);
                 }
                 return true;
             } else {
-                System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
-                String mensajeTarjeta = "Tarjeta: Rechazada";
-                pagoTarjeta.publicarPago(mensajeTarjeta);
+                    System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
+                if(this.pagoTarjeta != null) {
+                    String mensajeTarjeta = "Tarjeta: Rechazada";
+                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                }
                 return false;
             }
         } else {

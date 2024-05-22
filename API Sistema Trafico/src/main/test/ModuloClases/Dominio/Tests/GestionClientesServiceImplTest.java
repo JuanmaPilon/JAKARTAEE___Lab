@@ -248,35 +248,44 @@ public class GestionClientesServiceImplTest {
 
     @Test
     void testRealizarPostPago_SinTarjeta() {
-        // Crear un cliente de Telepeaje con cuenta POSTPaga pero sin tarjeta asociada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear una cuenta POSTPaga sin tarjeta asociada
         POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), null);
         cliente.asignarCuentaPostpaga(cuentaPostpaga);
 
-        // Importe a pagar
-        double importe = 50.0;
-        //tag asignado
-        int tag = 123;
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPostpaga(cuentaPostpaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPostPago(tag, importe);
+        gestionClientesService.realizarPostPago(123, 50.0);
+
 
     }
 
     @Test
     void testRealizarPostPago_SinCuentaPostpaga() {
-        // Crear un cliente de Telepeaje sin cuenta POSTPaga asignada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
-        // Importe a pagar
-        double importe = 50.0;
-        //tag asignado
-        int tag = 123;
+
+        vehiculo.setCliente(cliente);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPostPago(tag, importe);
+        gestionClientesService.realizarPostPago(123, 50.0);
     }
 
     @Test
