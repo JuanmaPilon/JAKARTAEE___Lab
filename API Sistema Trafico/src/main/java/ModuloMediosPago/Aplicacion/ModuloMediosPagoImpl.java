@@ -36,8 +36,11 @@ public class ModuloMediosPagoImpl implements ModuloMediosPagoAplicacion {
         ClienteTelepeaje clienteModulo = repoMediosPago.buscarCliente(cliente.getCi()); // busco el cliente que esta ingresado en el repo mediante el que se me provee
         String texto = "Nuevo pago por el importe de :" + importe + " Matricula: "+ vehiculo.getMatricula().getNroMatricula() +" Tarjeta: "+ tarjeta.getNombre(); //creo la notificacion
         moduloComunicacion.notificarInformacion(clienteModulo.getCi(),texto);// le derivo la tarea de la notificacion al modulo correspondiente (ver como hacer con eventos)
-        eventoPago.fire(texto); // Notifica al modulo de monitoreo
+        if(this.eventoPago != null){
+            eventoPago.fire(texto); // Notifica al modulo de monitoreo
+        }
     }
+
 
     @Override
     public List<Pagos> consultaDePagos(Date fechaInicial, Date fechaFinal) {
