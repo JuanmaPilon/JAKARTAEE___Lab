@@ -200,15 +200,19 @@ public class GestionClientesServiceImplTest {
 
     @Test
     void testRealizarPrePago_SinCuentaPrepaga() {
-        // Crear un cliente de Telepeaje sin cuenta PREPaga asignada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+
+        vehiculo.setCliente(cliente);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
 
         // Realizar el pago
-        gestionClientesService.realizarPrePago(tag, importe);
+        gestionClientesService.realizarPrePago(123, 50.0);
 
     }
 
