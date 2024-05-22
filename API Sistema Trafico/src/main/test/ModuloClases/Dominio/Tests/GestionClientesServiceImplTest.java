@@ -218,7 +218,11 @@ public class GestionClientesServiceImplTest {
 
     @Test
     void testRealizarPostPago_ConTarjeta() throws ParseException {
-        // Crear un cliente de Telepeaje con cuenta POSTPaga y tarjeta asociada
+        // Crear un vehículo
+        Vehiculo vehiculo = new Vehiculo();
+        Tag tag = new Tag("123");
+        vehiculo.setTag(tag);
+        // Crear un cliente de Telepeaje
         ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
 
         // Crear fecha como cadena
@@ -231,13 +235,15 @@ public class GestionClientesServiceImplTest {
         POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), tarjeta);
         cliente.asignarCuentaPostpaga(cuentaPostpaga);
 
-        //tag asignado
-        int tag = 123;
-        // Importe a pagar
-        double importe = 50.0;
+        vehiculo.setCliente(cliente);
+        cliente.setCuentaPostpaga(cuentaPostpaga);
+        repoClientes.agregarClienteTelepeaje(cliente);
+        repoClientes.addVehiculo(vehiculo);
+
 
         // Realizar el pago
-        gestionClientesService.realizarPostPago(tag, importe);
+        gestionClientesService.realizarPostPago(123, 50.0);
+        System.out.println("Pago logrado");
     }
 
     @Test

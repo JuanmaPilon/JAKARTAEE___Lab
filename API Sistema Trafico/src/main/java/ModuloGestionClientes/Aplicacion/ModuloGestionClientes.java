@@ -220,9 +220,11 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (cuenta != null) {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
-                System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
-                String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
-                pagoTarjeta.publicarPago(mensajeTarjeta);
+                if(this.pagoTarjeta != null) {
+                    System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                    String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
+                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                }
                 return true;
             } else {
                 System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
