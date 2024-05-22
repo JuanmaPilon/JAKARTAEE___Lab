@@ -2,6 +2,7 @@ package ModuloClases.Dominio.Tests;
 
 import ModuloPeaje.Evento.notificarPasajeVehiculo;
 import ModuloSucive.Evento.notificarPagoSucive;
+import ModuloGestionClientes.Evento.notCobroTarjeta;
 import ModuloMonitoreo.Aplicacion.ModuloMonitoreo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class ModuloMonitoreoTest {
     }
 
     @Test
-    public void testnotificarPeajeVehiculo() {
+    public void testNotificarPeajeVehiculo() {
         // Arrange
         String mensaje = "Pasaje de vehículo detectado";
         notificarPasajeVehiculo event = new notificarPasajeVehiculo(mensaje);
@@ -39,4 +40,35 @@ public class ModuloMonitoreoTest {
         // Act
         moduloMonitoreo.notificarPeajeVehiculo(event);
     }
+
+    @Test
+    public void testNotificarCobroTarjeta() {
+        // Arrange
+        String mensaje = "Cobro con Tarjeta realizado";
+        notCobroTarjeta event = new notCobroTarjeta(mensaje);
+
+        // Act
+        moduloMonitoreo.notificarCobroTarjeta(event);
+    }
+
+    @Test
+    public void testNotificarCobroTarjetaRechazado() {
+        // Arrange
+        String mensaje = "Tarjeta Rechazada";
+        notCobroTarjeta event = new notCobroTarjeta(mensaje);
+
+        // Act
+        moduloMonitoreo.notificarCobroTarjetaRechazado(event);
+    }
+
+    @Test
+    public void testNotificarSaldoInsuficiente() {
+        // Arrange
+        String mensaje = "Saldo Insuficiente";
+        notCobroTarjeta event = new notCobroTarjeta(mensaje);
+
+        // Act
+        moduloMonitoreo.notificarSaldoInsuficiente(event);
+    }
+
 }

@@ -2,6 +2,7 @@ package ModuloGestionClientes.Aplicacion;
 
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
+import ModuloGestionClientes.Evento.PublicadorEventoClientes;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -24,12 +25,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     @Inject
     private ModuloIGestionClientes ModuloIGestionClientes;
+    // -----------------------------------------------------
     @Inject
-    private Event<String> enventoPagoTarjeta;
-
-    @Inject
-    private Event<String> enventoPREPago;
-
+    private PublicadorEventoClientes pagoTarjeta;
+    // ------------------------------------------------------
     @Inject
     private RepoClientes repoClientes;
 
@@ -201,7 +200,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             } else {
                 System.out.println("Saldo insuficiente.");
                 String mensajeTarjeta = "Saldo insuficiente";
-                enventoPREPago.fire(mensajeTarjeta);
+                pagoTarjeta.publicarPago(mensajeTarjeta);
                 return false;
             }
         } else {
@@ -219,12 +218,12 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             if (tarjeta != null) {
                 System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
                 String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
-                enventoPagoTarjeta.fire(mensajeTarjeta);
+                pagoTarjeta.publicarPago(mensajeTarjeta);
                 return true;
             } else {
                 System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
                 String mensajeTarjeta = "Tarjeta: Rechazada";
-                enventoPagoTarjeta.fire(mensajeTarjeta);
+                pagoTarjeta.publicarPago(mensajeTarjeta);
                 return false;
             }
         } else {

@@ -2,6 +2,7 @@ package ModuloMonitoreo.Aplicacion;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
+import ModuloGestionClientes.Evento.notCobroTarjeta;
 import ModuloSucive.Evento.notificarPagoSucive;
 import ModuloPeaje.Evento.notificarPasajeVehiculo;
 import jakarta.enterprise.event.Observes;
@@ -23,18 +24,18 @@ public class ModuloMonitoreo {
 
 
 
-    public void notificarCobroTarjeta(@Observes String evento) {
+    public void notificarCobroTarjeta(@Observes notCobroTarjeta event) {
         // Manejar el evento de pago recibido desde el módulo de MediosPago
-        System.out.println("Evento de pago recibido: " + evento);
+        System.out.println(event.getDescripcion());
     }
 
 
-    public void notificarCobroTarjetaRechazado(@Observes String mensajeTarjeta) {
-        System.out.println("Evento: rechazo de cobro por tarjeta" + mensajeTarjeta);
+    public void notificarCobroTarjetaRechazado(@Observes notCobroTarjeta event) {
+        System.out.println(event.getDescripcion());
     }
 
 
-    public void notificarSaldoInsuficiente(@Observes String mensajeTarjeta) {
-         System.out.println("Evento: rechazo de cobro por saldo insuficiente" + mensajeTarjeta);
+    public void notificarSaldoInsuficiente(@Observes notCobroTarjeta event) {
+        System.out.println(event.getDescripcion());
     }
 }
