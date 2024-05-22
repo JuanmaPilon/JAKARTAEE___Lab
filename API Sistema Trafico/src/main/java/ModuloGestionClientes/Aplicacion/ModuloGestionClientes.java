@@ -36,6 +36,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
         this.repoClientes = new RepoClientesImp();
     }
+    public ModuloGestionClientes(RepoClientesImp repoClientesImp) {
+
+        this.repoClientes = repoClientesImp;
+    }
 
     @Override
     public void altaClienteTeleapeje(Usuario usuario) {
@@ -87,7 +91,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (clienteEnRepo != null) {
             clienteEnRepo.agregarVehiculoACliente(vehiculo);
             repoClientes.actualizarCliente(clienteEnRepo);
-            System.out.println("El veheiculo ha sido vinculado al cliente exitosamente.");
+            System.out.println("El vehiculo ha sido vinculado al cliente exitosamente.");
         } else {
             System.out.println("Cliente no encontrado en el repo.");
         }

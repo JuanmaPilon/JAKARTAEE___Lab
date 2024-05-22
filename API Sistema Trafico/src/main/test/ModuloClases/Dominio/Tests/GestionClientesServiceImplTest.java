@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GestionClientesServiceImplTest {
 
     @Inject
-    private RepoClientes repoClientes;
+    private RepoClientesImp repoClientes;
     @Inject
     private ModuloGestionClientes gestionClientesService;
 
@@ -40,7 +40,7 @@ public class GestionClientesServiceImplTest {
         // Inicializa la implementación real del repositorio
         repoClientes = new RepoClientesImp();
         // Inicializa el servicio con el repositorio
-        gestionClientesService = new ModuloGestionClientes();
+        gestionClientesService = new ModuloGestionClientes(repoClientes);
 
         // Configura los datos iniciales
         clienteTelepeaje = new ClienteTelepeaje();
@@ -391,7 +391,7 @@ public class GestionClientesServiceImplTest {
 
         clienteEnRepo = repoClientes.buscarClienteTelePorCI("12345678");
         assertNotNull(clienteEnRepo);
-        assertTrue(clienteEnRepo.getVehiculosCliente().contains(vehiculo), "El vehículo debería estar vinculado al cliente de Telepeaje.");
+        assertTrue(clienteEnRepo.getVehiculosCliente().contains(vehiculo), "El vehiculo debería estar vinculado al cliente de Telepeaje.");
 
         }
 }
