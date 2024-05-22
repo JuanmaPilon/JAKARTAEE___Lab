@@ -108,15 +108,32 @@ public class ModuloPeajeTest {
         MockitoAnnotations.openMocks(this);
 
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo,moduloIGestionClientes);
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo);
         // Ejecuta el método a probar
-        when(moduloIGestionClientes.realizarPrePago(456, 50.000000)).thenReturn(true);
-
         boolean resultado = moduloPeaje.estaHabilitado(456,"");
+
         // Verifica que el resultado sea verdadero
         assertTrue(resultado);
         System.out.println("resultado: " + resultado);
     }
+
+//
+//    @Test
+//    public void testEstaHabilitadoVehiculoExtranjeroFalloPrePagoExitoPostPago() {
+//        // Mock del RepoPeaje
+//        RepoPeaje repoMock = mock(RepoPeaje.class);
+//        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
+//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
+//
+//        when(moduloIGestionClientes.realizarPrePago(123, 50.0)).thenReturn(false);
+//        when(moduloIGestionClientes.realizarPostPago(123, 50.0)).thenReturn(true);
+//
+//        boolean resultado = moduloPeaje.estaHabilitado(123, "DEF456");
+//
+//        assertTrue(resultado);
+//        verify(moduloIGestionClientes, times(1)).realizarPrePago(123, 50.0);
+//        verify(moduloIGestionClientes, times(1)).realizarPostPago(123, 50.0);
+//    }
 
     @Test
     public void testVehiculoNoEncontrado() {
