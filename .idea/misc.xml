@@ -5,8 +5,6 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/Sistema Trafico/pom.xml" />
-        <option value="$PROJECT_DIR$/API Medios de Pago (RESTFul)/pom.xml" />
       </list>
     </option>
   </component>
