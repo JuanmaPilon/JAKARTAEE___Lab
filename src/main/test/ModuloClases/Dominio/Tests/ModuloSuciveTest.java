@@ -68,6 +68,4 @@ public class ModuloSuciveTest {
         verify(moduloMonitoreo).notificarCobroSucive(eventCaptor.getValue());
     }
     // como pruebo las otras operaciones del modulo si supuestamente este modulo no tiene ninguna operacion de alta ???
-    
-
 }

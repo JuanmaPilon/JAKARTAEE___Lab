@@ -108,10 +108,11 @@ public class ModuloPeajeTest {
         MockitoAnnotations.openMocks(this);
 
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo);
+        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo,moduloIGestionClientes);
         // Ejecuta el método a probar
-        boolean resultado = moduloPeaje.estaHabilitado(456,"");
+        when(moduloIGestionClientes.realizarPrePago(456, 50.000000)).thenReturn(true);
 
+        boolean resultado = moduloPeaje.estaHabilitado(456,"");
         // Verifica que el resultado sea verdadero
         assertTrue(resultado);
         System.out.println("resultado: " + resultado);
