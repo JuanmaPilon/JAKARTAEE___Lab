@@ -3,6 +3,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import ModuloSucive.Evento.notificarPagoSucive;
+import ModuloPeaje.Evento.notificarPasajeVehiculo;
 import jakarta.enterprise.event.Observes;
 
 @ApplicationScoped
@@ -10,9 +11,9 @@ public class ModuloMonitoreo {
 
     // Método anotado con @Observes para escuchar el evento de pasaje de vehículo enviado desde el módulo de Peaje
 
-    public void notificarPasajeVehiculo(@Observes String mensaje) {
+    public void notificarPeajeVehiculo(@Observes notificarPasajeVehiculo event) {
         // Manejar el evento de pasaje de vehículo recibido desde el módulo de Peaje
-        System.out.println("Evento de pasaje de vehículo: " + mensaje);
+        System.out.println(event.getDescripcion());
     }
 
 

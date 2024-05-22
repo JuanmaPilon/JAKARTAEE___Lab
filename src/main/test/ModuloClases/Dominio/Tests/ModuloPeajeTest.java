@@ -6,8 +6,10 @@ import ModuloPeaje.Aplicacion.*;
 import ModuloPeaje.Dominio.Repo.RepoPeajeImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import jakarta.inject.Inject;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +25,14 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import ModuloGestionClientes.Dominio.ClienteTelepeaje;
 
+import ModuloPeaje.Aplicacion.ModuloPeajeAplicacion;
+import ModuloPeaje.Evento.notificarPasajeVehiculo;
+import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 @ExtendWith(MockitoExtension.class)
 public class ModuloPeajeTest {

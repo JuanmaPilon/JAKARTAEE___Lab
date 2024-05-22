@@ -2,6 +2,7 @@ package ModuloPeaje.Aplicacion;
 
 
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
+import ModuloPeaje.Evento.PublicadorEventoPeaje;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
@@ -21,7 +22,7 @@ public class ModuloPeajeImpl {
 
 
     @Inject
-    private Event<String> eventoPasajeVehiculo; // Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
+    private PublicadorEventoPeaje pasajeVehiculo;// Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
 
     @Inject
     private Event<String> vehiculoNoEncontrado;
@@ -168,8 +169,8 @@ public class ModuloPeajeImpl {
     public void manejarNotificarPasajeVehiculo() {
         // Lógica para determinar el pasaje de vehículo
         // Una vez que se detecta el pasaje, se envía un evento para notificar al módulo de Monitoreo
-        String mensaje = "Pasaje de vehículo detectado";
-        eventoPasajeVehiculo.fire(mensaje);
+        String mensajeVehiulo = "Pasaje de vehículo detectado";
+        pasajeVehiculo.publicarPasajeVehiculo(mensajeVehiulo);
     }
 
 
