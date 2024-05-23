@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/API Sistema Trafico/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/API Sistema Trafico/src/main/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/API Sistema Trafico/src/main/test/ModuloClases/Dominio/Tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/API Medios de Pagos (RESTFul)/src/main/java" isTestSource="false" />
     </content>
   </component>
   <component name="FacetManager">
