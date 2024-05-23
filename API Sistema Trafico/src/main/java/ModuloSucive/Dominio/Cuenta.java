@@ -1,7 +1,8 @@
-package ModuloClases.Dominio;
+package ModuloSucive.Dominio;
+
+import lombok.Data;
 
 import java.util.Date;
-import lombok.Data;
 
 //cambie esto por lombok, la verdad que mucho mejor la notacion
 

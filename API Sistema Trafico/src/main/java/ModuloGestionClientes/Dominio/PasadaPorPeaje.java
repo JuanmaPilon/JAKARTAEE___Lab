@@ -1,6 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
-import ModuloClases.Dominio.DataTipoCobro;
+import ModuloGestionClientes.Dominio.DataTipoCobro;
 import lombok.Data;
 
 import java.util.Date;

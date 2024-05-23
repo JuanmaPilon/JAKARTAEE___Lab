@@ -1,6 +1,6 @@
 package ModuloPeaje.Dominio;
 
-import ModuloClases.Dominio.DataTipoCobro;
+import ModuloPeaje.Dominio.DataTipoCobro;
 import lombok.Data;
 
 import java.util.Date;

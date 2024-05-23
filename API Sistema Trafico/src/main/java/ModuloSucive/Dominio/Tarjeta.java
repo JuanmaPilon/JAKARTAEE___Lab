@@ -1,4 +1,4 @@
-package ModuloClases.Dominio;
+package ModuloSucive.Dominio;
 
 import java.sql.Date;
 
