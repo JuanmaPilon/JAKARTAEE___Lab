@@ -37,13 +37,4 @@ public class Tarjeta {
         this.fechaVto = fechaVto;
     }
 
-    /*@Override
-    public String toString() {
-        return "Tarjeta{" +
-                "nroTarjeta=" + nro +
-                ", nombre='" + nombre + '\'' +
-                ", fechaVencimiento=" + fechaVto +
-                '}';
-    }
-     */
 }
