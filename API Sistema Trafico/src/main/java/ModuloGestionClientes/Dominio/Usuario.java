@@ -1,16 +1,22 @@
 package ModuloGestionClientes.Dominio;
 
-import ModuloMediosPago.Dominio.ClienteTelepeaje;
+import ModuloGestionClientes.Dominio.ClienteTelepeaje;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.*;
 
 @Getter
 @Setter
-
+@Entity
+@Inheritance (strategy = InheritanceType.JOINED)
+@Table(name = "gestion_usuario")
 public class Usuario {
+
+    @Id
     private String ci;
     private String nom;
     private String email;
+    @OneToOne
     private ClienteTelepeaje cliente;
 
 

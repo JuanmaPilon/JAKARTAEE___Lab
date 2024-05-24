@@ -1,5 +1,9 @@
 package ModuloGestionClientes.Dominio;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table (name = "gestion_usrNacional")
 public class UsrNacional extends Usuario {
 
     public UsrNacional() {
