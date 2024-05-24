@@ -1,7 +1,12 @@
 package ModuloGestionClientes.Dominio;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "gestion_Matricula")
 public class Matricula {
-	
+
+	@Id
 	String nroMatricula;
 	
 	public Matricula() {

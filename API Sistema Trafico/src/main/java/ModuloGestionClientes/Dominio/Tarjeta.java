@@ -1,10 +1,25 @@
 package ModuloGestionClientes.Dominio;
 
-import java.sql.Date;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.sql.Date;
+import jakarta.persistence.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table (name = "gestion_tarjeta")
 public class Tarjeta {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int nro;
+
     private String nombre;
+
     private Date fechaVto;
 
     public Tarjeta(int nro, String nombre, Date fechaVto) {
@@ -17,33 +32,9 @@ public class Tarjeta {
         return nro;
     }
 
-    public void setNroTarjeta(int nro) {
-        this.nro = nro;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Date getFechaVto() {
-        return fechaVto;
-    }
 
     public void setFechaVencimiento(Date fechaVto) {
         this.fechaVto = fechaVto;
     }
 
-    /*@Override
-    public String toString() {
-        return "Tarjeta{" +
-                "nroTarjeta=" + nro +
-                ", nombre='" + nombre + '\'' +
-                ", fechaVencimiento=" + fechaVto +
-                '}';
-    }
-     */
 }

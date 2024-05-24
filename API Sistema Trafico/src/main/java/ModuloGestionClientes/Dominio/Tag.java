@@ -2,11 +2,16 @@ package ModuloGestionClientes.Dominio;
 
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.*;
 
+@Setter
+@Getter
+@Entity
+@Table(name = "gestion_Tag")
 public class Tag {
-	
-	@Setter
-    @Getter
+
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
     String idUnico;
 
 

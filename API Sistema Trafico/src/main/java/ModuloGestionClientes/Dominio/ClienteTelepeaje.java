@@ -1,7 +1,7 @@
 package ModuloGestionClientes.Dominio;
 
 import lombok.Data;
-import lombok.Getter;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,38 @@ import java.util.Date;
 // cambie por data que ya incluye setters , getters, pareses y to string y otras cosas.
 
 @Data
+@Entity
+@Table(name = "gestion_clienteTelepeaje")
 public class ClienteTelepeaje {
 
-    private String nombre;
+
+    @Id
     private String ci;
+
+    private String nombre;
     private String email;
-    private List<Vehiculo> vehiculosCliente;
     private Double saldo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "cuenta_prepaga_id", referencedColumnName = "id")
     private PREPaga cuentaPrepaga; // Cuenta de tipo PREPaga
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "postpaga_id", referencedColumnName = "id")
     private POSTPaga cuentaPostpaga; // Cuenta de tipo POSTPaga
+
+    @OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "tarjeta_id", referencedColumnName = "id")
     private Tarjeta tarjeta;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "cliente_id")
     private List<PasadaPorPeaje> pasadaPorPeaje;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "cliente_id")
+    private List<Vehiculo> vehiculosCliente;
 
     public ClienteTelepeaje() {
         this.vehiculosCliente = new ArrayList<>();
