@@ -7,7 +7,7 @@ import ModuloPeaje.Dominio.*;
 public class Vehiculo {
     private Tag tag;
     private List<PasadaPorPeaje> pasadaPorPeajeList;
-    private ClienteTelepeaje cliente;
+    
 
     // creo que el constructor vacio, porque sino cuando tag y las otras hereden los metodos, se rompe con lombok
     public Vehiculo() {
@@ -25,12 +25,6 @@ public class Vehiculo {
         return nacionalidad == Nacionalidad.NACIONAL;
     }
 
-    public ClienteTelepeaje getClienteTelepeaje() {
-        return cliente;
-    }
-
-    public void setClienteTelepeaje(ClienteTelepeaje clienteTelepeaje) {
-        this.cliente= clienteTelepeaje;}
 
 }
 
