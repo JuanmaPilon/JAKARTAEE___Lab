@@ -2,11 +2,25 @@ package ModuloPeaje.Dominio;
 import lombok.Data;
 import java.util.List;
 import ModuloPeaje.Dominio.*;
+import jakarta.persistence.*;
 
 @Data
+@Entity
+@Inheritance (strategy = InheritanceType.JOINED)
+@Table(name = "peaje_Vehiculo")
 public class Vehiculo {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Tag tag;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PasadaPorPeaje> pasadaPorPeajeList;
+
+    private Nacionalidad nacionalidad;
     
 
     // creo que el constructor vacio, porque sino cuando tag y las otras hereden los metodos, se rompe con lombok
@@ -17,8 +31,6 @@ public class Vehiculo {
         this.tag = tag;
         this.pasadaPorPeajeList = pasadaPorPeajeList;
     }
-    private long id;
-    private Nacionalidad nacionalidad;
 
 
     public boolean nacional() {

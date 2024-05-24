@@ -2,14 +2,22 @@ package ModuloPeaje.Dominio;
 
 import ModuloPeaje.Dominio.DataTipoCobro;
 import lombok.Data;
-
 import java.util.Date;
+import jakarta.persistence.*;
 
 @Data
+@Entity
+@Table(name = "peaje_PasadaPorPeaje")
 public class PasadaPorPeaje {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    long id;
 
     private Date fecha;
     private double costo;
+
+    @Embedded
     private DataTipoCobro tipoCobro;
 
     public PasadaPorPeaje() {}

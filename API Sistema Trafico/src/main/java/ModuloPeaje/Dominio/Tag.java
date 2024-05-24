@@ -2,12 +2,17 @@ package ModuloPeaje.Dominio;
 
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.*;
 
 @Setter
 @Getter
+@Entity
+@Table(name = "peaje_Tag")
 public class Tag {
 
-	private String idUnico;
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	String idUnico;
 
 	public Tag() {
 

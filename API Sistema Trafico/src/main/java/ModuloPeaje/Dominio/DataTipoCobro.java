@@ -3,11 +3,17 @@ package ModuloPeaje.Dominio;
 import ModuloMediosPago.Dominio.ClienteSucive;
 import ModuloMediosPago.Dominio.POSTPaga;
 import ModuloMediosPago.Dominio.PREPaga;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@Embeddable
+@NoArgsConstructor
 public class DataTipoCobro {
 
-    private ModuloMediosPago.Dominio.PREPaga prePaga;
-    private ModuloMediosPago.Dominio.POSTPaga postPago;
+    private PREPaga prePaga;
+    private POSTPaga postPago;
     private ClienteSucive clienteSucive;
 
 
@@ -17,18 +23,5 @@ public class DataTipoCobro {
         this.postPago = postPago;
         this.clienteSucive = clienteSucive;
     }
-
-    public PREPaga getPrePaga() {
-        return prePaga;
-    }
-
-    public POSTPaga getPostPago() {
-        return postPago;
-    }
-
-    public ClienteSucive getClienteSucive() {
-        return clienteSucive;
-    }
-
 
 }

@@ -1,6 +1,5 @@
 package ModuloPeaje.Dominio;
 
-
 public enum Nacionalidad {
         NACIONAL(1),
         EXTRANJERO(2);

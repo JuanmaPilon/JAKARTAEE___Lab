@@ -1,6 +1,15 @@
 package ModuloPeaje.Dominio;
 
-public class Comun extends ModuloPeaje.Dominio.Tarifa {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.Getter;
+
+
+
+@Entity
+@Getter
+@DiscriminatorValue("comun")
+public class Comun extends Tarifa {
 
 	public Comun() {
 		// Llama al constructor de la superclase Tarifa sin argumentos
