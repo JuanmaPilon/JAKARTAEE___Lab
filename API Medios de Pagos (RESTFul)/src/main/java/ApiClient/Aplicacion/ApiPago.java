@@ -21,12 +21,14 @@ public class ApiPago {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response mensaje() {
+        System.out.println("Todo ok negro cagado");
         return Response.ok("Tdo ok").status(200, "OK").build();
     }
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     public Response otroMensaje() {
+        System.out.println("Todo ok negro cagado");
         return Response.ok("Funciona ok").status(200, "Nice").build();
     }
 
