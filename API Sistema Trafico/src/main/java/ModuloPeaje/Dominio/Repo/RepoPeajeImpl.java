@@ -5,9 +5,10 @@ import ModuloPeaje.Dominio.*;
 
 import java.util.*;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
 
-
+@ApplicationScoped
 public class RepoPeajeImpl implements RepoPeaje {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     private Preferencial tarifaPreferencial;
@@ -15,12 +16,12 @@ public class RepoPeajeImpl implements RepoPeaje {
     private List<Vehiculo> vehiculos;
 
 
-    public RepoPeajeImpl(Preferencial tarifaPreferencial, Comun tarifaComun) {
-        this.tarifaPreferencial = tarifaPreferencial;
-        this.tarifaComun = tarifaComun;
-        this.vehiculos = new ArrayList<>();
-
-    }
+//    public RepoPeajeImpl(Preferencial tarifaPreferencial, Comun tarifaComun) {
+//        this.tarifaPreferencial = tarifaPreferencial;
+//        this.tarifaComun = tarifaComun;
+//        this.vehiculos = new ArrayList<>();
+//
+//    }
     @Override
     public void altaVehiculo(Vehiculo vehiculo) {
 

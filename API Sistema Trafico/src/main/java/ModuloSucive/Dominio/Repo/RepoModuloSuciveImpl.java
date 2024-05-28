@@ -3,11 +3,13 @@ package ModuloSucive.Dominio.Repo;
 
 
 import ModuloSucive.Dominio.*;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+@ApplicationScoped
 public class RepoModuloSuciveImpl implements RepoModuloSucive {
     private Map<String, Matricula> matriculasMap;
 

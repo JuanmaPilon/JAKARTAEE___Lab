@@ -5,6 +5,7 @@ import ModuloGestionClientes.Dominio.ClienteSucive;
 import ModuloGestionClientes.Dominio.Usuario;
 import ModuloGestionClientes.Dominio.Vehiculo;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
 
 
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ApplicationScoped
 public class RepoClientesImp implements RepoClientes {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     private Map<String, ClienteTelepeaje> clientesTelepeajeMap;
