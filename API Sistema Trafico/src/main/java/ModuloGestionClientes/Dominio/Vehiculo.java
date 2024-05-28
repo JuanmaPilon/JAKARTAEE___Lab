@@ -7,9 +7,9 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Data
-@Entity
+@Entity(name = "gestion_Vehiculo")
 @Inheritance (strategy = InheritanceType.JOINED)
-@Table(name = "gestion_Vehiculo") //manualmente establezco el nombre de la tabla
+// @Table(name = "gestion_Vehiculo")
 public class Vehiculo {
 
  @Id

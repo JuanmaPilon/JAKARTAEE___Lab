@@ -5,9 +5,9 @@ import ModuloPeaje.Dominio.*;
 import jakarta.persistence.*;
 
 @Data
-@Entity
+@Entity(name = "peaje_Vehiculo")
 @Inheritance (strategy = InheritanceType.JOINED)
-@Table(name = "peaje_Vehiculo")
+// @Table(name = "peaje_Vehiculo")
 public class Vehiculo {
 
     @Id

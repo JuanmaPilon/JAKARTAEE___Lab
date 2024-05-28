@@ -15,13 +15,16 @@ public class RepoPeajeImpl implements RepoPeaje {
     private Comun tarifaComun;
     private List<Vehiculo> vehiculos;
 
+    public RepoPeajeImpl() {
+        // Constructor sin parámetros requerido por CDI
+    }
 
-//    public RepoPeajeImpl(Preferencial tarifaPreferencial, Comun tarifaComun) {
-//        this.tarifaPreferencial = tarifaPreferencial;
-//        this.tarifaComun = tarifaComun;
-//        this.vehiculos = new ArrayList<>();
-//
-//    }
+    public RepoPeajeImpl(Preferencial tarifaPreferencial, Comun tarifaComun) {
+        this.tarifaPreferencial = tarifaPreferencial;
+        this.tarifaComun = tarifaComun;
+        this.vehiculos = new ArrayList<>();
+
+    }
     @Override
     public void altaVehiculo(Vehiculo vehiculo) {
 

@@ -9,8 +9,8 @@ import java.util.List;
 // mismo que las otras clases, también hay que quitar las otras viejas desactualizadas de cada modulo y solo ponerlos aca
 
 @Data
-@Entity
-@Table(name = "gestion_clienteSucive")
+@Entity(name = "gestion_clienteSucive")
+// @Table(name = "gestion_clienteSucive")
 public class ClienteSucive {
 
     // no me lo agarra usr nacional si es private, lo cambio a public, pero no se si estará bien

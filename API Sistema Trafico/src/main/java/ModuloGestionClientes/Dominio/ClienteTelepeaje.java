@@ -9,8 +9,8 @@ import java.util.Date;
 // cambie por data que ya incluye setters , getters, pareses y to string y otras cosas.
 
 @Data
-@Entity
-@Table(name = "gestion_clienteTelepeaje")
+@Entity(name = "gestion_clienteTelepeaje")
+// @Table(name = "gestion_clienteTelepeaje")
 public class ClienteTelepeaje {
 
 

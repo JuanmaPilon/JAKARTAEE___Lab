@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 
 @EqualsAndHashCode(callSuper = true) //faltaba esta linea sino no incluye llamadas del metodo base
 @Data
-@Entity
-@Table(name = "gestion_cuentaPrePaga")
+@Entity(name = "gestion_cuentaPrePaga")
+// @Table(name = "gestion_cuentaPrePaga")
 public class PREPaga extends Cuenta {
 
 

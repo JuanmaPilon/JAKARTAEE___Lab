@@ -13,8 +13,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true) //faltaba esta línea si no no incluye llamadas del método base
 @Data
 @NoArgsConstructor
-@Entity
-@Table (name = "gestion_cuentaPostPaga")
+@Entity(name = "gestion_cuentaPostPaga")
+// @Table (name = "gestion_cuentaPostPaga")
 public class POSTPaga extends Cuenta {
 
     private double saldo;

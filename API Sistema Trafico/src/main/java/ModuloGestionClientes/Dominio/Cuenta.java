@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 //cambie esto por lombok, la verdad que mucho mejor la notacion
 
 @Data
-@Entity
+@Entity(name = "gestion_cuenta")
 @Inheritance (strategy = InheritanceType.JOINED)
-@Table(name = "gestion_cuenta")
+// @Table(name = "gestion_cuenta")
 public class Cuenta {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

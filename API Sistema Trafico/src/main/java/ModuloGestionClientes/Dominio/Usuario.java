@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "gestion_usuario")
 @Inheritance (strategy = InheritanceType.JOINED)
-@Table(name = "gestion_usuario")
+// @Table(name = "gestion_usuario")
 public class Usuario {
 
     @Id

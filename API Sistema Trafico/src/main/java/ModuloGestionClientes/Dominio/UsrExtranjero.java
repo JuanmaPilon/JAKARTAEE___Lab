@@ -2,8 +2,8 @@ package ModuloGestionClientes.Dominio;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table (name = "gestion_usrExtranjero")
+@Entity(name = "gestion_usrExtranjero")
+// @Table (name = "gestion_usrExtranjero")
 public class UsrExtranjero extends Usuario {
 
     public UsrExtranjero() {

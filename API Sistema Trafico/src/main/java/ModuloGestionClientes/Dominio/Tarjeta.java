@@ -10,8 +10,8 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table (name = "gestion_tarjeta")
+@Entity(name = "gestion_tarjeta")
+// @Table (name = "gestion_tarjeta")
 public class Tarjeta {
 
     @Id

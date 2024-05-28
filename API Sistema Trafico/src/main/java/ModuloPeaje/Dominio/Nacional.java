@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Setter
 @Getter
-@Entity
-
-@Table(name = "peaje_vehiculoNacional")
-@PrimaryKeyJoinColumn(name = "id")
+@Entity(name = "peaje_vehiculoNacional")
+// @Table(name = "peaje_vehiculoNacional")
 public class Nacional extends Vehiculo {
 
 	@OneToOne(cascade = CascadeType.ALL)

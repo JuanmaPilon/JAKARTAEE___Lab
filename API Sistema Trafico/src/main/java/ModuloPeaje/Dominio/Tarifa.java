@@ -3,10 +3,10 @@ package ModuloPeaje.Dominio;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+@Entity(name =   "peaje_tarifa")
 @Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name =   "peaje_tarifa")
+// @Table(name =   "peaje_tarifa")
 public class Tarifa {
 
     @Id

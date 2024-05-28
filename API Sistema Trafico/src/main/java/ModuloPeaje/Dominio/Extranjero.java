@@ -9,10 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "peaje_vehiculoExtranjero")
 @NoArgsConstructor
-@Table(name = "peaje_vehiculoExtranjero")
-@PrimaryKeyJoinColumn(name = "id")
+// @Table(name = "peaje_vehiculoExtranjero")
 public class Extranjero extends Vehiculo {
 
 	@OneToOne(cascade = CascadeType.ALL)

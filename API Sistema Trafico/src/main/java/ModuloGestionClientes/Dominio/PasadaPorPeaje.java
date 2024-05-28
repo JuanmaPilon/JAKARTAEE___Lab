@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "gestion_PasadaPorPeaje")
+@Entity(name = "gestion_PasadaPorPeaje")
+// @Table(name = "gestion_PasadaPorPeaje")
 public class PasadaPorPeaje {
 
     @Id
