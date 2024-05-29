@@ -6,9 +6,12 @@
 	<groupId>org.tallerjava</groupId>
 	<artifactId>Sistema-Trafico</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 
 	<name>Sistema-Trafico</name>
+	<modules>
+		<module>DTOs</module>
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,6 +31,12 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.tallerjava</groupId>
+			<artifactId>DTOs</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>jakarta.platform</groupId>
 			<artifactId>jakarta.jakartaee-api</artifactId>
