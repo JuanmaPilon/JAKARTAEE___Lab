@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Embeddable
 @NoArgsConstructor
 public class DataTipoCobroDTO {
 
@@ -16,7 +15,7 @@ public class DataTipoCobroDTO {
 	private ClienteSuciveDTO clienteSucive;
 	
 
-	public DataTipoCobroDTO(DTO.PREPagaDTO prePaga, DTO.POSTPagaDTO postPago, DTO.ClienteSuciveDTO clienteSucive) {
+	public DataTipoCobroDTO(org.tallerjava.PREPagaDTO prePaga, org.tallerjava.POSTPagaDTO postPago, org.tallerjava.ClienteSuciveDTO clienteSucive) {
 		super();
 		this.prePaga = prePaga;
 		this.postPago = postPago;

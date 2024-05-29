@@ -4,6 +4,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.tallerjava.*;
 
 @Data
 public class ClienteSuciveDTO {
@@ -12,7 +13,7 @@ public class ClienteSuciveDTO {
     private Double saldo;
 
 
-    private List<Vehiculo> vehiculosCliente;
+    private List<VehiculoDTO> vehiculosCliente;
 
     private TarjetaDTO tarjeta;
 
@@ -25,7 +26,7 @@ public class ClienteSuciveDTO {
         this.pasadaPorPeaje = new ArrayList<>();
     }
 
-    public ClienteSuciveDTO(String nombre, String ci, List<Vehiculo> vehiculosCliente) {
+    public ClienteSuciveDTO(String nombre, String ci, List<VehiculoDTO> vehiculosCliente) {
         this.nombre = nombre;
         this.ci = ci;
         this.vehiculosCliente = vehiculosCliente;
