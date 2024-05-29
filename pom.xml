@@ -10,7 +10,9 @@
 
 	<name>Sistema-Trafico</name>
 	<modules>
-		<module>DTOs</module>
+		<module>Sistema-Trafico/DTOs</module>
+		<module>Sistema-Trafico/API Medios de Pagos (RESTFul)</module>
+		<module>Sistema-Trafico/API Sistema Trafico</module>
 	</modules>
 
 	<properties>
