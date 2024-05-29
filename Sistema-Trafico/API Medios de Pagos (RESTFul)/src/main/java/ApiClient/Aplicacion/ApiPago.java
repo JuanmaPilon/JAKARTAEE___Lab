@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.Response;
 import ApiClient.Aplicacion.IApiPago;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-
+import org.tallerjava.*;
 
 
 @ApplicationScoped
@@ -27,8 +27,10 @@ public class ApiPago {
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
-    public Response otroMensaje() {
+    public Response createUsuarioDTO(UsuarioDTO usuarioDTO) {
         System.out.println("Todo ok negro cagado");
+        usuarioDTO = new UsuarioDTO();
+
         return Response.ok("Funciona ok").status(200, "Nice").build();
     }
 

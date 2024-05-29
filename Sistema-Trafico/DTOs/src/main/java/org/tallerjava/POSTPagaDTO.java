@@ -12,7 +12,7 @@ public class POSTPagaDTO extends CuentaDTO {
     private double saldo;
     private TarjetaDTO tarjeta;
 
-    public POSTPaga(int nroCuenta,Date fechaApertura, TarjetaDTO tarjeta) {
+    public POSTPagaDTO(int nroCuenta,Date fechaApertura, TarjetaDTO tarjeta) {
         super(nroCuenta, fechaApertura);
         this.tarjeta = tarjeta;
     }

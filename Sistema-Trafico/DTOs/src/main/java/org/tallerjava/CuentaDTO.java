@@ -1,11 +1,13 @@
 package org.tallerjava;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Data
-public class CuentaDTO {
+public class CuentaDTO implements Serializable {
     private int nroCuenta;
 
     private Date fechaApertura;

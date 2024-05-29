@@ -1,13 +1,15 @@
 package org.tallerjava;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.tallerjava.*;
 
 @Data
-public class ClienteSuciveDTO {
+public class ClienteSuciveDTO implements Serializable {
     private String ci;
     private String nombre;
     private Double saldo;

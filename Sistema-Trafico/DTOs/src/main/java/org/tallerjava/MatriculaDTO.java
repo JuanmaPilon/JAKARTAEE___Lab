@@ -1,6 +1,8 @@
 package org.tallerjava;
 
-public class MatriculaDTO {
+import java.io.Serializable;
+
+public class MatriculaDTO implements Serializable {
 
 	String nroMatricula;
 	

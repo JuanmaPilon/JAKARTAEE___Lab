@@ -1,27 +1,29 @@
 package org.tallerjava;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 // cambie por data que ya incluye setters , getters, pareses y to string y otras cosas.
 
 @Data
-public class ClienteTelepeajeDTO {
+public class ClienteTelepeajeDTO implements Serializable {
     private String ci;
     private String nombre;
     private String email;
     private Double saldo;
 
-    private PREPaga cuentaPrepaga; // Cuenta de tipo PREPaga
+    private PREPagaDTO cuentaPrepaga; // Cuenta de tipo PREPaga
 
-    private POSTPaga cuentaPostpaga; // Cuenta de tipo POSTPaga
+    private POSTPagaDTO cuentaPostpaga; // Cuenta de tipo POSTPaga
 
-    private Tarjeta tarjeta;
+    private TarjetaDTO tarjeta;
 
-    private List<PasadaPorPeaje> pasadaPorPeaje;
+    private List<PasadaPorPeajeDTO> pasadaPorPeaje;
 
-    private List<Vehiculo> vehiculosCliente;
+    private List<VehiculoDTO> vehiculosCliente;
 
     public ClienteTelepeajeDTO() {
         this.vehiculosCliente = new ArrayList<>();
@@ -32,7 +34,7 @@ public class ClienteTelepeajeDTO {
         this.pasadaPorPeaje = new ArrayList<>();
     }
 
-    public ClienteTelepeajeDTO(String nombre, String ci,String email, List<Vehiculo> vehiculosCliente) {
+    public ClienteTelepeajeDTO(String nombre, String ci,String email, List<VehiculoDTO> vehiculosCliente) {
         this.nombre = nombre;
         this.ci = ci;
         this.email = email;

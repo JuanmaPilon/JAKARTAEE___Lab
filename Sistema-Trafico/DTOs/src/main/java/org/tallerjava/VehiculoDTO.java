@@ -5,9 +5,10 @@ import org.tallerjava.TagDTO;
 import org.tallerjava.ClienteTelepeajeDTO;
 import lombok.Data;
 import java.util.List;
+import java.io.Serializable;
 
 @Data
-public class VehiculoDTO {
+public class VehiculoDTO implements Serializable {
 
  long id;
  private TagDTO tag;

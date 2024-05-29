@@ -2,21 +2,23 @@ package org.tallerjava;
 
 import org.tallerjava.DataTipoCobroDTO;
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class PasadaPorPeajeDTO {
+public class PasadaPorPeajeDTO implements Serializable {
     long id;
 
     private Date fecha;
     private double costo;
 
-    @Embedded
-    private DataTipoCobro tipoCobro;
+
+    private DataTipoCobroDTO tipoCobro;
 
     public PasadaPorPeajeDTO() {}
 
-    public PasadaPorPeajeDTO(Date fecha, double costo, DataTipoCobro tipoCobro) {
+    public PasadaPorPeajeDTO(Date fecha, double costo, DataTipoCobroDTO tipoCobro) {
         this.fecha = fecha;
         this.costo = costo;
         this.tipoCobro = tipoCobro;

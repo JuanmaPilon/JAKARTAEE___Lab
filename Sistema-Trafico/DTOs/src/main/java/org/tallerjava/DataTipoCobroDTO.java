@@ -6,9 +6,11 @@ import org.tallerjava.PREPagaDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Getter
 @NoArgsConstructor
-public class DataTipoCobroDTO {
+public class DataTipoCobroDTO implements Serializable {
 
 	private PREPagaDTO prePaga;
 	private POSTPagaDTO postPago;

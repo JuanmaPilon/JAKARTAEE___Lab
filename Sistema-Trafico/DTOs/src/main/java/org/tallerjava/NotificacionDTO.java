@@ -1,4 +1,6 @@
 package org.tallerjava;
 
-public class NotificacionDTO {
+import java.io.Serializable;
+
+public class NotificacionDTO implements Serializable {
 }

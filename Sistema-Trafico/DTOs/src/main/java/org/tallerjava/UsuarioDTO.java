@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable {
 
     private String ci;
     private String nom;

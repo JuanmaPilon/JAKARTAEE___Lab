@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class TarjetaDTO {
+public class TarjetaDTO implements Serializable {
     private int nro;
 
     private String nombre;
