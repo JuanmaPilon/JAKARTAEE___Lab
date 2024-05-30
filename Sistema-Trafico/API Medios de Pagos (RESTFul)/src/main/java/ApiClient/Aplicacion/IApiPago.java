@@ -7,9 +7,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
 import okhttp3.Response;
+import org.tallerjava.UsuarioDTO;
 
 public interface IApiPago {
     public Response mensaje();
-    public Response otroMensaje();
+    public Response otroMensaje(UsuarioDTO usuarioDTO);
 }
 
