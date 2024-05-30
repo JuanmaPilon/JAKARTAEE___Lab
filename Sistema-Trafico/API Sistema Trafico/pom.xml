@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.tallerjava</groupId>
-	<artifactId>Sistema-Trafico</artifactId>
+	<artifactId>Sistema-Gestion</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Sistema-Trafico</name>
+	<name>Sistema-Gestion</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -118,7 +118,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>Sistema-Trafico</finalName>
+		<finalName>Sistema-Gestion</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

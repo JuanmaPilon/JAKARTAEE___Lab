@@ -8,12 +8,14 @@
 	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Sistema-Trafico</name>
 	<modules>
-		<module>Sistema-Trafico/DTOs</module>
-		<module>Sistema-Trafico/API Medios de Pagos (RESTFul)</module>
-		<module>Sistema-Trafico/API Sistema Trafico</module>
+		<module>DTOs</module>
+		<module>API Medios de Pagos (RESTFul)</module>
+		<module>API Sistema Trafico</module>
 	</modules>
+
+	<name>Sistema-Trafico</name>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,11 +36,9 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>org.tallerjava</groupId>
-			<artifactId>DTOs</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
+
+
+
 		<dependency>
 			<groupId>jakarta.platform</groupId>
 			<artifactId>jakarta.jakartaee-api</artifactId>
