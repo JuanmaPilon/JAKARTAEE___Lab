@@ -14,7 +14,7 @@ public class Cuenta {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int nroCuenta;
-
+    @Temporal(TemporalType.DATE)
     private Date fechaApertura;
 
     public Cuenta() {} // tuve que agregar el constructor por parametros para que la clase PREPaga y POSTPaga no me tiren error con Lombok

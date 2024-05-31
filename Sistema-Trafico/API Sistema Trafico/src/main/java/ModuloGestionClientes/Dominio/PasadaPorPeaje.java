@@ -13,7 +13,7 @@ public class PasadaPorPeaje {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long id;
-
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     private double costo;
 

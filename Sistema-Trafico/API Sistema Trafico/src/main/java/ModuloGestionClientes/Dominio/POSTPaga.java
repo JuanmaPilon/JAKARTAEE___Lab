@@ -18,6 +18,7 @@ import java.util.Date;
 public class POSTPaga extends Cuenta {
 
     private double saldo;
+    @OneToOne
     private Tarjeta tarjeta;
 
     //agregado correctamente el constructor

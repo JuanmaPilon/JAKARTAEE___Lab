@@ -19,7 +19,7 @@ public class Tarjeta {
     private int nro;
 
     private String nombre;
-
+    @Temporal(TemporalType.DATE)
     private Date fechaVto;
 
     public Tarjeta(int nro, String nombre, Date fechaVto) {
@@ -32,9 +32,5 @@ public class Tarjeta {
         return nro;
     }
 
-
-    public void setFechaVencimiento(Date fechaVto) {
-        this.fechaVto = fechaVto;
-    }
 
 }

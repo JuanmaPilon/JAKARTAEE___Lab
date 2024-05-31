@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DataTipoCobro {
 
+    @Transient
     private PREPaga prePaga;
+    @Transient
     private POSTPaga postPago;
+    @Transient
     private ClienteSucive clienteSucive;
 
 
