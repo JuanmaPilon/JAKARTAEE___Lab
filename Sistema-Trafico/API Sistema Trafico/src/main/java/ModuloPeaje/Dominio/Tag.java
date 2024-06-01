@@ -12,6 +12,8 @@ public class Tag {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	long id;
+	@Id
 	String idUnico;
 
 	public Tag() {

@@ -12,7 +12,10 @@ public class Tag {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-    String idUnico;
+    long id;
+
+	@Id
+	String idUnico;
 
 
 	public Tag() {
