@@ -4,9 +4,10 @@ import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 import ModuloPeaje.Dominio.*;
 import ModuloPeaje.Aplicacion.*;
 import ModuloPeaje.Dominio.Repo.RepoPeajeImpl;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -36,6 +37,9 @@ import org.mockito.MockitoAnnotations;
 
 @ExtendWith(MockitoExtension.class)
 public class ModuloPeajeTest {
+    @PersistenceContext
+    @Mock
+    private EntityManager em;
 
     @Mock
     private ModuloIGestionClientes moduloIGestionClientes;
@@ -68,7 +72,8 @@ public class ModuloPeajeTest {
     // Crear un mock del RepoPeaje
     RepoPeaje repoMock = mock(RepoPeaje.class);
     repo = new RepoPeajeImpl(new Preferencial(50.0), new Comun(30.0));
-
+        // Inyección manual del EntityManager
+        RepoPeajeImpl = new RepoPeajeImpl(em);
     Tag tag = new Tag("123");
     Tag tagx = new Tag("456");
     Matricula matricula = new Matricula("ABC123");
@@ -189,7 +194,21 @@ public class ModuloPeajeTest {
         // Si la aserción es verdadera, se imprime un mensaje en la consola
         System.out.println("La tarifa preferencial se ha actualizado correctamente.");
     }
+    @Test
+    void testAltaVehiculo() {
+        // Arrange
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setId(1234);
+        vehiculo.setNacionalidad(Nacionalidad.NACIONAL);
 
+        // Act
+        repo.altaVehiculo(vehiculo);
+
+        // Assert
+        verify(em).persist(vehiculo);
+        System.out.println("caca"+vehiculo);
+
+    }
 
 }
 

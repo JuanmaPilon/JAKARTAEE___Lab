@@ -2,11 +2,11 @@ package ModuloGestionClientes.Dominio.Repo;
 
 import ModuloGestionClientes.Dominio.ClienteTelepeaje;
 import ModuloGestionClientes.Dominio.ClienteSucive;
-import ModuloGestionClientes.Dominio.Usuario;
 import ModuloGestionClientes.Dominio.Vehiculo;
-import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.jboss.logging.Logger;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+//import org.jboss.logging.Logger;
 
 
 import java.util.ArrayList;
@@ -16,10 +16,13 @@ import java.util.Map;
 
 @ApplicationScoped
 public class RepoClientesImp implements RepoClientes {
-    private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
+    //private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     private Map<String, ClienteTelepeaje> clientesTelepeajeMap;
     private Map<String, ClienteSucive> clientesSuciveMap;
     private List<Vehiculo> vehiculos = new ArrayList<>();
+
+    @PersistenceContext
+    private EntityManager em;
 
     public RepoClientesImp() {
 
@@ -32,7 +35,7 @@ public class RepoClientesImp implements RepoClientes {
 
     @Override
     public void agregarClienteTelepeaje(ClienteTelepeaje cliente) {
-
+    //em.persist(cliente);
         clientesTelepeajeMap.put(cliente.getCi(), cliente);
     }
 

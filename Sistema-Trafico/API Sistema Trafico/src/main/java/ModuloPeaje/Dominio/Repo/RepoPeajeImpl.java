@@ -6,6 +6,9 @@ import ModuloPeaje.Dominio.*;
 import java.util.*;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 @ApplicationScoped
@@ -15,6 +18,9 @@ public class RepoPeajeImpl implements RepoPeaje {
     private Comun tarifaComun;
     private List<Vehiculo> vehiculos;
 
+
+    @PersistenceContext
+    private EntityManager em;
     public RepoPeajeImpl() {
         // Constructor sin parámetros requerido por CDI
     }
@@ -25,10 +31,11 @@ public class RepoPeajeImpl implements RepoPeaje {
         this.vehiculos = new ArrayList<>();
 
     }
+    @Transactional
     @Override
     public void altaVehiculo(Vehiculo vehiculo) {
-
-        this.vehiculos.add(vehiculo);
+        em.persist(vehiculo);
+        //this.vehiculos.add(vehiculo);
 
     }
 

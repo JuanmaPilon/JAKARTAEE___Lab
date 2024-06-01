@@ -1,7 +1,6 @@
 package ModuloPeaje.Dominio;
 import lombok.Data;
 import java.util.List;
-import ModuloPeaje.Dominio.*;
 import jakarta.persistence.*;
 
 @Data

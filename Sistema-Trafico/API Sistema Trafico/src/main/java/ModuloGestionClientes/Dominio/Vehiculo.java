@@ -1,7 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
-import ModuloGestionClientes.Dominio.PasadaPorPeaje;
-import ModuloGestionClientes.Dominio.Tag;
+
 import lombok.Data;
 import java.util.List;
 import jakarta.persistence.*;
