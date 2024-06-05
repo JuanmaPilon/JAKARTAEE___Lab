@@ -15,4 +15,20 @@ public interface RepoClientes {
 
     void addVehiculo(Vehiculo vehiculo);
     Vehiculo BuscarTag(int tag);
+
+    void altaMatricula(Matricula matricula);
+    void bajaMatricula(String id);
+    void modificarMatricula(Matricula matricula);
+
+    void altaPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
+    void bajaPasadaPorPeaje(long id);
+    void modificarPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
+
+    void altaTag(Tag tag);
+    void bajaTag(long id);
+    void ModificarTag(Tag tag);
+
+    void altaVehiculo(Vehiculo vehiculo);
+    void bajaVehiculo(Long id);
+    void modificarVehiculo(Vehiculo vehiculo);
 }

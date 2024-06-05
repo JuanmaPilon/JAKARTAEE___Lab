@@ -1,19 +1,19 @@
 package ModuloClases.Dominio.Tests;
 
-import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloGestionClientes.Dominio.*;
-import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -29,16 +29,15 @@ public class GestionClientesServiceImplTest {
     @Inject
     private ModuloGestionClientes gestionClientesService;
 
-
     @Inject
     private ClienteTelepeaje clienteTelepeaje;
     @Inject
     private Vehiculo vehiculo;
     @BeforeEach
     void setUp() {
-
         // Inicializa la implementación real del repositorio
         repoClientes = new RepoClientesImp();
+
         // Inicializa el servicio con el repositorio
         gestionClientesService = new ModuloGestionClientes(repoClientes);
 
@@ -50,6 +49,7 @@ public class GestionClientesServiceImplTest {
 
         // Crea y configura el vehículo
         vehiculo = new Vehiculo();
+        vehiculo.setId(1L);
         Tag tag = new Tag("123");
         vehiculo.setTag(tag);
         vehiculo.setClienteTelepeaje(clienteTelepeaje);

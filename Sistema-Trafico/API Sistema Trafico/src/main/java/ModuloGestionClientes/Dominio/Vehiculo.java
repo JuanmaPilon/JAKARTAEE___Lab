@@ -1,6 +1,7 @@
 package ModuloGestionClientes.Dominio;
 
 
+import ModuloPeaje.Dominio.Nacionalidad;
 import lombok.Data;
 import java.util.List;
 import jakarta.persistence.*;
@@ -23,7 +24,7 @@ public class Vehiculo {
  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
  private List<PasadaPorPeaje> pasadaPorPeajeList;
 
-
+ private Nacionalidad nacionalidad;
 
  // creo que el constructor vacio, porque sino cuando tag y las otras hereden los metodos, se rompe con lombok
  public Vehiculo() {
