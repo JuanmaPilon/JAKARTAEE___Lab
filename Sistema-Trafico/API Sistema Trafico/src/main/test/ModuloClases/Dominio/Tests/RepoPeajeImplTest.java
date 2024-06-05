@@ -25,6 +25,8 @@ public class RepoPeajeImplTest {
 
     private RepoPeajeImpl repoPeaje;
 
+    private Vehiculo vehiculo;
+
     private Extranjero vehiculoExtranjero;
     private Nacional vehiculoNacional;
 
@@ -42,15 +44,23 @@ public class RepoPeajeImplTest {
 
         vehiculoNacional.setNacionalidad(Nacionalidad.NACIONAL);
         vehiculoExtranjero.setNacionalidad(Nacionalidad.EXTRANJERO);
+        repoPeaje.altaVehiculo(vehiculo);
         repoPeaje.altaVehiculoNacional(vehiculoNacional);
         repoPeaje.altaVehiculoExtranjero(vehiculoExtranjero);
     }
 
     @Test
     @Transactional
+    public void testAltaVehiculo() {
+        repoPeaje.altaVehiculo(vehiculo);
+        verify(entityManager, times(2)).persist(vehiculo);
+    }
+
+    @Test
+    @Transactional
     public void testAltaVehiculoExtranjero() {
         repoPeaje.altaVehiculoExtranjero(vehiculoExtranjero);
-        verify(entityManager, times(1)).persist(vehiculoExtranjero);
+        verify(entityManager, times(2)).persist(vehiculoExtranjero);
     }
 
     @Test
@@ -80,7 +90,7 @@ public class RepoPeajeImplTest {
     @Transactional
     public void testAltaVehiculoNacional() {
         repoPeaje.altaVehiculoNacional(vehiculoNacional);
-        verify(entityManager, times(1)).persist(vehiculoNacional);
+        verify(entityManager, times(2)).persist(vehiculoNacional);
     }
 
     @Test
@@ -106,6 +116,42 @@ public class RepoPeajeImplTest {
         verify(entityManager, times(1)).merge(vehiculoNacional);
         assertEquals(newMatricula, vehiculoNacional.getMatricula());
         assertEquals(newTag, vehiculoNacional.getTag());
+    }
+
+    @Test
+    public void testAltaTag() {
+        Tag tag = new Tag("12345");
+
+        repoPeaje.altaTag(tag);
+
+        verify(entityManager).persist(tag);
+    }
+
+    @Test
+    public void testBajaTag() {
+        Tag tag = new Tag("12345");
+        tag.setId(1L);
+
+        when(entityManager.find(Tag.class, 1L)).thenReturn(tag);
+
+        repoPeaje.bajaTag(1L);
+
+        verify(entityManager).remove(tag);
+    }
+
+    @Test
+    public void testModificarTag() {
+        Tag existingTag = new Tag("12345");
+        existingTag.setId(1L);
+
+        Tag updatedTag = new Tag("67890");
+        updatedTag.setId(1L);
+
+        when(entityManager.find(Tag.class, 1L)).thenReturn(existingTag);
+
+        repoPeaje.modificarTag(updatedTag);
+
+        verify(entityManager).merge(existingTag);
     }
 
 
