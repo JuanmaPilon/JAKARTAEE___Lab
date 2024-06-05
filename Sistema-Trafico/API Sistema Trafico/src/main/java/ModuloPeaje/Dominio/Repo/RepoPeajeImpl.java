@@ -41,10 +41,44 @@ public class RepoPeajeImpl implements RepoPeaje {
 
     @Override
     @Transactional
+    public void altaVehiculoNacional(Nacional vehiculoNacional) {
+        em.persist(vehiculoNacional);
+    }
+
+    @Override
+    @Transactional
+    public void altaVehiculoExtranjero(Extranjero vehiculoExtranjero) {
+        em.persist(vehiculoExtranjero);
+    }
+
+    @Override
+    @Transactional
     public void bajaVehiculo(Long id) {
         Vehiculo vehiculo = em.find(Vehiculo.class, id);
         if (vehiculo != null) {
             em.remove(vehiculo);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void bajaVehiculoNacional(long id) {
+        Nacional vehiculoNacional = em.find(Nacional.class, id);
+        if (vehiculoNacional != null) {
+            em.remove(vehiculoNacional);
+        } else {
+            throw new IllegalArgumentException("Vehículo Nacional no encontrado: " + id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void bajaVehiculoExtranjero(long id) {
+        Extranjero vehiculoExtranjero = em.find(Extranjero.class, id);
+        if (vehiculoExtranjero != null) {
+            em.remove(vehiculoExtranjero);
+        } else {
+            throw new IllegalArgumentException("Vehículo Extranjero no encontrado: " + id);
         }
     }
 
@@ -63,6 +97,34 @@ public class RepoPeajeImpl implements RepoPeaje {
         }
     }
 
+    @Override
+    @Transactional
+    public void modificarVehiculoNacional(Nacional vehiculoNacional) {
+        Nacional existingVehiculoNacional = em.find(Nacional.class, vehiculoNacional.getId());
+        if (existingVehiculoNacional != null) {
+            existingVehiculoNacional.setMatricula(vehiculoNacional.getMatricula());
+            existingVehiculoNacional.setTag(vehiculoNacional.getTag());
+            existingVehiculoNacional.setPasadaPorPeajeList(vehiculoNacional.getPasadaPorPeajeList());
+            existingVehiculoNacional.setNacionalidad(vehiculoNacional.getNacionalidad());
+            em.merge(existingVehiculoNacional);
+        } else {
+            throw new IllegalArgumentException("Vehículo Nacional no encontrado: " + vehiculoNacional.getId());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void modificarVehiculoExtranjero(Extranjero vehiculoExtranjero) {
+        Extranjero existingVehiculoExtranjero = em.find(Extranjero.class, vehiculoExtranjero.getId());
+        if (existingVehiculoExtranjero != null) {
+            existingVehiculoExtranjero.setTag(vehiculoExtranjero.getTag());
+            existingVehiculoExtranjero.setPasadaPorPeajeList(vehiculoExtranjero.getPasadaPorPeajeList());
+            existingVehiculoExtranjero.setNacionalidad(vehiculoExtranjero.getNacionalidad());
+            em.merge(existingVehiculoExtranjero);
+        } else {
+            throw new IllegalArgumentException("Vehículo Extranjero no encontrado: " + vehiculoExtranjero.getId());
+        }
+    }
 
     @Override
     public Vehiculo BuscarTag(int tag) {
