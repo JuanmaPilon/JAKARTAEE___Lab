@@ -73,7 +73,7 @@ public class ModuloPeajeTest {
     RepoPeaje repoMock = mock(RepoPeaje.class);
     repo = new RepoPeajeImpl(new Preferencial(50.0), new Comun(30.0));
         // Inyección manual del EntityManager
-        RepoPeajeImpl = new RepoPeajeImpl(em);
+        /// RepoPeajeImpl = new RepoPeajeImpl(em);
     Tag tag = new Tag("123");
     Tag tagx = new Tag("456");
     Matricula matricula = new Matricula("ABC123");

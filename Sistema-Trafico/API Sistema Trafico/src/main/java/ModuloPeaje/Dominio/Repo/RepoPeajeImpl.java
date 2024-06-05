@@ -21,6 +21,11 @@ public class RepoPeajeImpl implements RepoPeaje {
 
     @PersistenceContext
     private EntityManager em;
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.em = entityManager;
+    }
+
     public RepoPeajeImpl() {
         // Constructor sin parámetros requerido por CDI
     }
