@@ -68,6 +68,12 @@ public class RepoPeajeImpl implements RepoPeaje {
         em.persist(matricula);
     }
 
+    @Transactional
+    @Override
+    public void altaPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje) {
+        em.persist(pasadaPorPeaje);
+    }
+
     @Override
     @Transactional
     public void bajaVehiculo(Long id) {
@@ -116,6 +122,17 @@ public class RepoPeajeImpl implements RepoPeaje {
         Matricula matricula = em.find(Matricula.class, id);
         if (matricula != null) {
             em.remove(matricula);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void bajaPasadaPorPeaje(long id) {
+        PasadaPorPeaje pasadaPorPeaje = em.find(PasadaPorPeaje.class, id);
+        if (pasadaPorPeaje != null) {
+            em.remove(pasadaPorPeaje);
+        } else {
+            throw new IllegalArgumentException("PasadaPorPeaje no encontrada: " + id);
         }
     }
 
@@ -184,6 +201,20 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.merge(matriculaExistente);
         } else {
             throw new IllegalArgumentException("Matrícula no encontrada: " + matricula.getId());
+        }
+    }
+
+    @Transactional
+    @Override
+    public void modificarPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje) {
+        PasadaPorPeaje existingPasadaPorPeaje = em.find(PasadaPorPeaje.class, pasadaPorPeaje.getId());
+        if (existingPasadaPorPeaje != null) {
+            existingPasadaPorPeaje.setFecha(pasadaPorPeaje.getFecha());
+            existingPasadaPorPeaje.setCosto(pasadaPorPeaje.getCosto());
+            existingPasadaPorPeaje.setTipoCobro(pasadaPorPeaje.getTipoCobro());
+            em.merge(existingPasadaPorPeaje);
+        } else {
+            throw new IllegalArgumentException("PasadaPorPeaje no encontrada: " + pasadaPorPeaje.getId());
         }
     }
 

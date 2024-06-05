@@ -5,6 +5,7 @@ import ModuloPeaje.Dominio.*;
 import ModuloPeaje.Aplicacion.*;
 import ModuloPeaje.Dominio.Repo.RepoPeaje;
 import ModuloPeaje.Dominio.Repo.RepoPeajeImpl;
+import java.util.Date;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,8 @@ public class RepoPeajeImplTest {
     private Extranjero vehiculoExtranjero;
     private Nacional vehiculoNacional;
 
+    private PasadaPorPeaje pasadaPorPeaje;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -52,6 +55,8 @@ public class RepoPeajeImplTest {
         repoPeaje.altaVehiculo(vehiculo);
         repoPeaje.altaVehiculoNacional(vehiculoNacional);
         repoPeaje.altaVehiculoExtranjero(vehiculoExtranjero);
+        pasadaPorPeaje = new PasadaPorPeaje(new Date(), 10.0, null);
+        pasadaPorPeaje.setId(1L);
     }
 
     @Test
@@ -218,6 +223,38 @@ public class RepoPeajeImplTest {
 
         verify(entityManager, times(1)).merge(matricula);
         assertEquals("XYZ789", matricula.getNroMatricula());
+    }
+
+    @Test
+    @Transactional
+    public void testAltaPasadaPorPeaje() {
+        repoPeaje.altaPasadaPorPeaje(pasadaPorPeaje);
+
+        verify(entityManager, times(1)).persist(pasadaPorPeaje);
+    }
+
+    @Test
+    @Transactional
+    public void testBajaPasadaPorPeaje() {
+        when(entityManager.find(PasadaPorPeaje.class, pasadaPorPeaje.getId())).thenReturn(pasadaPorPeaje);
+
+        repoPeaje.bajaPasadaPorPeaje(pasadaPorPeaje.getId());
+
+        verify(entityManager, times(1)).remove(pasadaPorPeaje);
+    }
+
+    @Test
+    @Transactional
+    public void testModificarPasadaPorPeaje() {
+        PasadaPorPeaje pasadaPorPeajeModificada = new PasadaPorPeaje(new Date(), 20.0, null);
+        pasadaPorPeajeModificada.setId(pasadaPorPeaje.getId());
+
+        when(entityManager.find(PasadaPorPeaje.class, pasadaPorPeaje.getId())).thenReturn(pasadaPorPeaje);
+
+        repoPeaje.modificarPasadaPorPeaje(pasadaPorPeajeModificada);
+
+        verify(entityManager, times(1)).merge(pasadaPorPeaje);
+        assertEquals(20.0, pasadaPorPeaje.getCosto());
     }
 
     @Test

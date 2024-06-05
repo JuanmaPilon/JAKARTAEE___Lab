@@ -32,6 +32,11 @@ public interface RepoPeaje {
     public void bajaMatricula(String id);
     public void modificarMatricula(Matricula matricula);
 
+    public void altaPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
+    public void bajaPasadaPorPeaje(long id);
+    public void modificarPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
+
+
 
 
 }
