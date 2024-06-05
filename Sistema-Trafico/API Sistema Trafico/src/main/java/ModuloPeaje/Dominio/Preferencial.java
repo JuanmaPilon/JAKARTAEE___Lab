@@ -7,7 +7,7 @@ import jakarta.persistence.InheritanceType;
 import lombok.Getter;
 
 
-@Entity(name = "peaje_preferencial")
+@Entity(name = "peaje_tarifaPreferencial")
 @Getter
 @DiscriminatorValue("preferencial")
 public class Preferencial extends Tarifa {

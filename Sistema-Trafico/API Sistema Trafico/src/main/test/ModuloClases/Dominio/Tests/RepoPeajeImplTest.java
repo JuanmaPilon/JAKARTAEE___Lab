@@ -41,6 +41,9 @@ public class RepoPeajeImplTest {
         Tag tag = new Tag("12345");
         vehiculoExtranjero = new Extranjero(tag);
 
+        vehiculo = new Vehiculo();
+        vehiculo.setId(1L);
+
         Matricula matricula = new Matricula("ABC123");
         vehiculoNacional = new Nacional(matricula, tag);
 
@@ -56,6 +59,34 @@ public class RepoPeajeImplTest {
     public void testAltaVehiculo() {
         repoPeaje.altaVehiculo(vehiculo);
         verify(entityManager, times(2)).persist(vehiculo);
+    }
+
+    @Test
+    @Transactional
+    public void testBajaVehiculo() {
+        long id = 1L;
+        when(entityManager.find(Vehiculo.class, vehiculo.getId())).thenReturn(vehiculo);
+
+        repoPeaje.bajaVehiculo(vehiculo.getId());
+
+        verify(entityManager, times(1)).remove(vehiculo);
+    }
+
+    @Test
+    @Transactional
+    public void testModificarVehiculo() {
+        long id = 1L;
+        Tag newTag = new Tag("12345");
+        Vehiculo vehiculoModificado = new Vehiculo();
+        vehiculoModificado.setId(id);
+        vehiculoModificado.setTag(newTag);
+
+        when(entityManager.find(Vehiculo.class, vehiculo.getId())).thenReturn(vehiculo);
+
+        repoPeaje.modificarVehiculo(vehiculoModificado);
+
+        verify(entityManager, times(1)).merge(vehiculo);
+        assertEquals("12345", vehiculo.getTag().getIdUnico());
     }
 
     @Test

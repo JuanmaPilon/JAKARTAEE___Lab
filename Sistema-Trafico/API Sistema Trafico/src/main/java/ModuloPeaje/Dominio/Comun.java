@@ -6,7 +6,7 @@ import lombok.Getter;
 
 
 
-@Entity(name = "peaje_comun")
+@Entity(name = "peaje_tarifaComun")
 @Getter
 @DiscriminatorValue("comun")
 public class Comun extends Tarifa {
