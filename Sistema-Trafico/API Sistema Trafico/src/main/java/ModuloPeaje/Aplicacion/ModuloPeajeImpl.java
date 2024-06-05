@@ -151,10 +151,12 @@ public class ModuloPeajeImpl {
     }
     // Método para notificar el pasaje de vehículo al módulo de Monitoreo
     public void manejarNotificarPasajeVehiculo() {
-        // Lógica para determinar el pasaje de vehículo
-        // Una vez que se detecta el pasaje, se envía un evento para notificar al módulo de Monitoreo
-        String mensajeVehiulo = "Pasaje de vehículo detectado";
-        pasajeVehiculo.publicarPasajeVehiculo(mensajeVehiulo);
+        if(pasajeVehiculo!= null) {
+            // Lógica para determinar el pasaje de vehículo
+            // Una vez que se detecta el pasaje, se envía un evento para notificar al módulo de Monitoreo
+            String mensajeVehiulo = "Pasaje de vehículo detectado";
+            pasajeVehiculo.publicarPasajeVehiculo(mensajeVehiulo);
+        }
     }
 
 

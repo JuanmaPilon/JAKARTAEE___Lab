@@ -1,9 +1,6 @@
 package ModuloClases.Dominio.Tests;
 
-import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 import ModuloPeaje.Dominio.*;
-import ModuloPeaje.Aplicacion.*;
-import ModuloPeaje.Dominio.Repo.RepoPeaje;
 import ModuloPeaje.Dominio.Repo.RepoPeajeImpl;
 import java.util.Date;
 import jakarta.persistence.EntityManager;
@@ -19,8 +16,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class RepoPeajeImplTest {
-    @Mock
-    private ModuloIGestionClientes moduloIGestionClientes;
+
     @Mock
     private EntityManager entityManager;
 
@@ -295,54 +291,4 @@ public class RepoPeajeImplTest {
         assertEquals(TipoTarifa.PREFERENCIAL, tarifa.getTipoTarifa());
     }
 
-    @Test
-    void testActualizarTarifaPreferencial() {
-        // Mock del RepoPeaje
-        RepoPeaje repoMock = mock(RepoPeaje.class);
-
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-
-        // Crea un objeto Preferencial con el valor deseado
-        Preferencial preferencial = new Preferencial();
-        preferencial.setMonto(20.0);
-
-        // Llama al método para actualizar la tarifa preferencial
-        moduloPeaje.actualizarTarifaPreferencial(preferencial);
-
-        // Verifica que la tarifa preferencial se haya actualizado correctamente
-        Preferencial tarifaPreferencial = moduloPeaje.getTarifaPreferencial();
-        assertEquals(20.0, tarifaPreferencial.getMonto());
-
-        // Si la aserción es verdadera, se imprime un mensaje en la consola
-        System.out.println("La tarifa preferencial se ha actualizado correctamente.");
-    }
-    @Test
-    void testActualizarTarifaComun() {
-        // Mock del RepoPeaje
-        RepoPeaje repoMock = mock(RepoPeaje.class);
-
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-
-        // Llama al método para actualizar la tarifa común con un importe específico (por ejemplo, 15.0)
-        moduloPeaje.actualizarTarifaComun(15.0);
-
-        // Validación: Verifica que la tarifa común se haya actualizado correctamente
-        // En este caso, esperamos que el importe de la tarifa común sea 15.0
-        assertEquals(15.0, moduloPeaje.getTarifaComun().getMonto());
-        // Si la aserción es verdadera, se imprime un mensaje en la consola
-        System.out.println("La tarifa común se ha actualizado correctamente.");
-    }
-    @Test
-    public void testVehiculoNoEncontrado() {
-        // Mock del RepoPeaje
-        RepoPeaje repoMock = mock(RepoPeaje.class);
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-        boolean resultado = moduloPeaje.estaHabilitado(999, "XYZ999");
-        // Imprime el resultado por consola
-        System.out.println("¿Vehículo encontrado? " + (resultado ? "Sí" : "No"));
-        assertFalse(resultado);
-    }
 }

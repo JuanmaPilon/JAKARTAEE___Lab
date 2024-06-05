@@ -1,102 +1,82 @@
 package ModuloClases.Dominio.Tests;
 
 import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
+import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import ModuloPeaje.Dominio.*;
-import ModuloPeaje.Aplicacion.*;
-import ModuloPeaje.Dominio.Repo.RepoPeajeImpl;
+import ModuloPeaje.Dominio.Repo.RepoPeaje;
+import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import jakarta.enterprise.event.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import ModuloPeaje.Dominio.Repo.RepoPeaje;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ModuloPeajeTest {
 
     @Mock
+    private RepoPeaje repo;
+
+    @Mock
+    private PublicadorEventoPeaje pasajeVehiculo;
+
+    @Mock
+    private Event<String> vehiculoNoEncontrado;
+
+    @Mock
     private ModuloIGestionClientes moduloIGestionClientes;
 
     @InjectMocks
-    private RepoPeajeImpl repo;
-
-    private Vehiculo vehiculoNacional;
-    private Vehiculo vehiculoExtranjero;
+    private ModuloPeajeImpl moduloPeaje;
 
     @BeforeEach
-    public void setUp() {
-
-     MockitoAnnotations.openMocks(this);
-    repo = new RepoPeajeImpl(new Preferencial(50.0), new Comun(30.0));
-    Tag tag = new Tag("123");
-    Tag tagx = new Tag("456");
-    Matricula matricula = new Matricula("ABC123");
-    vehiculoNacional = new Nacional(matricula, tag);
-    vehiculoNacional.setNacionalidad(Nacionalidad.NACIONAL);
-    vehiculoExtranjero = new Extranjero(tagx);
-    vehiculoExtranjero.setNacionalidad(Nacionalidad.EXTRANJERO);
-    // Utiliza el repositorio mockeado en lugar de la instancia real
-    repo.altaVehiculo(vehiculoNacional);
-    repo.altaVehiculo(vehiculoExtranjero);
-
-}
-
-    @Test
-    public void testEstaHabilitadoVehiculoNacional() {
-        // Inicializa los mocks
-        MockitoAnnotations.openMocks(this);
-
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo);
-        // Ejecuta el método a probar
-        boolean resultado = moduloPeaje.estaHabilitado(123,"ABC123");
-
-        // Verifica que el resultado sea verdadero
-        assertTrue(resultado);
-        System.out.println("resultado: " + resultado);
+    void setUp() {
+        double montoPredeterminado = 10.0;
+        double montoPredeterminadoPreferencial = 5.0;
+        moduloPeaje.actualizarTarifaComun(montoPredeterminado);
+        moduloPeaje.actualizarTarifaPreferencial(new Preferencial(montoPredeterminadoPreferencial));
     }
 
     @Test
-    public void testEstaHabilitadoVehiculoExtranjero() {
-        // Mock del RepoPeaje
-        MockitoAnnotations.openMocks(this);
+    void testEstaHabilitadoVehiculoNacional() {
+        int tag = 123;
+        String matricula = "ABC123";
+        Nacional vehiculo = new Nacional();
+        vehiculo.setTag(new Tag("123"));
+        vehiculo.setNacionalidad(Nacionalidad.NACIONAL);
 
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repo,moduloIGestionClientes);
-        // Ejecuta el método a probar
-        when(moduloIGestionClientes.realizarPrePago(456, 50.000000)).thenReturn(true);
+        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
 
-        boolean resultado = moduloPeaje.estaHabilitado(456,"");
-        // Verifica que el resultado sea verdadero
-        assertTrue(resultado);
-        System.out.println("resultado: " + resultado);
+        boolean habilitado = moduloPeaje.estaHabilitado(tag, matricula);
+
+        assertTrue(habilitado);
+        verify(repo, times(1)).BuscarTag(tag);
     }
 
-//
-//    @Test
-//    public void testEstaHabilitadoVehiculoExtranjeroFalloPrePagoExitoPostPago() {
-//        // Mock del RepoPeaje
-//        RepoPeaje repoMock = mock(RepoPeaje.class);
-//        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-//        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-//
-//        when(moduloIGestionClientes.realizarPrePago(123, 50.0)).thenReturn(false);
-//        when(moduloIGestionClientes.realizarPostPago(123, 50.0)).thenReturn(true);
-//
-//        boolean resultado = moduloPeaje.estaHabilitado(123, "DEF456");
-//
-//        assertTrue(resultado);
-//        verify(moduloIGestionClientes, times(1)).realizarPrePago(123, 50.0);
-//        verify(moduloIGestionClientes, times(1)).realizarPostPago(123, 50.0);
-//    }
+    @Test
+    void testEstaHabilitadoVehiculoExtranjero() {
+        int tag = 123;
+        String matricula = "ABC123";
+        Extranjero vehiculo = new Extranjero();
+        vehiculo.setTag(new Tag("123"));
+        vehiculo.setNacionalidad(Nacionalidad.EXTRANJERO);
+
+        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
+        when(repo.obtenerTarifaPreferencial()).thenReturn(new Preferencial(5.0));
+        when(moduloIGestionClientes.realizarPrePago(tag, 5.0)).thenReturn(true);
+
+        boolean habilitado = moduloPeaje.estaHabilitado(tag, matricula);
+
+        assertTrue(habilitado);
+        verify(repo, times(1)).BuscarTag(tag);
+        verify(repo, times(1)).obtenerTarifaPreferencial();
+        verify(moduloIGestionClientes, times(1)).realizarPrePago(tag, 5.0);
+    }
 
     @Test
     public void testVehiculoNoEncontrado() {
@@ -110,48 +90,28 @@ public class ModuloPeajeTest {
         assertFalse(resultado);
     }
 
-
+    @Test
+    void testAltaVehiculo() {
+        Vehiculo vehiculo = new Vehiculo();
+        moduloPeaje.altaVehiculo(vehiculo);
+        verify(repo, times(1)).altaVehiculo(vehiculo);
+    }
     @Test
     void testActualizarTarifaComun() {
-        // Mock del RepoPeaje
-        RepoPeaje repoMock = mock(RepoPeaje.class);
-
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-
-        // Llama al método para actualizar la tarifa común con un importe específico (por ejemplo, 15.0)
-        moduloPeaje.actualizarTarifaComun(15.0);
-
-        // Validación: Verifica que la tarifa común se haya actualizado correctamente
-        // En este caso, esperamos que el importe de la tarifa común sea 15.0
-        assertEquals(15.0, moduloPeaje.getTarifaComun().getMonto());
-        // Si la aserción es verdadera, se imprime un mensaje en la consola
+        double nuevoMonto = 15.0;
+        moduloPeaje.actualizarTarifaComun(nuevoMonto);
+        assertEquals(nuevoMonto, moduloPeaje.getTarifaComun().obtenerMonto());
         System.out.println("La tarifa común se ha actualizado correctamente.");
     }
 
     @Test
     void testActualizarTarifaPreferencial() {
-        // Mock del RepoPeaje
-        RepoPeaje repoMock = mock(RepoPeaje.class);
-
-        // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
-        ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-
-        // Crea un objeto Preferencial con el valor deseado
-        Preferencial preferencial = new Preferencial();
-        preferencial.setMonto(20.0);
-
-        // Llama al método para actualizar la tarifa preferencial
-        moduloPeaje.actualizarTarifaPreferencial(preferencial);
-
-        // Verifica que la tarifa preferencial se haya actualizado correctamente
-        Preferencial tarifaPreferencial = moduloPeaje.getTarifaPreferencial();
-        assertEquals(20.0, tarifaPreferencial.getMonto());
-
-        // Si la aserción es verdadera, se imprime un mensaje en la consola
+        double nuevoMonto = 7.5;
+        Preferencial nuevaTarifa = new Preferencial(nuevoMonto);
+        moduloPeaje.actualizarTarifaPreferencial(nuevaTarifa);
+        assertEquals(nuevoMonto, moduloPeaje.getTarifaPreferencial().obtenerMonto());
         System.out.println("La tarifa preferencial se ha actualizado correctamente.");
     }
-
 }
 
 
