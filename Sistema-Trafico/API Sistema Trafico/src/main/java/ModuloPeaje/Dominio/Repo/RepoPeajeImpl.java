@@ -74,6 +74,12 @@ public class RepoPeajeImpl implements RepoPeaje {
         em.persist(pasadaPorPeaje);
     }
 
+    @Transactional
+    @Override
+    public void altaTarifa(Tarifa tarifa) {
+        em.persist(tarifa);
+    }
+
     @Override
     @Transactional
     public void bajaVehiculo(Long id) {
@@ -133,6 +139,17 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.remove(pasadaPorPeaje);
         } else {
             throw new IllegalArgumentException("PasadaPorPeaje no encontrada: " + id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void bajaTarifa(int id) {
+        Tarifa tarifa = em.find(Tarifa.class, id);
+        if (tarifa != null) {
+            em.remove(tarifa);
+        } else {
+            throw new IllegalArgumentException("Tarifa no encontrada: " + id);
         }
     }
 
@@ -215,6 +232,19 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.merge(existingPasadaPorPeaje);
         } else {
             throw new IllegalArgumentException("PasadaPorPeaje no encontrada: " + pasadaPorPeaje.getId());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void modificarTarifa(Tarifa tarifa) {
+        Tarifa existingTarifa = em.find(Tarifa.class, tarifa.getId());
+        if (existingTarifa != null) {
+            existingTarifa.setMonto(tarifa.getMonto());
+            existingTarifa.setTipoTarifa(tarifa.getTipoTarifa());
+            em.merge(existingTarifa);
+        } else {
+            throw new IllegalArgumentException("Tarifa no encontrada: " + tarifa.getId());
         }
     }
 

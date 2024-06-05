@@ -36,6 +36,10 @@ public interface RepoPeaje {
     public void bajaPasadaPorPeaje(long id);
     public void modificarPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
 
+    public void altaTarifa(Tarifa tarifa);
+    public void bajaTarifa(int id);
+    public void modificarTarifa(Tarifa tarifa);
+
 
 
 

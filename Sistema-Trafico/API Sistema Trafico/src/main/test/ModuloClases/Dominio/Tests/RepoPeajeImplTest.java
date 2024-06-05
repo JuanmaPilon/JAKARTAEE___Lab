@@ -34,6 +34,8 @@ public class RepoPeajeImplTest {
 
     private PasadaPorPeaje pasadaPorPeaje;
 
+    private Tarifa tarifa;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -57,6 +59,8 @@ public class RepoPeajeImplTest {
         repoPeaje.altaVehiculoExtranjero(vehiculoExtranjero);
         pasadaPorPeaje = new PasadaPorPeaje(new Date(), 10.0, null);
         pasadaPorPeaje.setId(1L);
+        tarifa = new Tarifa(100.0);
+        tarifa.setTipoTarifa(TipoTarifa.COMUN);
     }
 
     @Test
@@ -255,6 +259,40 @@ public class RepoPeajeImplTest {
 
         verify(entityManager, times(1)).merge(pasadaPorPeaje);
         assertEquals(20.0, pasadaPorPeaje.getCosto());
+    }
+
+    @Test
+    @Transactional
+    public void testAltaTarifa() {
+        repoPeaje.altaTarifa(tarifa);
+        verify(entityManager, times(1)).persist(tarifa);
+    }
+
+    @Test
+    @Transactional
+    public void testBajaTarifa() {
+        int id = 1;
+        when(entityManager.find(Tarifa.class, id)).thenReturn(tarifa);
+        repoPeaje.bajaTarifa(id);
+        verify(entityManager, times(1)).remove(tarifa);
+    }
+
+    @Test
+    @Transactional
+    public void testModificarTarifa() {
+        int id = 1;
+        tarifa.setId(id);
+        Tarifa tarifaModificada = new Tarifa(150.0);
+        tarifaModificada.setTipoTarifa(TipoTarifa.PREFERENCIAL);
+        tarifaModificada.setId(id);
+
+        when(entityManager.find(Tarifa.class, id)).thenReturn(tarifa);
+
+        repoPeaje.modificarTarifa(tarifaModificada);
+
+        verify(entityManager, times(1)).merge(tarifa);
+        assertEquals(150.0, tarifa.getMonto());
+        assertEquals(TipoTarifa.PREFERENCIAL, tarifa.getTipoTarifa());
     }
 
     @Test
