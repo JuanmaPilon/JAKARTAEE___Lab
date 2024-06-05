@@ -56,6 +56,12 @@ public class RepoPeajeImpl implements RepoPeaje {
         em.persist(vehiculoExtranjero);
     }
 
+    @Transactional
+    @Override
+    public void altaTag(Tag tag) {
+        em.persist(tag);
+    }
+
     @Override
     @Transactional
     public void bajaVehiculo(Long id) {
@@ -84,6 +90,17 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.remove(vehiculoExtranjero);
         } else {
             throw new IllegalArgumentException("Vehículo Extranjero no encontrado: " + id);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void bajaTag(long id) {
+        Tag tag = em.find(Tag.class, id);
+        if (tag != null) {
+            em.remove(tag);
+        } else {
+            throw new IllegalArgumentException("Tag no encontrado: " + id);
         }
     }
 
@@ -128,6 +145,18 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.merge(existingVehiculoExtranjero);
         } else {
             throw new IllegalArgumentException("Vehículo Extranjero no encontrado: " + vehiculoExtranjero.getId());
+        }
+    }
+
+    @Transactional
+    @Override
+    public void modificarTag(Tag tag) {
+        Tag existingTag = em.find(Tag.class, tag.getId());
+        if (existingTag != null) {
+            existingTag.setIdUnico(tag.getIdUnico());
+            em.merge(existingTag);
+        } else {
+            throw new IllegalArgumentException("Tag no encontrado: " + tag.getId());
         }
     }
 

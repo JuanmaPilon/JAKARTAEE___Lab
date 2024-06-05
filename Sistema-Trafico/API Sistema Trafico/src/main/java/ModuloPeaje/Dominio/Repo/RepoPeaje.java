@@ -24,4 +24,9 @@ public interface RepoPeaje {
     public void bajaVehiculoExtranjero(long id);
     public void modificarVehiculoExtranjero(Extranjero vehiculoExtranjero);
 
+    public void altaTag(Tag tag);
+    public void bajaTag(long id);
+    public void modificarTag(Tag tag);
+
+
 }
