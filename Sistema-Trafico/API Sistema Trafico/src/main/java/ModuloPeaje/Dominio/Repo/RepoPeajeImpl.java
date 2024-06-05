@@ -39,6 +39,30 @@ public class RepoPeajeImpl implements RepoPeaje {
 
     }
 
+    @Override
+    @Transactional
+    public void bajaVehiculo(Long id) {
+        Vehiculo vehiculo = em.find(Vehiculo.class, id);
+        if (vehiculo != null) {
+            em.remove(vehiculo);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void modificarVehiculo(Vehiculo vehiculo) {
+        Vehiculo existingVehiculo = em.find(Vehiculo.class, vehiculo.getId());
+        if (existingVehiculo != null) {
+            existingVehiculo.setTag(vehiculo.getTag());
+            existingVehiculo.setPasadaPorPeajeList(vehiculo.getPasadaPorPeajeList());
+            existingVehiculo.setNacionalidad(vehiculo.getNacionalidad());
+            em.merge(existingVehiculo);
+        } else {
+            // Si el vehículo no existe, puedes lanzar una excepción o manejarlo de otra manera
+            throw new IllegalArgumentException("Vehículo no encontrado: " + vehiculo.getId());
+        }
+    }
+
 
     @Override
     public Vehiculo BuscarTag(int tag) {
