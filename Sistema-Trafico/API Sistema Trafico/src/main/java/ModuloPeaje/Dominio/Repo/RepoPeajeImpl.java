@@ -62,6 +62,12 @@ public class RepoPeajeImpl implements RepoPeaje {
         em.persist(tag);
     }
 
+    @Transactional
+    @Override
+    public void altaMatricula(Matricula matricula) {
+        em.persist(matricula);
+    }
+
     @Override
     @Transactional
     public void bajaVehiculo(Long id) {
@@ -101,6 +107,15 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.remove(tag);
         } else {
             throw new IllegalArgumentException("Tag no encontrado: " + id);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void bajaMatricula(String id) {
+        Matricula matricula = em.find(Matricula.class, id);
+        if (matricula != null) {
+            em.remove(matricula);
         }
     }
 
@@ -157,6 +172,18 @@ public class RepoPeajeImpl implements RepoPeaje {
             em.merge(existingTag);
         } else {
             throw new IllegalArgumentException("Tag no encontrado: " + tag.getId());
+        }
+    }
+
+    @Transactional
+    @Override
+    public void modificarMatricula(Matricula matricula) {
+        Matricula matriculaExistente = em.find(Matricula.class, matricula.getId());
+        if (matriculaExistente != null) {
+            matriculaExistente.setNroMatricula(matricula.getNroMatricula());
+            em.merge(matriculaExistente);
+        } else {
+            throw new IllegalArgumentException("Matrícula no encontrada: " + matricula.getId());
         }
     }
 

@@ -26,6 +26,7 @@ public class RepoPeajeImplTest {
     private RepoPeajeImpl repoPeaje;
 
     private Vehiculo vehiculo;
+    private Matricula matricula;
 
     private Extranjero vehiculoExtranjero;
     private Nacional vehiculoNacional;
@@ -36,6 +37,7 @@ public class RepoPeajeImplTest {
         repoPeaje = new RepoPeajeImpl();
         repoPeaje.setEntityManager(entityManager);  // Establece manualmente el EntityManager
 
+        matricula = new Matricula("ABC123");
         Tag tag = new Tag("12345");
         vehiculoExtranjero = new Extranjero(tag);
 
@@ -154,6 +156,38 @@ public class RepoPeajeImplTest {
         verify(entityManager).merge(existingTag);
     }
 
+    @Test
+    @Transactional
+    public void testAltaMatricula() {
+        repoPeaje.altaMatricula(matricula);
+        verify(entityManager, times(1)).persist(matricula);
+    }
+
+    @Test
+    @Transactional
+    public void testBajaMatricula() {
+        String id = "1"; // Aquí proporciona el id correcto de la matrícula que deseas eliminar
+        when(entityManager.find(Matricula.class, id)).thenReturn(matricula);
+
+        repoPeaje.bajaMatricula(id);
+
+        verify(entityManager, times(1)).remove(matricula);
+    }
+
+    @Test
+    @Transactional
+    public void testModificarMatricula() {
+        String id = "1"; // Proporciona el id correcto de la matrícula que deseas modificar
+        Matricula matriculaModificada = new Matricula("XYZ789");
+        matriculaModificada.setId(id);
+
+        when(entityManager.find(Matricula.class, id)).thenReturn(matricula);
+
+        repoPeaje.modificarMatricula(matriculaModificada);
+
+        verify(entityManager, times(1)).merge(matricula);
+        assertEquals("XYZ789", matricula.getNroMatricula());
+    }
 
     @Test
     void testActualizarTarifaPreferencial() {

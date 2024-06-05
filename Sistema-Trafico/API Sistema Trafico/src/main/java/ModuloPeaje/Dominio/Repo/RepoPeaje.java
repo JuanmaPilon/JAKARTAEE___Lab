@@ -28,5 +28,10 @@ public interface RepoPeaje {
     public void bajaTag(long id);
     public void modificarTag(Tag tag);
 
+    public void altaMatricula(Matricula matricula);
+    public void bajaMatricula(String id);
+    public void modificarMatricula(Matricula matricula);
+
+
 
 }
