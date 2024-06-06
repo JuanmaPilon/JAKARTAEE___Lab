@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+
 @Entity(name = "gestion_tarjeta")
 // @Table (name = "gestion_tarjeta")
 public class Tarjeta {
@@ -26,6 +27,13 @@ public class Tarjeta {
         this.nro = nro;
         this.nombre = nombre;
         this.fechaVto = fechaVto;
+    }
+    public Tarjeta(int nro, String nombre) {
+        this.nro = nro;
+        this.nombre = nombre;
+    }
+    public Tarjeta(int nro ) {
+        this.nro = nro;
     }
 
     public int getNroTarjeta() {

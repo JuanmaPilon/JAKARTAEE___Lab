@@ -4,6 +4,7 @@ import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloGestionClientes.Dominio.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 //import org.jboss.logging.Logger;
@@ -36,68 +37,92 @@ public class RepoClientesImp implements RepoClientes {
 
     }
 
-
+    @Transactional
     @Override
     public void agregarClienteTelepeaje(ClienteTelepeaje cliente) {
-    //em.persist(cliente);
-        clientesTelepeajeMap.put(cliente.getCi(), cliente);
+        em.persist(cliente);
+        //clientesTelepeajeMap.put(cliente.getCi(), cliente);
     }
-
+    @Transactional
     @Override
     public void agregarClienteSukcsive(ClienteSucive cliente) {
-        clientesSuciveMap.put(cliente.getCi(), cliente);
+        em.persist(cliente);
+        //clientesSuciveMap.put(cliente.getCi(), cliente);
     }
-
+    @Transactional
     @Override
     public ClienteTelepeaje buscarClienteTelePorCI(String ci) {
 
-        return clientesTelepeajeMap.get(ci);
+        return em.find(ClienteTelepeaje.class, ci);
+                //clientesTelepeajeMap.get(ci);
     }
-
+    @Transactional
     @Override
     public ClienteSucive buscarClienteSucPorCI(String ci) {
-        return clientesSuciveMap.get(ci);
-    }
 
+        return em.find(ClienteSucive.class, ci);
+                //clientesSuciveMap.get(ci);
+    }
+    @Transactional
     @Override
     public void actualizarCliente(ClienteTelepeaje cliente) {
-        clientesTelepeajeMap.put(cliente.getCi(), cliente);
+        ClienteTelepeaje existingCliente = em.find(ClienteTelepeaje.class, cliente.getCi());
+        if (existingCliente != null) {
+            em.merge(cliente);
+        } else {
+            throw new IllegalArgumentException("Cliente no encontrado: " + cliente.getCi());
+        }
     }
-
+    @Transactional
     @Override
     public void eliminarClientePorCI(String ci) {
-        clientesTelepeajeMap.remove(ci);
+        ClienteTelepeaje cliente = em.find(ClienteTelepeaje.class, ci);
+        if (cliente != null) {
+            em.remove(cliente);
+        } else {
+            throw new IllegalArgumentException("Cliente no encontrado: " + ci);
+        }
     }
-
+    @Transactional
     @Override
     public void agregarClienteSucive(ClienteSucive cliente) {
-        clientesSuciveMap.put(cliente.getCi(), cliente);
+        em.persist(cliente);
+        //clientesSuciveMap.put(cliente.getCi(), cliente);
     }
-
+    @Transactional
     @Override
     public void actualizarCliente(ClienteSucive cliente) {
-        clientesSuciveMap.put(cliente.getCi(), cliente);
+        ClienteSucive existingCliente = em.find(ClienteSucive.class, cliente.getCi());
+        if (existingCliente != null) {
+            em.merge(cliente);
+        } else {
+            throw new IllegalArgumentException("Cliente no encontrado: " + cliente.getCi());
+        }
     }
-
+    @Transactional
     @Override
     public void eliminarClienteSucivePorCI(String ci) {
-        clientesSuciveMap.remove(ci);
-    }
+        ClienteSucive cliente = em.find(ClienteSucive.class, ci);
+        if (cliente != null) {
+            em.remove(cliente);
+        } else {
+            throw new IllegalArgumentException("Cliente no encontrado: " + ci);
+        }}
 
     @Override
     public void addVehiculo(Vehiculo vehiculo) {
         vehiculos.add(vehiculo);
     }
-
+    @Transactional
     @Override
     public Vehiculo BuscarTag(int tag) {
-        for (Vehiculo vehiculo : vehiculos) {
-            int tag2 = Integer.parseInt(vehiculo.getTag().getIdUnico());
-            if (tag2 == tag) {
-                return vehiculo;
-            }
+        try {
+            return em.createQuery("SELECT v FROM gestion_Vehiculo v WHERE v.tag.idUnico = :tag", Vehiculo.class)
+                    .setParameter("tag", String.valueOf(tag))
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
 

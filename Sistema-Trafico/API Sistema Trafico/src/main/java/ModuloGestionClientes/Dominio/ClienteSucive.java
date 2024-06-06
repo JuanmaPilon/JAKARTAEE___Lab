@@ -1,5 +1,6 @@
 package ModuloGestionClientes.Dominio;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 // mismo que las otras clases, también hay que quitar las otras viejas desactualizadas de cada modulo y solo ponerlos aca
-
+@AllArgsConstructor
 @Data
 @Entity(name = "gestion_clienteSucive")
 // @Table(name = "gestion_clienteSucive")

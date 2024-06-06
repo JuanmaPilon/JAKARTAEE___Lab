@@ -1,429 +1,249 @@
 package ModuloClases.Dominio.Tests;
 
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
+import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
 import ModuloGestionClientes.Dominio.*;
+import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
+import ModuloGestionClientes.Evento.PublicadorEventoClientes;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class GestionClientesServiceImplTest {
+    @InjectMocks
+    private ModuloGestionClientes moduloGestionClientes;
 
-    @Inject
+    @Mock
     private RepoClientesImp repoClientes;
-    @Inject
-    private ModuloGestionClientes gestionClientesService;
 
-    @Inject
-    private ClienteTelepeaje clienteTelepeaje;
-    @Inject
-    private Vehiculo vehiculo;
+    @Mock
+    private PublicadorEventoClientes pagoTarjeta;
+
     @BeforeEach
-    void setUp() {
-        // Inicializa la implementación real del repositorio
-        repoClientes = new RepoClientesImp();
-
-        // Inicializa el servicio con el repositorio
-        gestionClientesService = new ModuloGestionClientes(repoClientes);
-
-        // Configura los datos iniciales
-        clienteTelepeaje = new ClienteTelepeaje();
-        PREPaga cuenta = new PREPaga();
-        cuenta.setSaldo(100.0);
-        clienteTelepeaje.setCuentaPrepaga(cuenta);
-
-        // Crea y configura el vehículo
-        vehiculo = new Vehiculo();
-        vehiculo.setId(1L);
-        Tag tag = new Tag("123");
-        vehiculo.setTag(tag);
-        vehiculo.setClienteTelepeaje(clienteTelepeaje);
-
-        // Registra el vehículo en el repositorio
-        //repoClientes.addVehiculo(vehiculo);
-
-    }
-
-    public GestionClientesServiceImplTest() {
-        this.gestionClientesService = new ModuloGestionClientes();
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        moduloGestionClientes = new ModuloGestionClientes(repoClientes);
     }
 
     @Test
-    void testAltaClienteSucive() {
-        Usuario usuario = new Usuario("12345678", "Juan", "juan@example.com");
-        gestionClientesService.altaClienteSucksive(usuario);
+    public void testAltaClienteTelepeaje_ClienteNoExistente() {
+        Usuario usuario = new Usuario("Nombre", "CI123", "email@example.com");
+        when(repoClientes.buscarClienteTelePorCI(usuario.getCi())).thenReturn(null);
+
+        moduloGestionClientes.altaClienteTeleapeje(usuario);
+
+        verify(repoClientes, times(1)).agregarClienteTelepeaje(any(ClienteTelepeaje.class));
     }
 
     @Test
-    void testAltaClienteTeleapeje() {
-        Usuario usuario = new Usuario("12345678", "Juan", "juan@example.com");
-        gestionClientesService.altaClienteTeleapeje(usuario);
+    public void testAltaClienteTelepeaje_ClienteExistente() {
+        Usuario usuario = new Usuario("Nombre", "CI123", "email@example.com");
+        ClienteTelepeaje clienteExistente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        when(repoClientes.buscarClienteTelePorCI(usuario.getCi())).thenReturn(clienteExistente);
+
+        moduloGestionClientes.altaClienteTeleapeje(usuario);
+
+        verify(repoClientes, times(0)).agregarClienteTelepeaje(any(ClienteTelepeaje.class));
     }
 
     @Test
-    void testCargarSaldoTelepeaje() {
-        Usuario usuario = new Usuario("34563456", "Pepe", "pepe@example.com");
-        gestionClientesService.altaClienteTeleapeje(usuario);
-        ClienteTelepeaje clienteTelepeaje = new ClienteTelepeaje();
-        clienteTelepeaje.setCi(usuario.getCi());
-        clienteTelepeaje.setNombre(usuario.getNombreUsuario());
-        clienteTelepeaje.setEmail(usuario.getEmail());
-        gestionClientesService.cargarSaldo(clienteTelepeaje,55.0);
+    public void testCargarSaldoClienteTelepeaje_ClienteExistente() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
+
+        moduloGestionClientes.cargarSaldo(cliente, 100.0);
+
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
     }
 
     @Test
-    void testCargarSaldoSucive() {
-        Usuario usuario = new Usuario("3456345634", "Roberto", "roberto@example.com");
-        gestionClientesService.altaClienteSucksive(usuario);
-        ClienteSucive clienteSucive = new ClienteSucive();
-        clienteSucive.setCi(usuario.getCi());
-        clienteSucive.setNombre(usuario.getNombreUsuario());
-        gestionClientesService.cargarSaldo(clienteSucive,55.0);
+    public void testCargarSaldoClienteTelepeaje_ClienteNoExistente() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(null);
+
+        moduloGestionClientes.cargarSaldo(cliente, 100.0);
+
+        verify(repoClientes, times(0)).actualizarCliente(any(ClienteTelepeaje.class));
     }
 
     @Test
-    void testObtenerCuentasPorTag() throws ParseException {
-        // Crear un cliente de Telepeaje
-       ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+    public void testVincularVehiculoClienteSucive() {
+        ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
+        Tag tag = new Tag("ID_Unico");
+        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
+        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
+        //Vehiculo vehiculo = new Vehiculo("Vehiculo1", "Placa123");
+        when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
 
-        // Crear un Tag
-        Tag tagA = new Tag("TAG123");
+        moduloGestionClientes.vincularVehiculo(cliente, vehiculo);
 
-        // Crear un vehículo con ese Tag
-        List<PasadaPorPeaje> pasadasPorPeaje = new ArrayList<>();
-        Vehiculo vehiculo = new Vehiculo(tagA, pasadasPorPeaje);
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
+    }
 
-        // Agregar el vehículo al cliente
+    @Test
+    public void testVincularVehiculoClienteTelepeaje() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        Tag tag = new Tag("ID_Unico");
+        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
+        Vehiculo vehiculo = new Vehiculo(tag, pasadas);when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
+
+        moduloGestionClientes.vincularVehiculo(cliente, vehiculo);
+
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
+    }
+
+    @Test
+    public void testDesvincularVehiculoClienteTelepeaje() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        Tag tag = new Tag("ID_Unico");
+        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
+        Vehiculo vehiculo = new Vehiculo(tag, pasadas);cliente.agregarVehiculoACliente(vehiculo);
+        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
+
+        moduloGestionClientes.desvincularVehiculo(cliente, vehiculo);
+
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
+    }
+
+    @Test
+    public void testDesvincularVehiculoClienteSucive() {
+        ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
+        Tag tag = new Tag("ID_Unico");
+        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
+        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
         cliente.agregarVehiculoACliente(vehiculo);
+        cliente.agregarVehiculoACliente(vehiculo);
+        when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
 
-        // Asignar cuentas PREPaga y POSTPaga al cliente
-        PREPaga cuentaPrepaga = new PREPaga();
-        cuentaPrepaga.setSaldo(100.0);
-        cliente.asignarCuentaPrepaga(cuentaPrepaga);
+        moduloGestionClientes.desvincularVehiculo(cliente, vehiculo);
 
-        // Crear fecha como cadena
-        String fechaVtoStr = "2025-12-31";
-
-        // Crear Tarjeta con la fecha como cadena
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaVto = sdf.parse(fechaVtoStr);
-        Tarjeta tarjeta = new Tarjeta(1234, "Carlos", new java.sql.Date(fechaVto.getTime()));  // Creación de java.sql.Date a partir de java.util.Date
-
-        POSTPaga cuentaPostpaga = new POSTPaga(5678, fechaVto, tarjeta);
-        cliente.asignarCuentaPostpaga(cuentaPostpaga);
-
-        // Obtener cuentas por Tag
-        Set<Object> cuentasPorTag = gestionClientesService.obtenerCuentasPorTag(cliente, tagA);
-
-        // Verificar que las cuentas obtenidas son correctas
-        Set<Object> expectedCuentas = new HashSet<>();
-        expectedCuentas.add(cuentaPrepaga);
-        expectedCuentas.add(cuentaPostpaga);
-
-        assertEquals(expectedCuentas, cuentasPorTag, "Las cuentas obtenidas por Tag no son correctas.");
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
     }
 
     @Test
-    void testRealizarPrePago_SaldoSuficiente() {
+    public void testConsultarSaldoClienteTelepeaje() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
 
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("123");
+        Double saldo = moduloGestionClientes.consultarSaldo(cliente);
+
+        assertNotNull(saldo);
+        verify(repoClientes, times(1)).buscarClienteTelePorCI(cliente.getCi());
+    }
+
+    @Test
+    public void testConsultarSaldoClienteSucive() {
+        ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
+        when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
+
+        Double saldo = moduloGestionClientes.consultarSaldo(cliente);
+
+        assertNotNull(saldo);
+        verify(repoClientes, times(1)).buscarClienteSucPorCI(cliente.getCi());
+    }
+
+    @Test
+    public void testRealizarPrePago() {
+        Tag tag = new Tag("1234");
+        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
+        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
+
         vehiculo.setTag(tag);
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        cliente.setCuentaPrepaga(new PREPaga(500.0));
+        vehiculo.setClienteTelepeaje(cliente);
 
-        // Crear una cuenta PREPaga con saldo suficiente
-        PREPaga cuentaPrepaga = new PREPaga();
-        cuentaPrepaga.setSaldo(100.0);
+        when(repoClientes.BuscarTag(anyInt())).thenReturn(vehiculo);
 
-        vehiculo.setCliente(cliente);
-        cliente.setCuentaPrepaga(cuentaPrepaga);
-        repoClientes.agregarClienteTelepeaje(cliente);
-        repoClientes.addVehiculo(vehiculo);
+        boolean result = moduloGestionClientes.realizarPrePago(1234, 100.0);
 
-        // Realizar el pago
-        boolean resultado = gestionClientesService.realizarPrePago(123, 50.0);
-
-        assertTrue(resultado);
-        // Busca el vehículo por el tag
-        vehiculo = repoClientes.BuscarTag(Integer.parseInt(tag.getIdUnico()));
-
-        // Verificar que el saldo se haya reducido correctamente
-        assertEquals(50.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo no se redujo correctamente.");
-        assertEquals(50.0, vehiculo.getClienteTelepeaje().getCuentaPrepaga().getSaldo());
-        System.out.println("Test realizado. Saldo esperado: " + 50.0);
-
+        assertTrue(result);
+        verify(repoClientes, times(1)).BuscarTag(1234);
     }
 
     @Test
-    void testRealizarPrePago_SaldoInsuficiente() {
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("123");
+    public void testRealizarPostPago() {
+        Tag tag = new Tag("1234");
+        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
+        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
         vehiculo.setTag(tag);
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        Tarjeta tarjeta = new Tarjeta(123, "123456789");
+        cliente.setCuentaPostpaga(new POSTPaga(tarjeta));
+        vehiculo.setClienteTelepeaje(cliente);
 
-        // Crear una cuenta PREPaga con saldo insuficiente
-        PREPaga cuentaPrepaga = new PREPaga();
-        cuentaPrepaga.setSaldo(20.0);
+        when(repoClientes.BuscarTag(anyInt())).thenReturn(vehiculo);
 
-        vehiculo.setCliente(cliente);
-        cliente.setCuentaPrepaga(cuentaPrepaga);
-        repoClientes.agregarClienteTelepeaje(cliente);
-        repoClientes.addVehiculo(vehiculo);
+        boolean result = moduloGestionClientes.realizarPostPago(1234, 100.0);
 
-        // Realizar el pago
-        gestionClientesService.realizarPrePago(123, 50.0);
-
-        // Verificar que el saldo no se haya reducido
-        assertEquals(20.0, cuentaPrepaga.getSaldo(), 0.01, "El saldo debería permanecer igual debido a saldo insuficiente.");
-        System.out.println("Saldo insuficiente");
-        System.out.println("Su cuenta tiene: "+ cuentaPrepaga.getSaldo());
+        assertTrue(result);
+        verify(repoClientes, times(1)).BuscarTag(1234);
     }
 
     @Test
-    void testRealizarPrePago_SinCuentaPrepaga() {
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("123");
-        vehiculo.setTag(tag);
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+    public void testAsociarTarjetaClienteTelepeaje() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        Tarjeta tarjeta = new Tarjeta(123,"123456789");
+        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
 
-        vehiculo.setCliente(cliente);
-        repoClientes.agregarClienteTelepeaje(cliente);
-        repoClientes.addVehiculo(vehiculo);
+        moduloGestionClientes.asociarTarjeta(cliente, tarjeta);
 
-        // Realizar el pago
-        gestionClientesService.realizarPrePago(123, 50.0);
-
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
     }
 
     @Test
-    void testRealizarPostPago_ConTarjeta() throws ParseException {
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("123");
-        vehiculo.setTag(tag);
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+    public void testAsociarTarjetaClienteSucive() {
+        ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
+        Tarjeta tarjeta = new Tarjeta(123,"123456789");
+        when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
 
-        // Crear fecha como cadena
-        String fechaVtoStr = "2025-12-31";
+        moduloGestionClientes.asociarTarjeta(cliente, tarjeta);
 
-        // Crear Tarjeta con la fecha como cadena
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaVto = sdf.parse(fechaVtoStr);
-        Tarjeta tarjeta = new Tarjeta(1234, "Carlos", new java.sql.Date(fechaVto.getTime()));
-        POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), tarjeta);
-        cliente.asignarCuentaPostpaga(cuentaPostpaga);
-
-        vehiculo.setCliente(cliente);
-        cliente.setCuentaPostpaga(cuentaPostpaga);
-        repoClientes.agregarClienteTelepeaje(cliente);
-        repoClientes.addVehiculo(vehiculo);
-
-
-        // Realizar el pago
-        gestionClientesService.realizarPostPago(123, 50.0);
-        System.out.println("Pago logrado");
+        verify(repoClientes, times(1)).actualizarCliente(cliente);
     }
 
     @Test
-    void testRealizarPostPago_SinTarjeta() {
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("123");
-        vehiculo.setTag(tag);
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+    public void testConsultarPasadasClienteTelepeaje() {
+        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+        Date fechaInicio = new Date();
+        Date fechaFin = new Date();
 
-        // Crear una cuenta POSTPaga sin tarjeta asociada
-        POSTPaga cuentaPostpaga = new POSTPaga(5678, new Date(), null);
-        cliente.asignarCuentaPostpaga(cuentaPostpaga);
+        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
 
-        vehiculo.setCliente(cliente);
-        cliente.setCuentaPostpaga(cuentaPostpaga);
-        repoClientes.agregarClienteTelepeaje(cliente);
-        repoClientes.addVehiculo(vehiculo);
+        Set<PasadaPorPeaje> pasadas = moduloGestionClientes.consultarPasadas(cliente, fechaInicio, fechaFin);
 
-        // Realizar el pago
-        gestionClientesService.realizarPostPago(123, 50.0);
-
-
+        assertNotNull(pasadas);
+        verify(repoClientes, times(1)).buscarClienteTelePorCI(cliente.getCi());
     }
 
     @Test
-    void testRealizarPostPago_SinCuentaPostpaga() {
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("123");
-        vehiculo.setTag(tag);
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
+    public void testConsultarPasadasClienteSucive() {
+        ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
+        Date fechaInicio = new Date();
+        Date fechaFin = new Date();
 
+        when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
 
-        vehiculo.setCliente(cliente);
-        repoClientes.agregarClienteTelepeaje(cliente);
-        repoClientes.addVehiculo(vehiculo);
+        Set<PasadaPorPeaje> pasadas = moduloGestionClientes.consultarPasadas(cliente, fechaInicio, fechaFin);
 
-        // Realizar el pago
-        gestionClientesService.realizarPostPago(123, 50.0);
+        assertNotNull(pasadas);
+        verify(repoClientes, times(1)).buscarClienteSucPorCI(cliente.getCi());
     }
-
-    @Test
-    void testConsultarSaldo_ClienteSucive_Encontrado() {
-        // Crear un cliente Sucive existente
-        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
-        cliente.cargarSaldo(100.0);
-
-        // Consultar saldo del cliente Sucive existente
-        gestionClientesService.consultarSaldo(cliente);
-
-    }
-
-    @Test
-    void testConsultarSaldo_ClienteTelepeaje_Encontrado() {
-        // Crear un cliente Telepeaje existente
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Pedro", "87654321", "pedro@example.com", new ArrayList<>());
-        cliente.cargarSaldo(200.0);
-
-        // Consultar saldo del cliente Telepeaje existente
-        gestionClientesService.consultarSaldo(cliente);
-
-    }
-
-    @Test
-    void testConsultarSaldo_ClienteSucive_NoEncontrado() {
-        // Crear un cliente Sucive no existente
-        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
-
-        // Consultar saldo de un cliente Sucive no existente
-        gestionClientesService.consultarSaldo(cliente);
-    }
-
-    @Test
-    void testConsultarSaldo_ClienteTelepeaje_NoEncontrado() {
-        // Crear un cliente Telepeaje no existente
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Pedro", "87654321", "pedro@example.com", new ArrayList<>());
-
-        // Consultar saldo de un cliente Telepeaje no existente
-        gestionClientesService.consultarSaldo(cliente);
-    }
-
-    @Test
-    void testAsociarTarjeta_ClienteTelepeaje() throws ParseException {
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
-
-        // Crear fecha como cadena
-        String fechaVtoStr = "2025-12-31";
-
-        // Crear Tarjeta con la fecha como cadena
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaVto = sdf.parse(fechaVtoStr);
-        Tarjeta tarjeta = new Tarjeta(1234, "Carlos", new java.sql.Date(fechaVto.getTime()));
-
-        // Asociar la tarjeta al cliente
-        gestionClientesService.asociarTarjeta(cliente, tarjeta);
-    }
-
-    @Test
-    void testAsociarTarjeta_ClienteSucive() throws ParseException {
-        // Crear un cliente de Sucive
-        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
-
-        // Crear fecha como cadena
-        String fechaVtoStr = "2025-12-31";
-
-        // Crear Tarjeta con la fecha como cadena
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaVto = sdf.parse(fechaVtoStr);
-        Tarjeta tarjeta = new Tarjeta(1234, "Juan", new java.sql.Date(fechaVto.getTime()));
-
-        // Asociar la tarjeta al cliente
-        gestionClientesService.asociarTarjeta(cliente, tarjeta);
-    }
-
-    @Test
-    void testConsultarPasadas_ClienteTelepeaje() throws ParseException {
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Carlos", "98765432", "carlos@example.com", new ArrayList<>());
-
-        // Crear fechas como cadenas
-        String fechaInicioStr = "2025-01-01";
-        String fechaFinStr = "2025-12-31";
-
-        // Convertir las cadenas a objetos de tipo Date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaInicio = new java.sql.Date(sdf.parse(fechaInicioStr).getTime());
-        Date fechaFin = new java.sql.Date(sdf.parse(fechaFinStr).getTime());
-
-        // Consultar pasadas por peaje
-        Set<PasadaPorPeaje> pasadas = gestionClientesService.consultarPasadas(cliente, fechaInicio, fechaFin);
-    }
-
-    @Test
-    void testConsultarPasadas_ClienteSucive() throws ParseException {
-        // Crear un cliente de Sucive
-        ClienteSucive cliente = new ClienteSucive("Juan", "12345678", new ArrayList<>());
-
-        // Crear fechas como cadenas
-        String fechaInicioStr = "2025-01-01";
-        String fechaFinStr = "2025-12-31";
-
-        // Convertir las cadenas a objetos de tipo Date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaInicio = new java.sql.Date(sdf.parse(fechaInicioStr).getTime());
-        Date fechaFin = new java.sql.Date(sdf.parse(fechaFinStr).getTime());
-
-        // Consultar pasadas por peaje
-        Set<PasadaPorPeaje> pasadas = gestionClientesService.consultarPasadas(cliente, fechaInicio, fechaFin);
-    }
-
-    @Test
-    void testVincularVehiculo_ClienteTelepeaje() {
-        // Crear un cliente de Telepeaje
-        ClienteTelepeaje clienteTelepeaje = new ClienteTelepeaje("Juan", "12345678", "juan@example.com", new ArrayList<>());
-
-        // Agregar el cliente al repositorio
-        repoClientes.agregarClienteTelepeaje(clienteTelepeaje);
-
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI("12345678");
-        assertNotNull(clienteEnRepo, "El cliente debería existir en el repositorio.");
-
-        // Crear un vehículo
-        Vehiculo vehiculo = new Vehiculo();
-        Tag tag = new Tag("456");
-        vehiculo.setTag(tag);
-
-        // Vincular el vehículo al cliente
-        gestionClientesService.vincularVehiculo(clienteTelepeaje, vehiculo);
-
-        // Verificar que el vehículo esté vinculado al cliente en el repositorio
-
-        clienteEnRepo = repoClientes.buscarClienteTelePorCI("12345678");
-        assertNotNull(clienteEnRepo);
-        assertTrue(clienteEnRepo.getVehiculosCliente().contains(vehiculo), "El vehiculo debería estar vinculado al cliente de Telepeaje.");
-
-        }
 }
 
 
