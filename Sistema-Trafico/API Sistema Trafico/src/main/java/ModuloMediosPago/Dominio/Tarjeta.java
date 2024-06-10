@@ -1,6 +1,6 @@
 package ModuloMediosPago.Dominio;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Tarjeta {
     private int nro;

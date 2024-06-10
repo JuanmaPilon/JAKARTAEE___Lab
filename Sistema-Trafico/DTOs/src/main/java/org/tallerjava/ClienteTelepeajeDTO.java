@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
+import java.sql.Date;
 // cambie por data que ya incluye setters , getters, pareses y to string y otras cosas.
 
 @Data
@@ -44,6 +44,17 @@ public class ClienteTelepeajeDTO implements Serializable {
         this.cuentaPostpaga = null;
         this.tarjeta = null;
         this.pasadaPorPeaje = new ArrayList<>();
+    }
+    public ClienteTelepeajeDTO(String nombre, String ci,String email) {
+        this.nombre = nombre;
+        this.ci = ci;
+        this.email = email;
+        this.vehiculosCliente = null;
+        this.saldo = 0.0;
+        this.cuentaPrepaga = null;
+        this.cuentaPostpaga = null;
+        this.tarjeta = null;
+        this.pasadaPorPeaje = null;
     }
 
     public void agregarVehiculoACliente(VehiculoDTO vehiculo) {
