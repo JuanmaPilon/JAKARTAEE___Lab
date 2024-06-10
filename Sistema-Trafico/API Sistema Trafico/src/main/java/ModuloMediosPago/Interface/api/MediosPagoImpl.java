@@ -1,4 +1,5 @@
 package ModuloMediosPago.Interface.api;
+import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloMediosPago.Dominio.ClienteTelepeaje;
 import ModuloMediosPago.Dominio.Tarjeta;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -23,11 +23,6 @@ public class TarjetaDTO implements Serializable {
         this.fechaVto = fechaVto;
     }
 
-    public int getNroTarjeta() {
-        return nro;
-    }
-
-
     public void setFechaVencimiento(Date fechaVto) {
         this.fechaVto = fechaVto;
     }

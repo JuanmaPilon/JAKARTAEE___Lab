@@ -38,12 +38,13 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     @Inject
     private MediosPagoImpl pagosExternos;
 
-    public ModuloGestionClientes() {
 
+    public ModuloGestionClientes() {
         this.repoClientes = new RepoClientesImp();
+        this.pagosExternos = new MediosPagoImpl();
     }
     public ModuloGestionClientes(RepoClientesImp repoClientesImp) {
-
+        this.pagosExternos = new MediosPagoImpl();
         this.repoClientes = repoClientesImp;
     }
 
@@ -227,6 +228,9 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
                 System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                ClienteTelepeajeDTO clienteDTO = new ClienteTelepeajeDTO(vehiculo.getClienteTelepeaje().getNombre(), vehiculo.getClienteTelepeaje().getCi(), vehiculo.getClienteTelepeaje().getEmail(), new ArrayList<>());
+                TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjeta.getNroTarjeta(), tarjeta.getNombre(), tarjeta.getFechaVto());
+                pagosExternos.CobroTelepeaje(clienteDTO, tarjetaDTO);
                 if(this.pagoTarjeta != null) {
                     String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
                     pagoTarjeta.publicarPago(mensajeTarjeta);

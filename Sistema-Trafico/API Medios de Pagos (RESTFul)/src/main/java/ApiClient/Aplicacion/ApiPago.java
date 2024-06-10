@@ -20,8 +20,8 @@ public class ApiPago {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response mensaje() {
-        System.out.println("Todo ok negro");
-        return Response.ok("Tdo ok").status(200, "OK").build();
+        System.out.println("Todo ok");
+        return Response.ok("Todo ok").status(200, "OK").build();
     }
 
     @POST
@@ -41,7 +41,7 @@ public class ApiPago {
             System.out.println("Cliente CI: " + cliente.getCi());
             System.out.println("Cliente Email: " + cliente.getEmail());
 
-            System.out.println("Tarjeta Número: " + tarjeta.getNroTarjeta());
+            System.out.println("Tarjeta Número: " + tarjeta.getNro());
             System.out.println("Tarjeta Nombre: " + tarjeta.getNombre());
             System.out.println("Tarjeta Fecha Vto: " + tarjeta.getFechaVto());
 
