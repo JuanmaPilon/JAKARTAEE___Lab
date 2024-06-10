@@ -3,6 +3,7 @@ package ModuloGestionClientes.Aplicacion;
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
 import ModuloGestionClientes.Evento.PublicadorEventoClientes;
+import ModuloMediosPago.Interface.api.MediosPagoImpl;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -11,6 +12,8 @@ import jakarta.inject.Inject;
 
 import jakarta.enterprise.event.Event;
 import org.jboss.logging.Logger;
+import org.tallerjava.ClienteTelepeajeDTO;
+import org.tallerjava.TarjetaDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,9 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     // ------------------------------------------------------
     @Inject
     private RepoClientes repoClientes;
+
+    @Inject
+    private MediosPagoImpl pagosExternos;
 
     public ModuloGestionClientes() {
 
@@ -220,7 +226,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (cuenta != null) {
             Tarjeta tarjeta = cuenta.getTarjeta();
             if (tarjeta != null) {
-                    System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
                 if(this.pagoTarjeta != null) {
                     String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
                     pagoTarjeta.publicarPago(mensajeTarjeta);

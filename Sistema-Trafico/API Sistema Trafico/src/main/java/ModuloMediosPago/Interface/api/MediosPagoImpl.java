@@ -2,6 +2,8 @@ package ModuloMediosPago.Interface.api;
 import ModuloMediosPago.Dominio.ClienteTelepeaje;
 import ModuloMediosPago.Dominio.Tarjeta;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.ApplicationPath;
 import jakarta.inject.Inject;
 import org.tallerjava.ClienteTelepeajeDTO;
 import org.tallerjava.TarjetaDTO;
@@ -13,8 +15,9 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import org.jboss.logging.Logger;
 import java.util.ArrayList;
-
-public class MediosPagoImpl {
+@ApplicationScoped
+@ApplicationPath("/medios-pago")
+public class MediosPagoImpl implements IMediosPago{
 
     @Inject
     private ModuloMediosPagoAplicacion firma;
@@ -23,9 +26,7 @@ public class MediosPagoImpl {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    public void CobroTelepeaje(ClienteTelepeaje cli, Tarjeta tar) {
-        ClienteTelepeajeDTO clienteDTO = new ClienteTelepeajeDTO(cli.getNombre(), cli.getCi(), cli.getEmail(), new ArrayList<>());
-        TarjetaDTO tarjetaDTO = new TarjetaDTO(tar.getNroTarjeta(), tar.getNombre(), tar.getFechaVto());
+    public void CobroTelepeaje(ClienteTelepeajeDTO clienteDTO, TarjetaDTO tarjetaDTO) {
 
         try {
             // Convertir los DTOs a JSON
