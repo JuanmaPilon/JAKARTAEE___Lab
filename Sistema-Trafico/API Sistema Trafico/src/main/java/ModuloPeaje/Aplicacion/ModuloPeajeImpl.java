@@ -26,10 +26,10 @@ public class ModuloPeajeImpl {
     private PublicadorEventoPeaje pasajeVehiculo;// Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
 
     @Inject
-    private Event<String> vehiculoNoEncontrado;
+    private PublicadorEventoPeaje vehiculoNoEncontrado;
     // Constructor que acepta el Event
     @Inject
-    public ModuloPeajeImpl(Event<String> vehiculoNoEncontrado, RepoPeaje repo) {
+    public ModuloPeajeImpl(PublicadorEventoPeaje vehiculoNoEncontrado, RepoPeaje repo) {
         this.vehiculoNoEncontrado = vehiculoNoEncontrado;
         this.repo = repo;
     }
@@ -139,7 +139,7 @@ public class ModuloPeajeImpl {
                 //error grave el vehiculo no esta en el sistema
                 String mensaje ="Vehiculo no encontrado: " + tag+ " " + matricula;
                 if (this.vehiculoNoEncontrado != null) {
-                    vehiculoNoEncontrado.fire(mensaje); // Invoca el método solo si vehiculoNoEncontrado no es nulo
+                    vehiculoNoEncontrado.publicarVehiculoNoEncontrado(mensaje); // Invoca el método solo si vehiculoNoEncontrado no es nulo
                 }
             }
         }
