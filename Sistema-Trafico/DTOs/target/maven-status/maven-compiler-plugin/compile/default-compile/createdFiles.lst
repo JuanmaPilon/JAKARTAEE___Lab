@@ -1,10 +1,11 @@
 org/tallerjava/UsrExtranjeroDTO.class
-org/tallerjava/ClienteTelepeajeDTO.class
 org/tallerjava/TarjetaDTO.class
+org/tallerjava/ClienteTelepeajeDTO.class
 org/tallerjava/ClienteSuciveDTO.class
 org/tallerjava/TagDTO.class
 org/tallerjava/VehiculoDTO.class
 org/tallerjava/DataTipoCobroDTO.class
+org/tallerjava/IdentificadorDTO.class
 org/tallerjava/UsrNacionalDTO.class
 org/tallerjava/PasadaPorPeajeDTO.class
 org/tallerjava/NotificacionDTO.class
