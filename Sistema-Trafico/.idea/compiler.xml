@@ -12,5 +12,8 @@
         <module name="Medios-de-Pago" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Medios-de-Pagos" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
