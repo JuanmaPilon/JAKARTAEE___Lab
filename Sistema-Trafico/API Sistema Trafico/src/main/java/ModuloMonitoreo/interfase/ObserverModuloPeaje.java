@@ -1,5 +1,7 @@
 package ModuloMonitoreo.interfase;
 
+import ModuloPeaje.Evento.eventoVehiculoExtranjero;
+import ModuloPeaje.Evento.eventoVehiculoNacional;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -41,6 +43,14 @@ public class ObserverModuloPeaje {
     public void accept(@Observes notCobroPrePaga event) {
         log.infof("Evento procesado: PrePago: %s", event.getDescripcion());
         register.incrementarCounter(RegistradorDeMetricas.GESTION_COUNTER_PRE_PAGO);
+    }
+    public void accept(@Observes eventoVehiculoExtranjero event) {
+        log.infof("Evento procesado: Vehiculo Extranjero: %s", event.getDescripcion());
+        register.incrementarCounter(RegistradorDeMetricas.PEAJE_COUNTER_VEHICULO_EXTRANJERO);
+    }
+    public void accept(@Observes eventoVehiculoNacional event) {
+        log.infof("Evento procesado: Vehiculo Nacional: %s", event.getDescripcion());
+        register.incrementarCounter(RegistradorDeMetricas.PEAJE_COUNTER_VEHICULO_NACIONAL);
     }
 
 }

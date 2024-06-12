@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name =   "peaje_tarifa")
+@Entity(name = "peaje_tarifa")
 @Data
 @Setter
 @Getter

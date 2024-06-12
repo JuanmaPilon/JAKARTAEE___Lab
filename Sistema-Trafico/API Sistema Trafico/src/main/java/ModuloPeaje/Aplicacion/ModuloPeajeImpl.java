@@ -27,6 +27,11 @@ public class ModuloPeajeImpl {
 
     @Inject
     private PublicadorEventoPeaje vehiculoNoEncontrado;
+    @Inject
+    private PublicadorEventoPeaje eventoVehiculoExtranjero;
+    @Inject
+    private PublicadorEventoPeaje eventoVehiculoNacional;
+
     // Constructor que acepta el Event
     @Inject
     public ModuloPeajeImpl(PublicadorEventoPeaje vehiculoNoEncontrado, RepoPeaje repo) {
@@ -72,10 +77,9 @@ public class ModuloPeajeImpl {
         Vehiculo vehiculo = existeVehiculo(tag, matricula);
         log.infof("obtengo vehiculo " + vehiculo);
         if (vehiculo != null) {
-            if (vehiculo.nacional()) {
-                //mandarAQueueDePagos(vehiculo);
+            if (vehiculo.getNacionalidad() == Nacionalidad.NACIONAL) {
                 habilitado = true;
-
+                eventoVehiculoNacional.publicarEventoVehiculoNacional("evento Vehiculo Nacional");
             } else {
                 habilitado = procesarVehiculoExtranjero(tag, vehiculo);
             }
@@ -90,8 +94,7 @@ public class ModuloPeajeImpl {
         log.infof("*** Procesando pago vehículo extranjero %s tag:", tag);
         boolean habilitado = false;
         // Todos los vehículos extranjeros son preferenciales
-        Preferencial tarifa = repo.obtenerTarifaPreferencial();
-
+        Preferencial tarifa = new Preferencial(50);
         if (tarifa != null) {
         log.infof("Tarifa obtenida %f ", tarifa.getMontoPreferencial());
         // Realizar el pre-pago
@@ -116,6 +119,9 @@ public class ModuloPeajeImpl {
         log.error("No se pudo obtener la tarifa preferencial.");
         // Podrías lanzar una excepción, retornar un valor predeterminado o realizar alguna otra acción adecuada
         }
+        if (habilitado) {
+            eventoVehiculoExtranjero.publicarEventoVehiculoExtranjero("evento Vehiculo Extranjero");
+        }
         return habilitado;
     }
 
@@ -127,8 +133,10 @@ public class ModuloPeajeImpl {
     private Vehiculo existeVehiculo(String tag, String matricula) {
         log.infof("flag a");
         Vehiculo vehiculo = repo.BuscarTag(tag);
+
         if (vehiculo != null) {
-            log.infof("Vehiculo encontrado con tag: %s", tag);
+            log.infof("Vehiculo encontrado con tag: %s", vehiculo.getTag());
+            log.infof(vehiculo.toString());
             return vehiculo;
         } else {
             vehiculo = repo.BuscarMatricula(matricula);

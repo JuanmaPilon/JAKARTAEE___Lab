@@ -16,7 +16,7 @@ public class Vehiculo {
     @OneToOne(cascade = CascadeType.ALL)
     private Tag tag;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PasadaPorPeaje> pasadaPorPeajeList;
 
     private Nacionalidad nacionalidad;

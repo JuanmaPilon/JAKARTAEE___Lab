@@ -8,11 +8,12 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
+import org.tallerjava.DatosPagoDTO;
 import org.tallerjava.IdentificadorDTO;
 
 // curl -X GET -v http://localhost:8080/Sistema-Gestion/rest/autorizar -H "Content-Type: application/json" -d '{"tag":11111,"matricula":"BAA 1234"}'
 @ApplicationScoped
-@Path("/autorizar")
+@Path("/Peaje")
 public class PeajeAPI {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
 
@@ -21,6 +22,7 @@ public class PeajeAPI {
 
 
     @GET //tal vez POST sea una mejor alternativa
+    @Path("/Autorizar")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean autorizarVehiculo(IdentificadorDTO idDTO) {
 
@@ -30,4 +32,12 @@ public class PeajeAPI {
         log.infof("Autorizando vehiculo %d, resultado %b", idDTO, autorizado);
         return autorizado;
     }
+    @GET
+    @Path("/contarVehiculo")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void contarVehiculo(IdentificadorDTO idDTO) {
+        moduloPeaje.estaHabilitado(idDTO.getTag(), idDTO.getMatricula());
+        log.infof("Contando Extranjero " + idDTO);
+    }
+
 }

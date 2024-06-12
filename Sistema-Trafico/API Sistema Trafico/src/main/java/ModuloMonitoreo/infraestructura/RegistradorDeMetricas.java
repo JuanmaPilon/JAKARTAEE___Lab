@@ -16,7 +16,8 @@ public class RegistradorDeMetricas {
     public static final String PEAJE_COUNTER_PAGO_SUCIVE ="peajePagoSucive";
     public static final String GESTION_COUNTER_PRE_PAGO ="gestionPrePago";
     public static final String GESTION_COUNTER_POST_PAGO ="gestionPostPago";
-
+    public static final String PEAJE_COUNTER_VEHICULO_EXTRANJERO ="peajeVehiculoExtranjero";
+    public static final String PEAJE_COUNTER_VEHICULO_NACIONAL ="peajeVehiculoNacional";
 
     private InfluxConfig config;
 

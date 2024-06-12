@@ -202,6 +202,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     @Override
     public boolean realizarPrePago(String tag, double importe) {
         Vehiculo vehiculo = repoClientes.BuscarTag(tag);
+        System.out.println("-----------------------------------------vehiculo ------------------------------------"+vehiculo.toString());
         PREPaga cuenta =  vehiculo.getClienteTelepeaje().getCuentaPrepaga();
 
         if (cuenta != null) {

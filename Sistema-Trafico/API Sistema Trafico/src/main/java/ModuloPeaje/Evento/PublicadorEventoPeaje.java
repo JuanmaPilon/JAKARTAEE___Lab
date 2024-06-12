@@ -10,12 +10,21 @@ public class PublicadorEventoPeaje {
     private Event<notificarPasajeVehiculo> pasajeVehiculo;
     @Inject
     private Event<PeajeVehiculoNoEncontrado> vehiculoNoEncontrado;
+    @Inject
+    private Event<eventoVehiculoExtranjero> vehiculoExtranjero;
+    @Inject
+    private Event<eventoVehiculoNacional> vehiculoNacional;
 
     public void publicarVehiculoNoEncontrado(String mensaje){
         vehiculoNoEncontrado.fire(new PeajeVehiculoNoEncontrado(mensaje));
     }
-
     public void publicarPasajeVehiculo(String mensaje){
         pasajeVehiculo.fire(new notificarPasajeVehiculo(mensaje));
+    }
+    public void publicarEventoVehiculoExtranjero(String mensaje){
+        vehiculoExtranjero.fire(new eventoVehiculoExtranjero(mensaje));
+    }
+    public void publicarEventoVehiculoNacional(String mensaje){
+        vehiculoNacional.fire(new eventoVehiculoNacional(mensaje));
     }
 }

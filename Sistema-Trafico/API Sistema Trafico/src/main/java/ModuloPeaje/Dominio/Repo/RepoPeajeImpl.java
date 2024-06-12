@@ -252,27 +252,35 @@ public class RepoPeajeImpl implements RepoPeaje {
     }
 
     @Override
+    @Transactional
     public Vehiculo BuscarTag(String tag) {
-        log.infof("b  "+ tag);
-        for (Vehiculo vehiculo : vehiculos) {
-            if (vehiculo.getTag().getIdUnico() == tag) {
-                return vehiculo;
-            }
+        try {
+            Vehiculo vehiculo = em.createQuery("SELECT v FROM peaje_Vehiculo v WHERE v.tag.idUnico= :tag", Vehiculo.class)
+                    .setParameter("tag", tag)
+                    .getSingleResult();
+
+            return vehiculo;
+        } catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
+
     @Override
+    @Transactional
     public Vehiculo BuscarMatricula(String matricula) {
-        for (Vehiculo vehiculo : vehiculos) {
-            if (vehiculo instanceof Nacional nacional) {
-                if (nacional.getMatricula().getNroMatricula().equals(matricula)) {
-                    return nacional;
-                }
-            }
+        try {
+            Nacional nacional  = em.createQuery("SELECT v FROM peaje_vehiculoNacional v WHERE v.matricula = :matricula", Nacional.class)
+                    .setParameter("matricula", matricula)
+                    .getSingleResult();
+            // Inicializar la colección pasadaPorPeajeList
+            nacional.getPasadaPorPeajeList().size();
+            return nacional;
+        } catch (NoResultException e) {
+            return null;
         }
-        return null; // Vehículo no encontrado
     }
+
     @Override
     public Preferencial obtenerTarifaPreferencial() {
         return tarifaPreferencial;
