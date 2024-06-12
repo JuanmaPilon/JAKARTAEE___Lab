@@ -168,12 +168,12 @@ public class GestionClientesServiceImplTest {
         cliente.setCuentaPrepaga(new PREPaga(500.0));
         vehiculo.setClienteTelepeaje(cliente);
 
-        when(repoClientes.BuscarTag(anyInt())).thenReturn(vehiculo);
+        when(repoClientes.BuscarTag(anyString())).thenReturn(vehiculo);
 
-        boolean result = moduloGestionClientes.realizarPrePago(1234, 100.0);
+        boolean result = moduloGestionClientes.realizarPrePago("1234", 100.0);
 
         assertTrue(result);
-        verify(repoClientes, times(1)).BuscarTag(1234);
+        verify(repoClientes, times(1)).BuscarTag("1234");
     }
 
     @Test
@@ -187,12 +187,12 @@ public class GestionClientesServiceImplTest {
         cliente.setCuentaPostpaga(new POSTPaga(tarjeta));
         vehiculo.setClienteTelepeaje(cliente);
 
-        when(repoClientes.BuscarTag(anyInt())).thenReturn(vehiculo);
+        when(repoClientes.BuscarTag(anyString())).thenReturn(vehiculo);
 
-        boolean result = moduloGestionClientes.realizarPostPago(1234, 100.0);
+        boolean result = moduloGestionClientes.realizarPostPago("1234", 100.0);
 
         assertTrue(result);
-        verify(repoClientes, times(1)).BuscarTag(1234);
+        verify(repoClientes, times(1)).BuscarTag("1234");
     }
 
     @Test

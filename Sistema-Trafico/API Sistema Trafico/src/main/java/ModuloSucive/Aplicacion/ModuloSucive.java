@@ -25,13 +25,13 @@ public class ModuloSucive implements ModuloISucive {
     }
 
     @Override
-    public void notificarPago(Matricula matricula, double importe){
+    public void notificarPago(String matricula, double importe){
         // Lógica para notificar el pago al Sistema externo de Sucive
         System.out.println("Notificando pago al Sistema externo de Sucive");
-        System.out.println("La matricula es: " + matricula.getNroMatricula());
+        System.out.println("La matricula es: " + matricula);
         System.out.println("El importe es: " + importe);
         String mensajeSucive = "Pago realizado con Sucive: " +
-                "La matricula es: " + matricula.getNroMatricula() +
+                "La matricula es: " + matricula +
                 ". El importe es: " + importe;
         pagoSucive.publicarPagoSucive(mensajeSucive);
     }

@@ -44,7 +44,7 @@ public class ModuloPeajeTest {
 
     @Test
     void testEstaHabilitadoVehiculoNacional() {
-        int tag = 123;
+        String tag = "123";
         String matricula = "ABC123";
         Nacional vehiculo = new Nacional();
         vehiculo.setTag(new Tag("123"));
@@ -60,7 +60,7 @@ public class ModuloPeajeTest {
 
     @Test
     void testEstaHabilitadoVehiculoExtranjero() {
-        int tag = 123;
+        String tag = "123";
         String matricula = "ABC123";
         Extranjero vehiculo = new Extranjero();
         vehiculo.setTag(new Tag("123"));
@@ -84,7 +84,7 @@ public class ModuloPeajeTest {
         RepoPeaje repoMock = mock(RepoPeaje.class);
         // Crea una instancia de ModuloPeajeImpl utilizando el mock de RepoPeaje
         ModuloPeajeImpl moduloPeaje = new ModuloPeajeImpl(repoMock);
-        boolean resultado = moduloPeaje.estaHabilitado(999, "XYZ999");
+        boolean resultado = moduloPeaje.estaHabilitado("999", "XYZ999");
         // Imprime el resultado por consola
         System.out.println("¿Vehículo encontrado? " + (resultado ? "Sí" : "No"));
         assertFalse(resultado);

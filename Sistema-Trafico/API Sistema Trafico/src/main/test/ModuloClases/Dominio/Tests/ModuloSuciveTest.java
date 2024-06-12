@@ -57,7 +57,7 @@ public class ModuloSuciveTest {
                 ". El importe es: " + importe;
 
         // Act
-        modulo.notificarPago(mat, importe);
+        modulo.notificarPago(mat.getNroMatricula(), importe);
 
         // Assert
         ArgumentCaptor<notificarPagoSucive> eventCaptor = ArgumentCaptor.forClass(notificarPagoSucive.class);

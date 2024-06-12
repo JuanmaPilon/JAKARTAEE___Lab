@@ -6,13 +6,17 @@ import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class PublicadorEventoClientes {
-    // notificarCobroTarjeta()
-    // notificarCobroTarjetaRechazado()
-    // notificarSaldoInsuficiente()
+
     @Inject
     private Event<notCobroTarjeta> pagoTarjeta;
+    @Inject
+    private Event<notCobroPrePaga> pagoDebito;
 
-    public void publicarPago(String mensaje){
+    public void publicarPostPago(String mensaje){
         pagoTarjeta.fire(new notCobroTarjeta(mensaje));
+    }
+
+    public void publicarPrePago(String mensaje){
+        pagoDebito.fire(new notCobroPrePaga(mensaje));
     }
 }

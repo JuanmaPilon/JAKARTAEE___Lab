@@ -65,7 +65,7 @@ public class ModuloPeajeImpl {
     }
 
 
-    public boolean estaHabilitado(int tag, String matricula) {
+    public boolean estaHabilitado(String tag, String matricula) {
         log.infof("*** Verificando peaje vehiculo: tag %s, matricula: %s", tag, matricula);
         boolean habilitado = false;
 
@@ -86,7 +86,7 @@ public class ModuloPeajeImpl {
     }
 
 
-    private boolean  procesarVehiculoExtranjero(int tag,  Vehiculo vehiculo) {
+    private boolean  procesarVehiculoExtranjero(String tag,  Vehiculo vehiculo) {
         log.infof("*** Procesando pago vehículo extranjero %s tag:", tag);
         boolean habilitado = false;
         // Todos los vehículos extranjeros son preferenciales
@@ -124,7 +124,7 @@ public class ModuloPeajeImpl {
 //        //TODO esto lo vamos a hacer más adelante.
 //    }
 
-    private Vehiculo existeVehiculo(int tag, String matricula) {
+    private Vehiculo existeVehiculo(String tag, String matricula) {
         log.infof("flag a");
         Vehiculo vehiculo = repo.BuscarTag(tag);
         if (vehiculo != null) {

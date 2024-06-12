@@ -10,12 +10,15 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ApplicationScoped
 public class RepoPeajeImpl implements RepoPeaje {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
     private Preferencial tarifaPreferencial;
     private Comun tarifaComun;
-    //private List<Vehiculo> vehiculos;
+    private List<Vehiculo> vehiculos;
 
 
     @PersistenceContext
@@ -26,21 +29,21 @@ public class RepoPeajeImpl implements RepoPeaje {
     }
 
     public RepoPeajeImpl() {
-        //this.vehiculos = new ArrayList<>();
+        this.vehiculos = new ArrayList<>();
         // Constructor sin parámetros requerido por CDI
     }
 
     public RepoPeajeImpl(Preferencial tarifaPreferencial, Comun tarifaComun) {
         this.tarifaPreferencial = tarifaPreferencial;
         this.tarifaComun = tarifaComun;
-        //this.vehiculos = new ArrayList<>();
+        this.vehiculos = new ArrayList<>();
 
     }
     @Transactional
     @Override
     public void altaVehiculo(Vehiculo vehiculo) {
         em.persist(vehiculo);
-        //this.vehiculos.add(vehiculo);
+        this.vehiculos.add(vehiculo);
 
     }
 
@@ -249,29 +252,26 @@ public class RepoPeajeImpl implements RepoPeaje {
     }
 
     @Override
-    public Vehiculo BuscarTag(int tag) {
+    public Vehiculo BuscarTag(String tag) {
         log.infof("b  "+ tag);
-        try {
-            TypedQuery<Vehiculo> query = em.createQuery(
-                    "SELECT v FROM peaje_Vehiculo v WHERE v.tag.idUnico = :tag", Vehiculo.class);
-            query.setParameter("tag", String.valueOf(tag));
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo.getTag().getIdUnico() == tag) {
+                return vehiculo;
+            }
         }
+        return null;
     }
 
     @Override
     public Vehiculo BuscarMatricula(String matricula) {
-        log.infof("b  " + matricula);
-        try {
-            TypedQuery<Nacional> query = em.createQuery(
-                    "SELECT n FROM peaje_vehiculoNacional n WHERE n.matricula.nroMatricula = :matricula", Nacional.class);
-            query.setParameter("matricula", matricula);
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo instanceof Nacional nacional) {
+                if (nacional.getMatricula().getNroMatricula().equals(matricula)) {
+                    return nacional;
+                }
+            }
         }
+        return null; // Vehículo no encontrado
     }
     @Override
     public Preferencial obtenerTarifaPreferencial() {

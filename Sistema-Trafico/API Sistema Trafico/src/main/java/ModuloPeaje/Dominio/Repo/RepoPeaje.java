@@ -4,7 +4,7 @@ import ModuloPeaje.Dominio.*;
 
 public interface RepoPeaje {
 
-    public Vehiculo BuscarTag(int tag);
+    public Vehiculo BuscarTag(String tag);
 
     Vehiculo BuscarMatricula(String matricula);
 

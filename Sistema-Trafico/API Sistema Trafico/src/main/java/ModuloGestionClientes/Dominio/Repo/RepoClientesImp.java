@@ -115,10 +115,10 @@ public class RepoClientesImp implements RepoClientes {
     }
     @Transactional
     @Override
-    public Vehiculo BuscarTag(int tag) {
+    public Vehiculo BuscarTag(String tag) {
         try {
             return em.createQuery("SELECT v FROM gestion_Vehiculo v WHERE v.tag.idUnico = :tag", Vehiculo.class)
-                    .setParameter("tag", String.valueOf(tag))
+                    .setParameter("tag", tag)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;

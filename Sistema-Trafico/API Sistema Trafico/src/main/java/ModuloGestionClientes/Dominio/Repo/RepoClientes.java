@@ -14,7 +14,7 @@ public interface RepoClientes {
     ClienteSucive buscarClienteSucPorCI(String ci);
 
     void addVehiculo(Vehiculo vehiculo);
-    Vehiculo BuscarTag(int tag);
+    Vehiculo BuscarTag(String tag);
 
     void altaMatricula(Matricula matricula);
     void bajaMatricula(String id);

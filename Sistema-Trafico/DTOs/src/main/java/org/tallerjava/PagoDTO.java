@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @Data
-public class IdentificadorDTO implements Serializable {
-    private String matricula;
-    private String tag;
+public class PagoDTO implements Serializable{
+    String matricula;
+    double importe;
 }

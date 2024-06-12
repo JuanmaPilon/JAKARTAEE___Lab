@@ -31,6 +31,9 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     // -----------------------------------------------------
     @Inject
     private PublicadorEventoClientes pagoTarjeta;
+
+    @Inject
+    private PublicadorEventoClientes pagoDebito;
     // ------------------------------------------------------
     @Inject
     private RepoClientes repoClientes;
@@ -197,7 +200,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
     @Override
-    public boolean realizarPrePago(int tag, double importe) {
+    public boolean realizarPrePago(String tag, double importe) {
         Vehiculo vehiculo = repoClientes.BuscarTag(tag);
         PREPaga cuenta =  vehiculo.getClienteTelepeaje().getCuentaPrepaga();
 
@@ -207,10 +210,10 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
                 return true;
             } else {
-                if(this.pagoTarjeta != null) {
+                if(this.pagoDebito != null) {
                     System.out.println("Saldo insuficiente.");
                     String mensajeTarjeta = "Saldo insuficiente";
-                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                    pagoDebito.publicarPrePago(mensajeTarjeta);
                 }
                 return false;
             }
@@ -221,7 +224,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
     @Override
-    public boolean realizarPostPago(int tag, double importe) {
+    public boolean realizarPostPago(String tag, double importe) {
         Vehiculo vehiculo = repoClientes. BuscarTag(tag);
         POSTPaga cuenta = vehiculo.getClienteTelepeaje().getCuentaPostpaga();
         if (cuenta != null) {
@@ -233,14 +236,14 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
                 pagosExternos.CobroTelepeaje(clienteDTO, tarjetaDTO);
                 if(this.pagoTarjeta != null) {
                     String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
-                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                    pagoTarjeta.publicarPostPago(mensajeTarjeta);
                 }
                 return true;
             } else {
                     System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
                 if(this.pagoTarjeta != null) {
                     String mensajeTarjeta = "Tarjeta: Rechazada";
-                    pagoTarjeta.publicarPago(mensajeTarjeta);
+                    pagoDebito.publicarPrePago(mensajeTarjeta);
                 }
                 return false;
             }
