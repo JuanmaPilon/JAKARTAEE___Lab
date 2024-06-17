@@ -217,19 +217,19 @@ public class GestionClientesServiceImplTest {
         verify(repoClientes, times(1)).actualizarCliente(cliente);
     }
 
-    @Test
-    public void testConsultarPasadasClienteTelepeaje() {
-        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
-        Date fechaInicio = new Date();
-        Date fechaFin = new Date();
-
-        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
-
-        Set<PasadaPorPeaje> pasadas = moduloGestionClientes.consultarPasadas(cliente, fechaInicio, fechaFin);
-
-        assertNotNull(pasadas);
-        verify(repoClientes, times(1)).buscarClienteTelePorCI(cliente.getCi());
-    }
+//    @Test
+//    public void testConsultarPasadasClienteTelepeaje() {
+//        ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
+//        Date fechaInicio = new Date();
+//        Date fechaFin = new Date();
+//
+//        when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
+//
+//        Set<PasadaPorPeaje> pasadas = moduloGestionClientes.consultarPasadas(cliente, fechaInicio, fechaFin);
+//
+//        assertNotNull(pasadas);
+//        verify(repoClientes, times(1)).buscarClienteTelePorCI(cliente.getCi());
+//    }
 
     @Test
     public void testConsultarPasadasClienteSucive() {

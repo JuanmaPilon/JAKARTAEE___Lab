@@ -30,7 +30,7 @@ public class RepoClientesImpTest {
 
     @Test
     void testAltaMatricula() {
-        Matricula matricula = new Matricula("1", "ABC123");
+        Matricula matricula = new Matricula("ABC123");
 
         repoClientes.altaMatricula(matricula);
 
@@ -39,19 +39,20 @@ public class RepoClientesImpTest {
 
     @Test
     void testBajaMatricula() {
-        Matricula matricula = new Matricula("1", "ABC123");
-        when(em.find(Matricula.class, "1")).thenReturn(matricula);
+        Matricula matricula = new Matricula(1L, "ABC123");
+        when(em.find(Matricula.class, 1L)).thenReturn(matricula);
 
-        repoClientes.bajaMatricula("1");
+        repoClientes.bajaMatricula(1L);
 
         verify(em, times(1)).remove(matricula);
     }
 
+
     @Test
     void testModificarMatricula() {
-        Matricula matricula = new Matricula("1", "ABC123");
-        Matricula matriculaExistente = new Matricula("1", "XYZ789");
-        when(em.find(Matricula.class, "1")).thenReturn(matriculaExistente);
+        Matricula matricula = new Matricula(1L, "ABC123");
+        Matricula matriculaExistente = new Matricula(1L, "XYZ789");
+        when(em.find(Matricula.class, 1L)).thenReturn(matriculaExistente);
 
         repoClientes.modificarMatricula(matricula);
 

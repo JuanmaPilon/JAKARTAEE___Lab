@@ -213,7 +213,7 @@ public class RepoPeajeImplTest {
     @Test
     @Transactional
     public void testModificarMatricula() {
-        String id = "1"; // Proporciona el id correcto de la matrícula que deseas modificar
+        long id = 1; // Proporciona el id correcto de la matrícula que deseas modificar
         Matricula matriculaModificada = new Matricula("XYZ789");
         matriculaModificada.setId(id);
 

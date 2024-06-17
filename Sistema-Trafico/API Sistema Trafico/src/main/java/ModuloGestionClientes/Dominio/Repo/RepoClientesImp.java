@@ -136,7 +136,7 @@ public class RepoClientesImp implements RepoClientes {
     }
     @Transactional
     @Override
-    public void bajaMatricula(String id) {
+    public void bajaMatricula(long id) {
         Matricula matricula = em.find(Matricula.class, id);
         if (matricula != null) {
             em.remove(matricula);

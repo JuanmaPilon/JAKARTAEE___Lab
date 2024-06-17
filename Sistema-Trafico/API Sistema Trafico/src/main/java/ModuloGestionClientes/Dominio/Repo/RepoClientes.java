@@ -17,7 +17,7 @@ public interface RepoClientes {
     Vehiculo BuscarTag(String tag);
 
     void altaMatricula(Matricula matricula);
-    void bajaMatricula(String id);
+    void bajaMatricula(long id);
     void modificarMatricula(Matricula matricula);
 
     void altaPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
