@@ -79,7 +79,9 @@ public class ModuloPeajeImpl {
         if (vehiculo != null) {
             if (vehiculo.getNacionalidad() == Nacionalidad.NACIONAL) {
                 habilitado = true;
+                if (this.eventoVehiculoNacional != null) {
                 eventoVehiculoNacional.publicarEventoVehiculoNacional("evento Vehiculo Nacional");
+                }
             } else {
                 habilitado = procesarVehiculoExtranjero(tag, vehiculo);
             }
@@ -120,8 +122,10 @@ public class ModuloPeajeImpl {
         // Podrías lanzar una excepción, retornar un valor predeterminado o realizar alguna otra acción adecuada
         }
         if (habilitado) {
-            eventoVehiculoExtranjero.publicarEventoVehiculoExtranjero("evento Vehiculo Extranjero");
-        }
+            if (this.eventoVehiculoExtranjero != null) {
+                eventoVehiculoExtranjero.publicarEventoVehiculoExtranjero("evento Vehiculo Extranjero");
+            }
+            }
         return habilitado;
     }
 

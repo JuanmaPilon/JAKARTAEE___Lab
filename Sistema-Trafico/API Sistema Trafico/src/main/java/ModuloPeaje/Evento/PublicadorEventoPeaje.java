@@ -22,9 +22,13 @@ public class PublicadorEventoPeaje {
         pasajeVehiculo.fire(new notificarPasajeVehiculo(mensaje));
     }
     public void publicarEventoVehiculoExtranjero(String mensaje){
+        if (mensaje != null) {
         vehiculoExtranjero.fire(new eventoVehiculoExtranjero(mensaje));
+        }
     }
     public void publicarEventoVehiculoNacional(String mensaje){
+        if (mensaje != null) {
         vehiculoNacional.fire(new eventoVehiculoNacional(mensaje));
+        }
     }
 }

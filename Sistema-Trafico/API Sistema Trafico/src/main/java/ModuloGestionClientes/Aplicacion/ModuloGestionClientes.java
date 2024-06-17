@@ -210,7 +210,9 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
                 cuenta.setSaldo(cuenta.getSaldo() - importe);
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
                 String mensajeTarjeta = "Genero el pago";
-                pagoDebito.publicarPrePago(mensajeTarjeta);
+                if (this.pagoDebito != null) {
+                    pagoDebito.publicarPrePago(mensajeTarjeta);
+                }
                 return true;
             } else {
                 if(this.pagoDebito != null) {
