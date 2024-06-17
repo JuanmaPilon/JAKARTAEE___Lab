@@ -36,10 +36,6 @@ public class ClienteTelepeaje {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     //@JoinColumn(name = "cliente_id")
-    private List<PasadaPorPeaje> pasadaPorPeaje;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JoinColumn(name = "cliente_id")
     private List<Vehiculo> vehiculosCliente;
 
     public ClienteTelepeaje() {
@@ -48,7 +44,7 @@ public class ClienteTelepeaje {
         this.cuentaPrepaga = null;
         this.cuentaPostpaga = null;
         this.tarjeta = null;
-        this.pasadaPorPeaje = new ArrayList<>();
+
     }
 
     public ClienteTelepeaje(String nombre, String ci,String email, List<Vehiculo> vehiculosCliente) {
@@ -60,7 +56,7 @@ public class ClienteTelepeaje {
         this.cuentaPrepaga = null;
         this.cuentaPostpaga = null;
         this.tarjeta = null;
-        this.pasadaPorPeaje = new ArrayList<>();
+
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
@@ -87,19 +83,7 @@ public class ClienteTelepeaje {
         this.tarjeta = tarjeta;
     }
 
-    public List<PasadaPorPeaje> getPasadasPorPeaje() {
-        return this.pasadaPorPeaje;
-    }
 
-    public List<PasadaPorPeaje> getPasadasEnRango(Date fechaInicio, Date fechaFin) {
-        List<PasadaPorPeaje> pasadasEnRango = new ArrayList<>();
-        for (PasadaPorPeaje pasada : this.pasadaPorPeaje) {
-            if (!pasada.getFecha().before(fechaInicio) && !pasada.getFecha().after(fechaFin)) {
-                pasadasEnRango.add(pasada);
-            }
-        }
-        return pasadasEnRango;
-    }
 }
 
 

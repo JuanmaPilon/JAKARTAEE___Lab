@@ -302,17 +302,17 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         }
     }
 
-    @Override
-    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin) {
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
-        if (clienteEnRepo != null) {
-            List<PasadaPorPeaje> pasadasEnRango = clienteEnRepo.getPasadasEnRango(fechaInicio, fechaFin);
-            return new HashSet<>(pasadasEnRango);
-        } else {
-            System.out.println("Cliente no encontrado en el repo.");
-            return new HashSet<>();
-        }
-    }
+//    @Override
+//    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin) {
+//        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+//        if (clienteEnRepo != null) {
+//            List<PasadaPorPeaje> pasadasEnRango = clienteEnRepo.getPasadasEnRango(fechaInicio, fechaFin);
+//            return new HashSet<>(pasadasEnRango);
+//        } else {
+//            System.out.println("Cliente no encontrado en el repo.");
+//            return new HashSet<>();
+//        }
+//    }
 
     @Override
     public Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin) {

@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Matricula {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	String id;
+	long id;
 	
 	String nroMatricula;
 	

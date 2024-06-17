@@ -16,6 +16,7 @@ insert into gestion_cuenta (fechaApertura) values ('2024-05-29 10:34:14.533008')
 insert into gestion_cuenta (fechaApertura) values ('2024-05-29 10:34:14.533009');
 insert into gestion_cuentaPrePaga (saldo, nroCuenta) values (1000,1);
 
+insert into gestion_Matricula (nroMatricula) values ('ASD-720');
 insert into gestion_cuenta (fechaApertura) values ('2024-05-29 10:34:14.533008');
 insert into gestion_cuentaPrePaga (saldo, nroCuenta) values (1500, 2);
 insert into gestion_cuentaPrePaga (saldo, nroCuenta) values (5000, 3);
