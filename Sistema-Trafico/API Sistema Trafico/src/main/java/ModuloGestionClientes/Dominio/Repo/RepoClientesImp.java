@@ -230,7 +230,7 @@ public class RepoClientesImp implements RepoClientes {
         Vehiculo existingVehiculo = em.find(Vehiculo.class, vehiculo.getId());
         if (existingVehiculo != null) {
             existingVehiculo.setTag(vehiculo.getTag());
-            existingVehiculo.setPasadaPorPeajeList(vehiculo.getPasadaPorPeajeList());
+            //existingVehiculo.setPasadaPorPeajeList(vehiculo.getPasadaPorPeajeList());
             existingVehiculo.setNacionalidad(vehiculo.getNacionalidad());
             em.merge(existingVehiculo);
         } else {

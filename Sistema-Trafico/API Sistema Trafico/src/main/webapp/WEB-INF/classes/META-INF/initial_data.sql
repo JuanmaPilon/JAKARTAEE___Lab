@@ -29,6 +29,6 @@ insert into gestion_usuario (ci, email, nom, cliente_ci) values (123456, 'numeri
 insert into gestion_Tag (idUnico) values ('A1');
 insert into gestion_Tag (idUnico) values ('B1');
 insert into gestion_Tag (idUnico) values ('C3');
-insert into gestion_Vehiculo (nacionalidad,cliente_ci,tag_idUnico,tag_id) values (1,'123456',1,'A1');
-insert into gestion_Vehiculo (nacionalidad,cliente_ci,tag_idUnico,tag_id) values (1,'123456',2,'B1');
-insert into gestion_Vehiculo (nacionalidad,cliente_ci,tag_idUnico,tag_id) values (1,'123456',3,'C3');
+insert into gestion_Vehiculo (nacionalidad,cliente_ci,tag_idUnico,tag_id) values (1,'123456','A1',1);
+insert into gestion_Vehiculo (nacionalidad,cliente_ci,tag_idUnico,tag_id) values (1,'123456','B1',2);
+insert into gestion_Vehiculo (nacionalidad,cliente_ci,tag_idUnico,tag_id) values (1,'123456','C3',3);

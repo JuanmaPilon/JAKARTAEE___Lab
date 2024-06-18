@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
+
 // cambie por data que ya incluye setters , getters, pareses y to string y otras cosas.
 
 @Data
@@ -34,8 +34,7 @@ public class ClienteTelepeaje {
     //@JoinColumn(name = "tarjeta_id", referencedColumnName = "id")
     private Tarjeta tarjeta;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JoinColumn(name = "cliente_id")
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vehiculo> vehiculosCliente;
 
     public ClienteTelepeaje() {
@@ -60,7 +59,7 @@ public class ClienteTelepeaje {
     }
 
     public void agregarVehiculoACliente(Vehiculo vehiculo) {
-        this.vehiculosCliente.add(vehiculo);
+       this.vehiculosCliente.add(vehiculo);
     }
 
     public void asignarCuentaPrepaga(PREPaga cuenta) {

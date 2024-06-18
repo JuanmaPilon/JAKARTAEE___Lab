@@ -22,7 +22,7 @@ public interface ModuloIGestionClientes {
     void asociarTarjeta(ClienteSucive clienteSucive, Tarjeta tarjeta);
     //Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin);
     Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin);
-    Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
-    Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
+    //Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
+    //Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
 
 }

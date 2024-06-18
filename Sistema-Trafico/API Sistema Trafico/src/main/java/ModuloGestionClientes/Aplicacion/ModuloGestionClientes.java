@@ -329,48 +329,48 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
     }
 
 
-    @Override
-    public Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin) {
-        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
-        if (clienteEnRepo != null) {
-            if (clienteEnRepo.getVehiculosCliente().contains(vehiculo)) {
-                Set<PasadaPorPeaje> pasadasEnRango = new HashSet<>();
-                for (PasadaPorPeaje pasada : vehiculo.getPasadaPorPeajeList()) {
-                    if (!pasada.getFecha().before(fechaInicio) && !pasada.getFecha().after(fechaFin)) {
-                        pasadasEnRango.add(pasada);
-                    }
-                }
-                return pasadasEnRango;
-            } else {
-                System.out.println("El vehiculo no esta vinculado al cliente");
-                return new HashSet<>();
-            }
-        } else {
-            System.out.println("Cliente no encontrado en el repo");
-            return new HashSet<>();
-        }
-    }
-
-    @Override
-    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin) {
-        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
-        if (clienteEnRepo != null) {
-            if (clienteEnRepo.getVehiculosCliente().contains(vehiculo)) {
-                Set<PasadaPorPeaje> pasadasEnRango = new HashSet<>();
-                for (PasadaPorPeaje pasada : vehiculo.getPasadaPorPeajeList()) {
-                    if (!pasada.getFecha().before(fechaInicio) && !pasada.getFecha().after(fechaFin)) {
-                        pasadasEnRango.add(pasada);
-                    }
-                }
-                return pasadasEnRango;
-            } else {
-                System.out.println("El vehiculo no está vinculado al cliente");
-                return new HashSet<>();
-            }
-        } else {
-            System.out.println("Cliente no encontrado en el repo");
-            return new HashSet<>();
-        }
-    }
+//    @Override
+//    public Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin) {
+//        ClienteSucive clienteEnRepo = repoClientes.buscarClienteSucPorCI(cliente.getCi());
+//        if (clienteEnRepo != null) {
+//            if (clienteEnRepo.getVehiculosCliente().contains(vehiculo)) {
+//                Set<PasadaPorPeaje> pasadasEnRango = new HashSet<>();
+//                for (PasadaPorPeaje pasada : vehiculo.getPasadaPorPeajeList()) {
+//                    if (!pasada.getFecha().before(fechaInicio) && !pasada.getFecha().after(fechaFin)) {
+//                        pasadasEnRango.add(pasada);
+//                    }
+//                }
+//                return pasadasEnRango;
+//            } else {
+//                System.out.println("El vehiculo no esta vinculado al cliente");
+//                return new HashSet<>();
+//            }
+//        } else {
+//            System.out.println("Cliente no encontrado en el repo");
+//            return new HashSet<>();
+//        }
+//    }
+//
+//    @Override
+//    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin) {
+//        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+//        if (clienteEnRepo != null) {
+//            if (clienteEnRepo.getVehiculosCliente().contains(vehiculo)) {
+//                Set<PasadaPorPeaje> pasadasEnRango = new HashSet<>();
+//                for (PasadaPorPeaje pasada : vehiculo.getPasadaPorPeajeList()) {
+//                    if (!pasada.getFecha().before(fechaInicio) && !pasada.getFecha().after(fechaFin)) {
+//                        pasadasEnRango.add(pasada);
+//                    }
+//                }
+//                return pasadasEnRango;
+//            } else {
+//                System.out.println("El vehiculo no está vinculado al cliente");
+//                return new HashSet<>();
+//            }
+//        } else {
+//            System.out.println("Cliente no encontrado en el repo");
+//            return new HashSet<>();
+//        }
+//    }
 
 }

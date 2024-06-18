@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 @Data
 @Entity(name = "gestion_Vehiculo")
 @Inheritance (strategy = InheritanceType.JOINED)
+
 // @Table(name = "gestion_Vehiculo")
 public class Vehiculo {
 
@@ -17,12 +18,17 @@ public class Vehiculo {
  long id;
 
  @OneToOne(cascade = CascadeType.ALL)
+ @JoinColumn(name = "tag_id", referencedColumnName = "id")
  private Tag tag;
+
+ @Column(name = "tag_idUnico")
+ private String tag_idUnico;
+
  @OneToOne(cascade = CascadeType.ALL)
  private ClienteTelepeaje cliente;
 
- @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
- private List<PasadaPorPeaje> pasadaPorPeajeList;
+ //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+ //private List<PasadaPorPeaje> pasadaPorPeajeList;
 
  private Nacionalidad nacionalidad;
 
@@ -32,7 +38,8 @@ public class Vehiculo {
 
  public Vehiculo(Tag tag, List<PasadaPorPeaje> pasadaPorPeajeList) {
   this.tag = tag;
-  this.pasadaPorPeajeList = pasadaPorPeajeList;
+  this.tag_idUnico = tag_idUnico;
+  //this.pasadaPorPeajeList = pasadaPorPeajeList;
  }
  public ClienteTelepeaje getClienteTelepeaje() {
   return cliente;
