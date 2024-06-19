@@ -137,7 +137,7 @@ public class ModuloPeajeImpl {
     private Vehiculo existeVehiculo(String tag, String matricula) {
         log.infof("flag a");
         Vehiculo vehiculo = repo.BuscarTag(tag);
-
+        log.infof("flag b"+ vehiculo);
         if (vehiculo != null) {
             log.infof("Vehiculo encontrado con tag: %s", vehiculo.getTag());
             log.infof(vehiculo.toString());
