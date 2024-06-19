@@ -13,7 +13,7 @@ public class Matricula {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	long id;
-	@Id
+	
 	private String nroMatricula;
 
 	public Matricula() {

@@ -13,8 +13,10 @@ public class Tag {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	long id;
-	@Id
+
+	@Column(name = "idUnico", unique = true)
 	String idUnico;
+
 
 	public Tag() {
 

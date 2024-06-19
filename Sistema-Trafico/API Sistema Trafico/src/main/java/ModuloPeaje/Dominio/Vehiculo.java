@@ -14,9 +14,13 @@ public class Vehiculo {
     long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
     private Tag tag;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Column(name = "tag_idUnico")
+    private String tag_idUnico;
+
+    @Transient
     private List<PasadaPorPeaje> pasadaPorPeajeList;
 
     private Nacionalidad nacionalidad;

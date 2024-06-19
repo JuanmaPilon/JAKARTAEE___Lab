@@ -47,7 +47,12 @@
 			<version>3.2.6</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<!-- token bucket implemntacion -->
+		<dependency>
+			<groupId>com.bucket4j</groupId>
+			<artifactId>bucket4j-core</artifactId>
+			<version>8.10.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.parsson</groupId>
 			<artifactId>jakarta.json</artifactId>
