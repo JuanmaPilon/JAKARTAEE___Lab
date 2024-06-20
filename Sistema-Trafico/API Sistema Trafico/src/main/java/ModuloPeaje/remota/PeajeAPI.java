@@ -37,7 +37,7 @@ public class PeajeAPI {
     @Consumes(MediaType.APPLICATION_JSON)
     public void contarVehiculo(IdentificadorDTO idDTO) {
         moduloPeaje.estaHabilitado(idDTO.getTag(), idDTO.getMatricula());
-        log.infof("Contando Extranjero " + idDTO);
+        log.infof("Contando Vehiculos " + idDTO);
     }
 
 }

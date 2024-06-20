@@ -254,13 +254,24 @@ public class RepoPeajeImpl implements RepoPeaje {
     @Override
     @Transactional
     public Vehiculo BuscarTag(String tag) {
+        log.infof("fla llega" + tag);
         try {
-            Vehiculo vehiculo = em.createQuery("SELECT v FROM peaje_Vehiculo v WHERE v.tag.idUnico= :tag", Vehiculo.class)
+            Vehiculo vehiculo = em.createQuery("SELECT v FROM peaje_Vehiculo v WHERE v.tag_idUnico= :tag", Vehiculo.class)
                     .setParameter("tag", tag)
                     .getSingleResult();
+//            Nacionalidad nacionalidad = em.createQuery("SELECT v.nacionalidad FROM peaje_Vehiculo v WHERE v.tag_idUnico = :tag", Nacionalidad.class)
+//                    .setParameter("tag", tag)
+//                    .getSingleResult();
+//            log.infof("NACIONALIDAD  " + nacionalidad.toString());
 
+            //vehiculo.setNacionalidad(nacionalidad);
+            Nacionalidad nacionalidad = vehiculo.getNacionalidad();
+
+            log.infof("NACIONALIDAD: " + nacionalidad.toString());
+            log.infof("FLAW S"+ vehiculo.toString());
             return vehiculo;
         } catch (NoResultException e) {
+            log.infof("fla ZZ");
             return null;
         }
     }
@@ -270,6 +281,7 @@ public class RepoPeajeImpl implements RepoPeaje {
     @Transactional
     public Vehiculo BuscarMatricula(String matricula) {
         try {
+            log.infof("flag W"+ matricula);
             Nacional nacional  = em.createQuery("SELECT v FROM peaje_vehiculoNacional v WHERE v.matricula = :matricula", Nacional.class)
                     .setParameter("matricula", matricula)
                     .getSingleResult();

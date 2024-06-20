@@ -26,7 +26,7 @@ public class Vehiculo {
 
     @Transient
     private List<PasadaPorPeaje> pasadaPorPeajeList;
-
+    @Enumerated(EnumType.STRING)
     private Nacionalidad nacionalidad;
 
 

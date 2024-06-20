@@ -83,6 +83,7 @@ public class ModuloPeajeImpl {
                 eventoVehiculoNacional.publicarEventoVehiculoNacional("evento Vehiculo Nacional");
                 }
             } else {
+                log.infof("CABALLO M " + vehiculo.getNacionalidad().toString());
                 habilitado = procesarVehiculoExtranjero(tag, vehiculo);
             }
         }
