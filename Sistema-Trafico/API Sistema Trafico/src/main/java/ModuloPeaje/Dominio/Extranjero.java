@@ -14,14 +14,11 @@ import lombok.Setter;
 // @Table(name = "peaje_vehiculoExtranjero")
 public class Extranjero extends Vehiculo {
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private Tag tag;
-
 
 	public Extranjero(Tag tag) {
-		super();
-
-		this.tag = tag;
+		super(tag);
 	}
-
+	public Extranjero(Tag tag, String tag_idUnico) {
+		super(tag, tag_idUnico);
+	}
 }

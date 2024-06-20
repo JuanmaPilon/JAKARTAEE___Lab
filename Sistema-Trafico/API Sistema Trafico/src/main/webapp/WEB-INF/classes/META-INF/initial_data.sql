@@ -2,12 +2,12 @@ use tallerjava;
 insert into peaje_Tag (idUnico) values ('A1');
 insert into peaje_Tag (idUnico) values ('B1');
 
--- insert into peaje_Vehiculo (tag_id, nacionalidad, tag_idUnico) values ( 1, 1,'A1');
--- insert into peaje_Vehiculo (tag_id, nacionalidad, tag_idUnico) values ( 1, 2,'B1');
--- insert into peaje_vehiculoExtranjero (id) values (2);
+insert into peaje_Vehiculo (tag_id, nacionalidad, tag_idUnico) values ( 1, 1,'A1');
+insert into peaje_Vehiculo (tag_id, nacionalidad, tag_idUnico) values ( 1, 2,'B1');
+insert into peaje_vehiculoExtranjero (id) values (2);
 
 insert into peaje_Matricula (nroMatricula) values ('ASD-720');
--- insert into peaje_vehiculoNacional (id,matricula_id) values (1, 'ASD-720');
+insert into peaje_vehiculoNacional (id,matricula_id, nroMatricula) values (1, 1, 'ASD-720');
 
 insert into peaje_tarifa (tipoTarifa, monto) values (1,180);
 insert into peaje_tarifa (tipoTarifa, monto) values (2,100);

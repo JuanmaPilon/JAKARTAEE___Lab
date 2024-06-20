@@ -13,7 +13,9 @@ public class Matricula {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	long id;
-	
+
+
+	@Column(name = "nroMatricula", unique = true)
 	private String nroMatricula;
 
 	public Matricula() {
@@ -26,3 +28,4 @@ public class Matricula {
 
 
 }
+
