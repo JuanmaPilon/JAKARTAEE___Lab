@@ -3,6 +3,7 @@ package ModuloPeaje.Aplicacion;
 
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import ModuloSucive.Aplicacion.ModuloSucive;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
@@ -49,6 +50,9 @@ public class ModuloPeajeImpl {
     @Inject
     private ModuloIGestionClientes moduloIGestionClientes;
 
+    @Inject
+    private ModuloSucive moduloSucive;
+
 
     public ModuloPeajeImpl(RepoPeaje repo2) {
         this.moduloIGestionClientes = new ModuloGestionClientes();
@@ -78,7 +82,9 @@ public class ModuloPeajeImpl {
         log.infof("obtengo vehiculo " + vehiculo);
         if (vehiculo != null) {
             if (vehiculo.getNacionalidad() == Nacionalidad.NACIONAL) {
-                habilitado = true;
+                // TODO ACA LO PROCESAR VEHICULO NACIONAL
+
+                habilitado = procesarVehiculoNacional(tag, vehiculo,matricula);
                 if (this.eventoVehiculoNacional != null) {
                 eventoVehiculoNacional.publicarEventoVehiculoNacional("evento Vehiculo Nacional");
                 }
@@ -92,6 +98,19 @@ public class ModuloPeajeImpl {
         return habilitado;
     }
 
+
+    public boolean procesarVehiculoNacional(String tag, Vehiculo vehiculo,String matricula) {
+        boolean habilitado = false;
+        Comun tarifa = new Comun(70);
+        habilitado = moduloIGestionClientes.realizarPrePago(tag, tarifa.getMonto());
+        if(!habilitado) {
+            habilitado = moduloIGestionClientes.realizarPostPago(tag,tarifa.getMonto());
+        } if(!habilitado) {
+            habilitado = true;
+            moduloSucive.notificarPago(matricula, tarifa.getMonto());
+        }
+        return habilitado;
+    }
 
     private boolean  procesarVehiculoExtranjero(String tag,  Vehiculo vehiculo) {
         log.infof("*** Procesando pago vehículo extranjero %s tag:", tag);

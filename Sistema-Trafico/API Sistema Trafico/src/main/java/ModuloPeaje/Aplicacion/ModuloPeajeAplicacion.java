@@ -9,4 +9,5 @@ public interface ModuloPeajeAplicacion {
 	public void actualizarTarifaPreferencial(double importe);
 	void manejarNotificarPasajeVehiculo();
 	void altaVehiculo(Vehiculo vehiculo);
+
 }
