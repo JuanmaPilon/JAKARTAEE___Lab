@@ -233,23 +233,29 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         Vehiculo vehiculo = repoClientes. BuscarTag(tag);
         POSTPaga cuenta = vehiculo.getClienteTelepeaje().getCuentaPostpaga();
         if (cuenta != null) {
-            Tarjeta tarjeta = cuenta.getTarjeta();
-            if (tarjeta != null) {
-                System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
-                ClienteTelepeajeDTO clienteDTO = new ClienteTelepeajeDTO(vehiculo.getClienteTelepeaje().getNombre(), vehiculo.getClienteTelepeaje().getCi(), vehiculo.getClienteTelepeaje().getEmail(), new ArrayList<>());
-                TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjeta.getNroTarjeta(), tarjeta.getNombre(), tarjeta.getFechaVto());
-                pagosExternos.CobroTelepeaje(clienteDTO, tarjetaDTO);
-                if(this.pagoTarjeta != null) {
-                    String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
-                    pagoTarjeta.publicarPostPago(mensajeTarjeta);
-                }
-                return true;
-            } else {
+            if (cuenta.getSaldo() >= importe) {
+                Tarjeta tarjeta = cuenta.getTarjeta();
+                if (tarjeta != null) {
+                    System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                    ClienteTelepeajeDTO clienteDTO = new ClienteTelepeajeDTO(vehiculo.getClienteTelepeaje().getNombre(), vehiculo.getClienteTelepeaje().getCi(), vehiculo.getClienteTelepeaje().getEmail(), new ArrayList<>());
+                    TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjeta.getNroTarjeta(), tarjeta.getNombre(), tarjeta.getFechaVto());
+                    pagosExternos.CobroTelepeaje(clienteDTO, tarjetaDTO);
+                    if (this.pagoTarjeta != null) {
+                        String mensajeTarjeta = "Pago realizado con Tarjeta: " + "Importe: " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta();
+                        pagoTarjeta.publicarPostPago(mensajeTarjeta);
+                    }
+                    return true;
+
+                } else {
                     System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
-                if(this.pagoTarjeta != null) {
-                    String mensajeTarjeta = "Tarjeta: Rechazada";
-                    pagoDebito.publicarPrePago(mensajeTarjeta);
+                    if (this.pagoTarjeta != null) {
+                        String mensajeTarjeta = "Tarjeta: Rechazada";
+                        pagoDebito.publicarPrePago(mensajeTarjeta);
+                    }
+                    return false;
                 }
+            } else {
+                System.out.println("No hay saldo");
                 return false;
             }
         } else {

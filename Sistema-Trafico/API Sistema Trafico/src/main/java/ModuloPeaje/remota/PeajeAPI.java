@@ -6,6 +6,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import org.tallerjava.DatosPagoDTO;
@@ -35,9 +36,10 @@ public class PeajeAPI {
     @GET
     @Path("/contarVehiculo")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void contarVehiculo(IdentificadorDTO idDTO) {
+    public Response contarVehiculo(IdentificadorDTO idDTO) {
         moduloPeaje.estaHabilitado(idDTO.getTag(), idDTO.getMatricula());
         log.infof("Contando Vehiculos " + idDTO);
+        return Response.ok("Conto un vehiculo").status(200,"OK").build();
     }
 
 }
