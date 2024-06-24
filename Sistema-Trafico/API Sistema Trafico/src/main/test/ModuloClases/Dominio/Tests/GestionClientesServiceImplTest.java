@@ -85,8 +85,7 @@ public class GestionClientesServiceImplTest {
     public void testVincularVehiculoClienteSucive() {
         ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
         Tag tag = new Tag("ID_Unico");
-        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
-        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
+        Vehiculo vehiculo = new Vehiculo(tag);
         //Vehiculo vehiculo = new Vehiculo("Vehiculo1", "Placa123");
         when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
 
@@ -99,8 +98,7 @@ public class GestionClientesServiceImplTest {
     public void testVincularVehiculoClienteTelepeaje() {
         ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
         Tag tag = new Tag("ID_Unico");
-        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
-        Vehiculo vehiculo = new Vehiculo(tag, pasadas);when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
+         Vehiculo vehiculo = new Vehiculo(tag);when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
 
         moduloGestionClientes.vincularVehiculo(cliente, vehiculo);
 
@@ -111,8 +109,7 @@ public class GestionClientesServiceImplTest {
     public void testDesvincularVehiculoClienteTelepeaje() {
         ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
         Tag tag = new Tag("ID_Unico");
-        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
-        Vehiculo vehiculo = new Vehiculo(tag, pasadas);cliente.agregarVehiculoACliente(vehiculo);
+        Vehiculo vehiculo = new Vehiculo(tag);cliente.agregarVehiculoACliente(vehiculo);
         when(repoClientes.buscarClienteTelePorCI(cliente.getCi())).thenReturn(cliente);
 
         moduloGestionClientes.desvincularVehiculo(cliente, vehiculo);
@@ -124,8 +121,7 @@ public class GestionClientesServiceImplTest {
     public void testDesvincularVehiculoClienteSucive() {
         ClienteSucive cliente = new ClienteSucive("Nombre", "CI123", new ArrayList<>());
         Tag tag = new Tag("ID_Unico");
-        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
-        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
+        Vehiculo vehiculo = new Vehiculo(tag);
         cliente.agregarVehiculoACliente(vehiculo);
         cliente.agregarVehiculoACliente(vehiculo);
         when(repoClientes.buscarClienteSucPorCI(cliente.getCi())).thenReturn(cliente);
@@ -160,8 +156,7 @@ public class GestionClientesServiceImplTest {
     @Test
     public void testRealizarPrePago() {
         Tag tag = new Tag("1234");
-        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
-        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
+        Vehiculo vehiculo = new Vehiculo(tag);
 
         vehiculo.setTag(tag);
         ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
@@ -179,8 +174,7 @@ public class GestionClientesServiceImplTest {
     @Test
     public void testRealizarPostPago() {
         Tag tag = new Tag("1234");
-        List<PasadaPorPeaje> pasadas = new ArrayList<>(); // Asegúrate de inicializar esta lista si no lo has hecho ya
-        Vehiculo vehiculo = new Vehiculo(tag, pasadas);
+        Vehiculo vehiculo = new Vehiculo(tag);
         vehiculo.setTag(tag);
         ClienteTelepeaje cliente = new ClienteTelepeaje("Nombre", "CI123", "email@example.com", new ArrayList<>());
         Tarjeta tarjeta = new Tarjeta(123, "123456789");

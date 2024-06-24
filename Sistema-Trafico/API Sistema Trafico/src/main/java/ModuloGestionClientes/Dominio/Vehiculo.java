@@ -36,7 +36,7 @@ public class Vehiculo {
  public Vehiculo() {
  }
 
- public Vehiculo(Tag tag, List<PasadaPorPeaje> pasadaPorPeajeList) {
+ public Vehiculo(Tag tag) {
   this.tag = tag;
   this.tag_idUnico = tag_idUnico;
   //this.pasadaPorPeajeList = pasadaPorPeajeList;

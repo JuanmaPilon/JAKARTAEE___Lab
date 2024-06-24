@@ -10,10 +10,7 @@ import jakarta.transaction.Transactional;
 //import org.jboss.logging.Logger;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ApplicationScoped
 public class RepoClientesImp implements RepoClientes {
@@ -21,6 +18,7 @@ public class RepoClientesImp implements RepoClientes {
     private Map<String, ClienteTelepeaje> clientesTelepeajeMap;
     private Map<String, ClienteSucive> clientesSuciveMap;
     private List<Vehiculo> vehiculos = new ArrayList<>();
+
 
     @PersistenceContext
     private EntityManager em;
@@ -168,6 +166,18 @@ public class RepoClientesImp implements RepoClientes {
         } else {
             throw new IllegalArgumentException("PasadaPorPeaje no encontrada: " + id);
         }
+    }
+    @Transactional
+    @Override
+    public List<PasadaPorPeaje> buscarPasadaPorPeaje(Vehiculo vehiculo, Date fechaInicio, Date fechaFin)
+    {
+        return em.createQuery(
+                        "SELECT p FROM gestion_PasadaPorPeaje p WHERE p.vehiculo = :vehiculo AND p.fecha BETWEEN :fechaInicio AND :fechaFin",
+                        PasadaPorPeaje.class)
+                .setParameter("vehiculo", vehiculo)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("fechaFin", fechaFin)
+                .getResultList();
     }
     @Transactional
     @Override

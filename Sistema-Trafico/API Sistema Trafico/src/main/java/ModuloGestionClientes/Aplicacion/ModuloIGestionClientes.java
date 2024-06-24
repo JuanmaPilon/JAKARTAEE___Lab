@@ -20,7 +20,7 @@ public interface ModuloIGestionClientes {
     Double consultarSaldo(ClienteTelepeaje cliente);
     void asociarTarjeta(ClienteTelepeaje clienteTelepeaje ,Tarjeta tarjeta);
     void asociarTarjeta(ClienteSucive clienteSucive, Tarjeta tarjeta);
-    //Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin);
+    Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin,Vehiculo vehiculo);
     Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin);
     //Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
     //Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin);

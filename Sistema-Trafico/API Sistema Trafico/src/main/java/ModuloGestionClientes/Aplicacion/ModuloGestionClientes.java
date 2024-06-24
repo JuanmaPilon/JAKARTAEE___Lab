@@ -248,10 +248,6 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
 
                 } else {
                     System.out.println("No hay tarjeta asociada a la cuenta POSTPaga.");
-                    if (this.pagoTarjeta != null) {
-                        String mensajeTarjeta = "Tarjeta: Rechazada";
-                        pagoDebito.publicarPrePago(mensajeTarjeta);
-                    }
                     return false;
                 }
             } else {
@@ -263,6 +259,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             return false;
         }
     }
+
 
     @Override
     public Double consultarSaldo(ClienteSucive cliente) {
@@ -310,17 +307,17 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         }
     }
 
-//    @Override
-//    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin) {
-//        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
-//        if (clienteEnRepo != null) {
-//            List<PasadaPorPeaje> pasadasEnRango = clienteEnRepo.getPasadasEnRango(fechaInicio, fechaFin);
-//            return new HashSet<>(pasadasEnRango);
-//        } else {
-//            System.out.println("Cliente no encontrado en el repo.");
-//            return new HashSet<>();
-//        }
-//    }
+    @Override
+    public Set<PasadaPorPeaje> consultarPasadas(ClienteTelepeaje cliente, Date fechaInicio, Date fechaFin, Vehiculo vehiculo) {
+        ClienteTelepeaje clienteEnRepo = repoClientes.buscarClienteTelePorCI(cliente.getCi());
+        if (clienteEnRepo != null) {
+            List<PasadaPorPeaje> pasadasEnRango = repoClientes.buscarPasadaPorPeaje (vehiculo,fechaInicio, fechaFin);
+            return new HashSet<>(pasadasEnRango);
+        } else {
+            System.out.println("Cliente no encontrado en el repo.");
+            return new HashSet<>();
+        }
+    }
 
     @Override
     public Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin) {

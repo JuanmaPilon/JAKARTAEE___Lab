@@ -2,6 +2,9 @@ package ModuloGestionClientes.Dominio.Repo;
 
 import ModuloGestionClientes.Dominio.*;
 
+import java.util.Date;
+import java.util.List;
+
 public interface RepoClientes {
     void agregarClienteTelepeaje(ClienteTelepeaje cliente);
     ClienteTelepeaje buscarClienteTelePorCI(String ci);
@@ -31,4 +34,6 @@ public interface RepoClientes {
     void altaVehiculo(Vehiculo vehiculo);
     void bajaVehiculo(Long id);
     void modificarVehiculo(Vehiculo vehiculo);
+
+    List<PasadaPorPeaje> buscarPasadaPorPeaje(Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
 }
