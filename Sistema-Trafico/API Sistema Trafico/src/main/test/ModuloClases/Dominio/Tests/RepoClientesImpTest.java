@@ -65,7 +65,7 @@ public class RepoClientesImpTest {
         PasadaPorPeaje pasadaPorPeaje = new PasadaPorPeaje();
         pasadaPorPeaje.setId(1L);
 
-        repoClientes.altaPasadaPorPeaje(pasadaPorPeaje);
+        repoClientes.altaPasadaPorPeaje(pasadaPorPeaje.getCosto(),pasadaPorPeaje.getFecha(),pasadaPorPeaje.getId());
 
         verify(em, times(1)).persist(pasadaPorPeaje);
     }

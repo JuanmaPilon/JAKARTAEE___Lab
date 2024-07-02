@@ -2,6 +2,7 @@ package ModuloPeaje.Aplicacion;
 
 
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
+import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
 import ModuloSucive.Aplicacion.ModuloSucive;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,7 +15,13 @@ import ModuloPeaje.Dominio.Repo.RepoPeaje;
 //estahab
 import org.jboss.logging.Logger;
 import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
+import ModuloGestionClientes.Dominio.PasadaPorPeaje;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 
 @ApplicationScoped
@@ -53,6 +60,9 @@ public class ModuloPeajeImpl {
     @Inject
     private ModuloSucive moduloSucive;
 
+    @Inject
+    private RepoClientes repoGestion;
+
 
     public ModuloPeajeImpl(RepoPeaje repo2) {
         this.moduloIGestionClientes = new ModuloGestionClientes();
@@ -89,7 +99,6 @@ public class ModuloPeajeImpl {
                 eventoVehiculoNacional.publicarEventoVehiculoNacional("evento Vehiculo Nacional");
                 }
             } else {
-                log.infof("CABALLO M " + vehiculo.getNacionalidad().toString());
                 habilitado = procesarVehiculoExtranjero(tag, vehiculo);
             }
         }
@@ -109,6 +118,8 @@ public class ModuloPeajeImpl {
             habilitado = true;
             moduloSucive.notificarPago(matricula, tarifa.getMonto());
         }
+        Date fechaActual = new Date();
+        repoGestion.altaPasadaPorPeaje(tarifa.getMonto(),fechaActual,vehiculo.getId());
         return habilitado;
     }
 
@@ -144,8 +155,10 @@ public class ModuloPeajeImpl {
         if (habilitado) {
             if (this.eventoVehiculoExtranjero != null) {
                 eventoVehiculoExtranjero.publicarEventoVehiculoExtranjero("evento Vehiculo Extranjero");
+                Date fechaActual = new Date();
+                repoGestion.altaPasadaPorPeaje(tarifa.getMonto(),fechaActual,vehiculo.getId());
             }
-            }
+        }
         return habilitado;
     }
 

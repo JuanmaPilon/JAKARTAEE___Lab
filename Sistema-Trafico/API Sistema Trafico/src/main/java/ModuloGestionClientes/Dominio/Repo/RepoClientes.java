@@ -23,7 +23,7 @@ public interface RepoClientes {
     void bajaMatricula(long id);
     void modificarMatricula(Matricula matricula);
 
-    void altaPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
+    void altaPasadaPorPeaje(double monto,Date fecha, Long idvehiculo) ;
     void bajaPasadaPorPeaje(long id);
     void modificarPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje);
 

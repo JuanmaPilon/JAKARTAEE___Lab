@@ -154,8 +154,14 @@ public class RepoClientesImp implements RepoClientes {
 
     @Transactional
     @Override
-    public void altaPasadaPorPeaje(PasadaPorPeaje pasadaPorPeaje) {
-        em.persist(pasadaPorPeaje);
+    public void altaPasadaPorPeaje(double monto,Date fecha, Long idvehiculo) {
+        String sql = "INSERT INTO gestion_PasadaPorPeaje (costo, fecha, vehiculo_id) VALUES (?, ?, ?)";
+
+        em.createNativeQuery(sql)
+                .setParameter(1, monto) // Ajusta esto a los nombres reales de los campos
+                .setParameter(2, fecha)
+                .setParameter(3, idvehiculo)
+                .executeUpdate();
     }
     @Transactional
     @Override
