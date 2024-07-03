@@ -36,4 +36,6 @@ public interface RepoClientes {
     void modificarVehiculo(Vehiculo vehiculo);
 
     List<PasadaPorPeaje> buscarPasadaPorPeaje(Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
+    void actualizarCuentaPrepaga(PREPaga cuenta);
+    void actualizarCuentaPostpaga(POSTPaga cuenta);
 }

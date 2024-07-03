@@ -208,6 +208,7 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
         if (cuenta != null) {
             if (cuenta.getSaldo() >= importe) {
                 cuenta.setSaldo(cuenta.getSaldo() - importe);
+                repoClientes.actualizarCuentaPrepaga(cuenta);
                 System.out.println("Pago realizado. Saldo restante: " + cuenta.getSaldo());
                 String mensajeTarjeta = "Genero el pago";
                 if (this.pagoDebito != null) {
@@ -236,7 +237,12 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             if (cuenta.getSaldo() >= importe) {
                 Tarjeta tarjeta = cuenta.getTarjeta();
                 if (tarjeta != null) {
+                    cuenta.setSaldo(cuenta.getSaldo() - importe);
+                    repoClientes.actualizarCuentaPostpaga(cuenta);
+
                     System.out.println("Pago de " + importe + " realizado con tarjeta: " + tarjeta.getNroTarjeta());
+                    System.out.println("Saldo restante: " + cuenta.getSaldo());
+                    
                     ClienteTelepeajeDTO clienteDTO = new ClienteTelepeajeDTO(vehiculo.getClienteTelepeaje().getNombre(), vehiculo.getClienteTelepeaje().getCi(), vehiculo.getClienteTelepeaje().getEmail(), new ArrayList<>());
                     TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjeta.getNroTarjeta(), tarjeta.getNombre(), tarjeta.getFechaVto());
                     pagosExternos.CobroTelepeaje(clienteDTO, tarjetaDTO);

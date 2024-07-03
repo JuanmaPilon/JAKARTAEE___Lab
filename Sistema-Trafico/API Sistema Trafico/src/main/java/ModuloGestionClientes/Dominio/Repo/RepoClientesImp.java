@@ -254,5 +254,15 @@ public class RepoClientesImp implements RepoClientes {
             throw new IllegalArgumentException("Vehículo no encontrado: " + vehiculo.getId());
         }
     }
+    @Override
+    @Transactional
+    public void actualizarCuentaPrepaga(PREPaga cuenta) {
+        em.merge(cuenta);
+    }
+    @Override
+    @Transactional
+    public void actualizarCuentaPostpaga(POSTPaga cuenta) {
+        em.merge(cuenta);
+    }
 }
 

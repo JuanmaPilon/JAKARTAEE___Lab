@@ -15,4 +15,5 @@ org/tallerjava/PREPagaDTO.class
 org/tallerjava/POSTPagaDTO.class
 org/tallerjava/CuentaDTO.class
 org/tallerjava/UsuarioDTO.class
+org/tallerjava/DatosConsultaPasadaDTO.class
 org/tallerjava/MatriculaDTO.class

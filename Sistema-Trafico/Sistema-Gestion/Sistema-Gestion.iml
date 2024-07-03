@@ -3,6 +3,18 @@
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$/../API Sistema Trafico" dumb="true">
       <sourceFolder url="file://$MODULE_DIR$/../API Sistema Trafico/src/main/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../API Sistema Trafico/src/main/test/ramelimiter" />
     </content>
+  </component>
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping>
+          <factory-entry name="Sistema-Gestion" value="9e0a3b08-0dd5-425c-acbf-6b9a557fa378" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
   </component>
 </module>
