@@ -15,7 +15,7 @@ public interface RepoClientes {
     void eliminarClienteSucivePorCI(String ci);
     void agregarClienteSukcsive(ClienteSucive cliente);
     ClienteSucive buscarClienteSucPorCI(String ci);
-
+    List<Vehiculo> buscarVehiculosPorCI(String ci);
     void addVehiculo(Vehiculo vehiculo);
     Vehiculo BuscarTag(String tag);
 
@@ -36,6 +36,7 @@ public interface RepoClientes {
     void modificarVehiculo(Vehiculo vehiculo);
 
     List<PasadaPorPeaje> buscarPasadaPorPeaje(Vehiculo vehiculo, Date fechaInicio, Date fechaFin);
+    List<PasadaPorPeaje> buscarPasadaPorPeajeCliente(Vehiculo vehiculo);
     void actualizarCuentaPrepaga(PREPaga cuenta);
     void actualizarCuentaPostpaga(POSTPaga cuenta);
 }

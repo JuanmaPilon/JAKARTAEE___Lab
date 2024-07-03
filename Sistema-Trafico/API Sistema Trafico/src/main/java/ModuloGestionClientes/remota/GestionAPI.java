@@ -6,14 +6,12 @@ import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloGestionClientes.Dominio.Vehiculo;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
+import org.tallerjava.CiDTO;
 import org.tallerjava.DatosConsultaPasadaDTO;
 import org.tallerjava.DatosPagoDTO;
 
@@ -52,8 +50,16 @@ public class GestionAPI {
         ClienteTelepeaje clienteTelepeaje = repo.buscarClienteTelePorCI(dto.getCedula());
         Vehiculo vehiculo = repo.BuscarTag(dto.getTag());
         Set<PasadaPorPeaje> set = moduloGestion.consultarPasadas(clienteTelepeaje,dto.getFechaInicio(),dto.getFechaFin(),vehiculo);
-        log.infof("Consultando Pasadas");
-        //return Response.ok("Conto un vehiculo").status(200,"OK").build();
+        log.infof("Consultando Pasadas por tag/rangoFechas");
+        return set;
+    }
+    @GET
+    @Path("/ObtenerPasadasCliente")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<PasadaPorPeaje> ObtenerPasadasCliente(CiDTO ci) {
+        Set<PasadaPorPeaje> set = moduloGestion.consultarPasadasCliente(ci.getCi());
+        log.infof("Consultando Pasadas por cliente");
         return set;
     }
 }

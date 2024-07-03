@@ -123,10 +123,18 @@ public class RepoClientesImp implements RepoClientes {
             return null;
         }
     }
-
-
-
-
+    @Transactional
+    @Override
+    public List<Vehiculo> buscarVehiculosPorCI(String ci) {
+        try {
+            return em.createQuery("SELECT v FROM gestion_Vehiculo v WHERE v.cliente.ci = :ci", Vehiculo.class)
+                    .setParameter("ci", ci)
+                    .getResultList();
+        } catch (NoResultException e) {
+            System.out.println("no se encontraron vehiculos con ci: " + ci);
+            return null;
+        }
+    }
     @Transactional
     @Override
     public void altaMatricula(Matricula matricula) {
@@ -184,6 +192,18 @@ public class RepoClientesImp implements RepoClientes {
                 .setParameter("fechaInicio", fechaInicio)
                 .setParameter("fechaFin", fechaFin)
                 .getResultList();
+    }
+    @Transactional
+    @Override
+    public List<PasadaPorPeaje> buscarPasadaPorPeajeCliente(Vehiculo vehiculo) {
+        try {
+            return em.createQuery("SELECT p FROM gestion_PasadaPorPeaje p WHERE p.vehiculo = :vehiculo", PasadaPorPeaje.class)
+                    .setParameter("vehiculo", vehiculo)
+                    .getResultList();
+        } catch (NoResultException e) {
+            System.out.println("No pasadas found for vehicle: " + vehiculo.getId());
+            return null;
+        }
     }
     @Transactional
     @Override

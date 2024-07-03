@@ -324,6 +324,23 @@ public class ModuloGestionClientes implements ModuloIGestionClientes {
             return new HashSet<>();
         }
     }
+    @Override
+    public Set<PasadaPorPeaje> consultarPasadasCliente(String ci) {
+        List<Vehiculo> vehiculos = repoClientes.buscarVehiculosPorCI(ci);
+        if (vehiculos != null && !vehiculos.isEmpty()) {
+            List<PasadaPorPeaje> pasadasVehiculosCliente = new ArrayList<>();
+            for (Vehiculo vehiculo : vehiculos) {
+                List<PasadaPorPeaje> pasadas = repoClientes.buscarPasadaPorPeajeCliente(vehiculo);
+                if (pasadas != null) {
+                    pasadasVehiculosCliente.addAll(pasadas);
+                }
+            }
+            return new HashSet<>(pasadasVehiculosCliente);
+        } else {
+            System.out.println("consultarPasadasCliente ------ Cliente no encontrado o sin vehículos.");
+            return new HashSet<>();
+        }
+    }
 
     @Override
     public Set<PasadaPorPeaje> consultarPasadas(ClienteSucive cliente, Date fechaInicio, Date fechaFin) {
