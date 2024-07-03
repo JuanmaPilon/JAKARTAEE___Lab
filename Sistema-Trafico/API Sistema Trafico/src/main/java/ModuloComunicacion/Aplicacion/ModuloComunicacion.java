@@ -23,15 +23,13 @@ public class ModuloComunicacion implements ModuloIComunicacion {
     }
 
     @Override
-    public void notificarSaldoInsuficiente(ClienteTelepeaje cliente) {
-        System.out.println("Notificando saldo insuficiente al cliente atravez de email: " + cliente.getEmail());//le aviso
-        cliente.agregarNotificacion("NOTIFICACION: saldo insuficiente.");//guardo la notificacion
+    public void notificarSaldoInsuficiente(String email) {
+        System.out.println("Notificando saldo insuficiente al cliente atravez de email: " + email);//le aviso
     }
 
     @Override
-    public void notificarTarjetaBloqueada(ClienteTelepeaje cliente) {
-        System.out.println("Notificando tarjeta bloqueada al cliente atravez de email: " + cliente.getEmail());
-        cliente.agregarNotificacion("NOTIFICACION: tarjeta bloqueada.");
+    public void notificarTarjetaBloqueada(String email) {
+        System.out.println("Notificando tarjeta bloqueada al cliente atravez de email: " + email);
     }
 
     @Override

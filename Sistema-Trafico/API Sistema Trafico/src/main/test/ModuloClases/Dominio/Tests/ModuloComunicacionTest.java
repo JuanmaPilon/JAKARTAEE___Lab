@@ -29,13 +29,13 @@ public class ModuloComunicacionTest {
     @Test
     public void testNotificarSaldoInsuficiente() {
         ClienteTelepeaje cliente = new ClienteTelepeaje("pepe","231234551","pepito@asd.com");
-        modulo.notificarSaldoInsuficiente(cliente);
+        modulo.notificarSaldoInsuficiente(cliente.getEmail());
     }
 
     @Test
     public void testNotificarTarjetaBloqueada() {
         ClienteTelepeaje cliente = new ClienteTelepeaje("pepe","231234551","pepito@asd.com");
-        modulo.notificarTarjetaBloqueada(cliente);
+        modulo.notificarTarjetaBloqueada(cliente.getEmail());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package ModuloPeaje.Aplicacion;
 
 
+import ModuloComunicacion.Aplicacion.ModuloComunicacion;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
@@ -32,7 +33,8 @@ public class ModuloPeajeImpl {
 
     @Inject
     private PublicadorEventoPeaje pasajeVehiculo;// Evento CDI para notificar el pasaje de vehículo al módulo de Monitoreo
-
+    @Inject
+    private ModuloComunicacion notificar;
     @Inject
     private PublicadorEventoPeaje vehiculoNoEncontrado;
     @Inject
@@ -111,10 +113,13 @@ public class ModuloPeajeImpl {
     public boolean procesarVehiculoNacional(String tag, Vehiculo vehiculo,String matricula) {
         boolean habilitado = false;
         Comun tarifa = new Comun(70);
+        ModuloGestionClientes.Dominio.Vehiculo vehiculo1 = repoGestion.BuscarTag(tag);
         habilitado = moduloIGestionClientes.realizarPrePago(tag, tarifa.getMonto());
         if(!habilitado) {
+            notificar.notificarInformacion(vehiculo1.getCliente().getEmail(),"Sin saldo en cuenta prepaga");
             habilitado = moduloIGestionClientes.realizarPostPago(tag,tarifa.getMonto());
         } if(!habilitado) {
+            notificar.notificarInformacion(vehiculo1.getCliente().getEmail(),"Tarjeta Invalida");
             habilitado = true;
             moduloSucive.notificarPago(matricula, tarifa.getMonto());
         }
