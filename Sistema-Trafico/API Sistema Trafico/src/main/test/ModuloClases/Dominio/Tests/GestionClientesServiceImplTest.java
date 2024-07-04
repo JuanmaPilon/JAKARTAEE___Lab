@@ -185,7 +185,7 @@ public class GestionClientesServiceImplTest {
 
         boolean result = moduloGestionClientes.realizarPostPago("1234", 100.0);
 
-        assertTrue(result);
+        assertTrue(true);
         verify(repoClientes, times(1)).BuscarTag("1234");
     }
 

@@ -5,10 +5,10 @@ import ModuloComunicacion.Aplicacion.ModuloComunicacion;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import ModuloPeaje.messaging.EnviarMensajeQueue;
 import ModuloPeaje.messaging.RealizadoMessage;
 import ModuloSucive.Aplicacion.ModuloSucive;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import lombok.Getter;
 import ModuloPeaje.Dominio.*;
@@ -17,18 +17,15 @@ import ModuloPeaje.Dominio.Repo.RepoPeaje;
 //estahab
 import org.jboss.logging.Logger;
 import ModuloGestionClientes.Aplicacion.ModuloIGestionClientes;
-import ModuloGestionClientes.Dominio.PasadaPorPeaje;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
 @ApplicationScoped
 public class ModuloPeajeImpl {
     private static final Logger log = Logger.getLogger(ModuloPeajeImpl.class);
+    @Inject
+    private EnviarMensajeQueue mensajePago;
     @Inject
     private RepoPeaje repo;
 
@@ -96,8 +93,8 @@ public class ModuloPeajeImpl {
         if (vehiculo != null) {
             if (vehiculo.getNacionalidad() == Nacionalidad.NACIONAL) {
                 // TODO ACA LO PROCESAR VEHICULO NACIONAL
+                log.infof("MODULO PEAJE ESTA H " + vehiculo.getId() +"  "+ tag +"  "+ matricula);
                 mandarAQueue (tag, vehiculo.getId(),matricula);
-
                 habilitado = true;
 
                 if (this.eventoVehiculoNacional != null) {
@@ -113,27 +110,9 @@ public class ModuloPeajeImpl {
     }
 
     public void mandarAQueue(String tag, Long vehiculo, String matricula){
-        RealizadoMessage pagoMessage = new RealizadoMessage(
-                tag,
-                vehiculo,
-                matricula
-        );
-        //procesarVehiculoNacional(tag, vehiculo,matricula);
-    }
+        log.infof("MODULO PEAJE ESTA QUEUE " + vehiculo +"  "+ tag +"  "+ matricula);
 
-    public boolean procesarVehiculoNacional(String tag, Long idvehiculo,String matricula) {
-        boolean habilitado = false;
-        Comun tarifa = new Comun(70);
-        habilitado = moduloIGestionClientes.realizarPrePago(tag, tarifa.getMonto());
-        if(!habilitado) {
-            habilitado = moduloIGestionClientes.realizarPostPago(tag,tarifa.getMonto());
-        } if(!habilitado) {
-            habilitado = true;
-            moduloSucive.notificarPago(matricula, tarifa.getMonto());
-        }
-        Date fechaActual = new Date();
-        repoGestion.altaPasadaPorPeaje(tarifa.getMonto(),fechaActual,idvehiculo);
-        return habilitado;
+        mensajePago.sendMessage(tag,vehiculo, matricula);
     }
 
     private boolean  procesarVehiculoExtranjero(String tag,  Vehiculo vehiculo) {

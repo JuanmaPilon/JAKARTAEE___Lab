@@ -1,6 +1,6 @@
 package ModuloClases.Dominio.Tests;
 
-
+import jakarta.persistence.Query;
 import ModuloGestionClientes.Dominio.*;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +13,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import ModuloGestionClientes.Dominio.Repo.*;
+
+import java.util.Date;
+
 @ExtendWith(MockitoExtension.class)
 public class RepoClientesImpTest {
-
+    @Mock
+    private Query query;
     @Mock
     private EntityManager em;
 
@@ -62,13 +66,25 @@ public class RepoClientesImpTest {
 
     @Test
     void testAltaPasadaPorPeaje() {
-        PasadaPorPeaje pasadaPorPeaje = new PasadaPorPeaje();
-        pasadaPorPeaje.setId(1L);
+        double monto = 1.0;
+        Date fecha = new Date();
+        Long idvehiculo = 1L;
 
-        repoClientes.altaPasadaPorPeaje(pasadaPorPeaje.getCosto(),pasadaPorPeaje.getFecha(),pasadaPorPeaje.getId());
+        // Configura el comportamiento esperado
+        when(em.createNativeQuery(anyString())).thenReturn(query);
+        when(query.setParameter(anyInt(), any())).thenReturn(query);
 
-        verify(em, times(1)).persist(pasadaPorPeaje);
+        // Llama al método que estamos probando
+        repoClientes.altaPasadaPorPeaje(monto, fecha, idvehiculo);
+
+        // Verifica que se llamen los métodos esperados con los parámetros correctos
+        verify(em, times(1)).createNativeQuery(anyString());
+        verify(query, times(1)).setParameter(1, monto);
+        verify(query, times(1)).setParameter(2, fecha);
+        verify(query, times(1)).setParameter(3, idvehiculo);
+        verify(query, times(1)).executeUpdate();
     }
+
 
     @Test
     void testBajaPasadaPorPeaje() {

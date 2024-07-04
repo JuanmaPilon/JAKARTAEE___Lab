@@ -27,10 +27,6 @@ import ModuloGestionClientes.Dominio.Repo.RepoClientes;
                         propertyName = "destinationLookup",
                         propertyValue = "java:app/jms/ServicioPagoQueue"),
                 @ActivationConfigProperty
-                        //Establece el número máximo de consumidores que estarán procesando
-                        //los mensajes
-                        //Por defecto este valor es 15 pero lo cambio a 1 para facilitar
-                        //la prueba que muestra su funcionamiento
                         (propertyName = "maxSession", propertyValue = "1")
         }
 )
@@ -69,7 +65,6 @@ public class MensajeConsumer implements MessageListener {
                         String matricula = realizadoMessage.getMatricula();
 
 
-                        //identifier.setTag(realizadoMessage.toJson(tag));
                         boolean habilitado = false;
                         Comun tarifa = new Comun(70);
                         habilitado = moduloIGestionClientes.realizarPrePago(tag, tarifa.getMonto());
@@ -82,8 +77,7 @@ public class MensajeConsumer implements MessageListener {
                         Date fechaActual = new Date();
                         repoGestion.altaPasadaPorPeaje(tarifa.getMonto(),fechaActual,idVehiculo);
 
-                        enviarMensajeQueue.sendMessage(tag, idVehiculo, matricula);
-                }  catch (JMSException e) {
+                         }  catch (JMSException e) {
                         System.err.printf("Error (de tipo %s): %s\n", e.getClass(), e.getMessage());
 
                 } catch (NoSuchElementException e){
