@@ -6,6 +6,7 @@
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/UsrExtranjeroDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/CuentaDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/TarjetaDTO.java
+/home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/CiDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/ClienteTelepeajeDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/ClienteSuciveDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/UsrNacionalDTO.java
@@ -17,3 +18,4 @@
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/TagDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/VehiculoDTO.java
 /home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/PREPagaDTO.java
+/home/vboxuser/Documents/GitHub/JAKARTAEE___Lab/Sistema-Trafico/DTOs/src/main/java/org/tallerjava/IdentificadorDTO2.java

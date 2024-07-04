@@ -5,6 +5,7 @@ import ModuloComunicacion.Aplicacion.ModuloComunicacion;
 import ModuloGestionClientes.Aplicacion.ModuloGestionClientes;
 import ModuloGestionClientes.Dominio.Repo.RepoClientes;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import ModuloPeaje.messaging.RealizadoMessage;
 import ModuloSucive.Aplicacion.ModuloSucive;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
@@ -95,8 +96,10 @@ public class ModuloPeajeImpl {
         if (vehiculo != null) {
             if (vehiculo.getNacionalidad() == Nacionalidad.NACIONAL) {
                 // TODO ACA LO PROCESAR VEHICULO NACIONAL
+                mandarAQueue (tag, vehiculo.getId(),matricula);
 
-                habilitado = procesarVehiculoNacional(tag, vehiculo,matricula);
+                habilitado = true;
+
                 if (this.eventoVehiculoNacional != null) {
                 eventoVehiculoNacional.publicarEventoVehiculoNacional("evento Vehiculo Nacional");
                 }
@@ -109,22 +112,27 @@ public class ModuloPeajeImpl {
         return habilitado;
     }
 
+    public void mandarAQueue(String tag, Long vehiculo, String matricula){
+        RealizadoMessage pagoMessage = new RealizadoMessage(
+                tag,
+                vehiculo,
+                matricula
+        );
+        //procesarVehiculoNacional(tag, vehiculo,matricula);
+    }
 
-    public boolean procesarVehiculoNacional(String tag, Vehiculo vehiculo,String matricula) {
+    public boolean procesarVehiculoNacional(String tag, Long idvehiculo,String matricula) {
         boolean habilitado = false;
         Comun tarifa = new Comun(70);
-        ModuloGestionClientes.Dominio.Vehiculo vehiculo1 = repoGestion.BuscarTag(tag);
         habilitado = moduloIGestionClientes.realizarPrePago(tag, tarifa.getMonto());
         if(!habilitado) {
-            notificar.notificarInformacion(vehiculo1.getCliente().getEmail(),"Sin saldo en cuenta prepaga");
             habilitado = moduloIGestionClientes.realizarPostPago(tag,tarifa.getMonto());
         } if(!habilitado) {
-            notificar.notificarInformacion(vehiculo1.getCliente().getEmail(),"Tarjeta Invalida");
             habilitado = true;
             moduloSucive.notificarPago(matricula, tarifa.getMonto());
         }
         Date fechaActual = new Date();
-        repoGestion.altaPasadaPorPeaje(tarifa.getMonto(),fechaActual,vehiculo.getId());
+        repoGestion.altaPasadaPorPeaje(tarifa.getMonto(),fechaActual,idvehiculo);
         return habilitado;
     }
 
@@ -167,10 +175,6 @@ public class ModuloPeajeImpl {
         return habilitado;
     }
 
-
-//    private void mandarAQueueDePagos(Vehiculo vehiculo) {
-//        //TODO esto lo vamos a hacer más adelante.
-//    }
 
     private Vehiculo existeVehiculo(String tag, String matricula) {
         log.infof("flag a");
