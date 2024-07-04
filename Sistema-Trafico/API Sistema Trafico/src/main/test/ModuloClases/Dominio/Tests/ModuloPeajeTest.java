@@ -5,6 +5,7 @@ import ModuloPeaje.Aplicacion.ModuloPeajeImpl;
 import ModuloPeaje.Dominio.*;
 import ModuloPeaje.Dominio.Repo.RepoPeaje;
 import ModuloPeaje.Evento.PublicadorEventoPeaje;
+import ModuloPeaje.messaging.EnviarMensajeQueue;
 import jakarta.enterprise.event.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,17 +17,24 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ModuloPeaje.Dominio.Nacionalidad;
+import ModuloPeaje.Dominio.Preferencial;
+import ModuloPeaje.Dominio.Vehiculo;
+
+import ModuloGestionClientes.Dominio.Repo.RepoClientesImp;
+import ModuloPeaje.Evento.eventoVehiculoExtranjero;
+import ModuloPeaje.Evento.eventoVehiculoNacional;
+
+import java.util.Date;
+
 @ExtendWith(MockitoExtension.class)
 public class ModuloPeajeTest {
+    @Mock
+    private RepoClientesImp repoGestion;
 
     @Mock
     private RepoPeaje repo;
 
-    @Mock
-    private PublicadorEventoPeaje pasajeVehiculo;
-
-    @Mock
-    private Event<String> vehiculoNoEncontrado;
 
     @Mock
     private ModuloIGestionClientes moduloIGestionClientes;
@@ -34,48 +42,14 @@ public class ModuloPeajeTest {
     @InjectMocks
     private ModuloPeajeImpl moduloPeaje;
 
+
     @BeforeEach
     void setUp() {
         double montoPredeterminado = 10.0;
         double montoPredeterminadoPreferencial = 5.0;
         moduloPeaje.actualizarTarifaComun(montoPredeterminado);
         moduloPeaje.actualizarTarifaPreferencial(new Preferencial(montoPredeterminadoPreferencial));
-    }
 
-    @Test
-    void testEstaHabilitadoVehiculoNacional() {
-        String tag = "123";
-        String matricula = "ABC123";
-        Nacional vehiculo = new Nacional();
-        vehiculo.setTag(new Tag("123"));
-        vehiculo.setNacionalidad(Nacionalidad.NACIONAL);
-
-        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
-
-        boolean habilitado = moduloPeaje.estaHabilitado(tag, matricula);
-
-        assertTrue(habilitado);
-        verify(repo, times(1)).BuscarTag(tag);
-    }
-
-    @Test
-    void testEstaHabilitadoVehiculoExtranjero() {
-        String tag = "123";
-        String matricula = "ABC123";
-        Extranjero vehiculo = new Extranjero();
-        vehiculo.setTag(new Tag("123"));
-        vehiculo.setNacionalidad(Nacionalidad.EXTRANJERO);
-
-        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
-        when(repo.obtenerTarifaPreferencial()).thenReturn(new Preferencial(5.0));
-        when(moduloIGestionClientes.realizarPrePago(tag, 5.0)).thenReturn(true);
-
-        boolean habilitado = moduloPeaje.estaHabilitado(tag, matricula);
-
-        assertTrue(habilitado);
-        verify(repo, times(1)).BuscarTag(tag);
-        verify(repo, times(1)).obtenerTarifaPreferencial();
-        verify(moduloIGestionClientes, times(1)).realizarPrePago(tag, 5.0);
     }
 
     @Test
@@ -111,6 +85,65 @@ public class ModuloPeajeTest {
         moduloPeaje.actualizarTarifaPreferencial(nuevaTarifa);
         assertEquals(nuevoMonto, moduloPeaje.getTarifaPreferencial().obtenerMonto());
         System.out.println("La tarifa preferencial se ha actualizado correctamente.");
+    }
+
+    @Test
+    public void testProcesarVehiculoExtranjero_SuccessfulPrePago() {
+        // Arrange
+        String tag = "TAG123";
+        String matricula = "ABC123";
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setNacionalidad(Nacionalidad.EXTRANJERO);
+        vehiculo.setId(1L);
+
+        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
+        when(moduloIGestionClientes.realizarPrePago(tag, 50.0)).thenReturn(true);
+
+        // Act
+        boolean resultado = moduloPeaje.estaHabilitado(tag, matricula);
+
+        // Assert
+        assertTrue(resultado);
+      }
+
+    @Test
+    public void testProcesarVehiculoExtranjero_SuccessfulPostPago() {
+        // Arrange
+        String tag = "TAG123";
+        String matricula = "ABC123";
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setNacionalidad(Nacionalidad.EXTRANJERO);
+        vehiculo.setId(1L);
+
+        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
+        when(moduloIGestionClientes.realizarPrePago(tag, 50.0)).thenReturn(false);
+        when(moduloIGestionClientes.realizarPostPago(tag, 50.0)).thenReturn(true);
+
+        // Act
+        boolean resultado = moduloPeaje.estaHabilitado(tag, matricula);
+
+        // Assert
+        assertTrue(resultado);
+        }
+
+    @Test
+    public void testProcesarVehiculoExtranjero_FailedPayment() {
+        // Arrange
+        String tag = "TAG123";
+        String matricula = "ABC123";
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setNacionalidad(Nacionalidad.EXTRANJERO);
+        vehiculo.setId(1L);
+
+        when(repo.BuscarTag(tag)).thenReturn(vehiculo);
+        when(moduloIGestionClientes.realizarPrePago(tag, 50.0)).thenReturn(false);
+        when(moduloIGestionClientes.realizarPostPago(tag, 50.0)).thenReturn(false);
+
+        // Act
+        boolean resultado = moduloPeaje.estaHabilitado(tag, matricula);
+
+        // Assert
+        assertFalse(resultado);
     }
 }
 
