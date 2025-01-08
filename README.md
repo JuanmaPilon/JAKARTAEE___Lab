@@ -14,3 +14,6 @@
 - JakartaEE 17 Temurin
 - IntelliJ (IDE)
 - JUnit
+
+
+La propuesta de nuestro trabajo es de construir una aplicacion para SUCIVE, que controla el peaje de vehiculos.
